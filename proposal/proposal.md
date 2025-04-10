@@ -89,5 +89,12 @@ We want to model a flock of birds, flying through a forest scene with a camera f
 
 ## Resources
 
-<youtube.com/watch?v=YH4Xr6GIp4U>  : Example scene from the Lord of the Rings, timestamps : from 1:22 to 1:35
+Example scene from the Lord of the Rings : <youtube.com/watch?v=YH4Xr6GIp4U> from 1:22 to 1:35
+Bezier curves : <https://www.shadertoy.com/view/XtBGDR>
+Boids explanation : <https://en.wikipedia.org/wiki/Boids>
+Boids Algorithm : <https://observablehq.com/@rreusser/gpgpu-boids>
+Normal mapping : <https://lettier.github.io/3d-game-shaders-for-beginners/normal-mapping.html>
+Fog implementation: <https://lettier.github.io/3d-game-shaders-for-beginners/fog.html>
+Bird design : <https://www.youtube.com/watch?v=eSL98LLr1kw&list=WL&index=29>
+
 
