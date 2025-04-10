@@ -9,18 +9,18 @@ title: Project Proposal CS-341 2025
 
 ## Abstract
 
-We want to model a flock of birds, which have boid like behaviour, flying through a forest scene with a camera following the movement of the flock. The relevance of this task is to create a visually pleasing representation of these birds flying which is a common scene in many movies and one that we think gives for a very cinematic result.  We want the camera to follow the boids in a fluid way and we wish to implement Bezier curves as to have a nice curve for the camera path animation as well as a more cinema-esque movement for the camera. We will also add a Boids algorithm which the birds in our project will follow to mimic real-world movements as well as a fog effect for the same reasons and also to create more intrigue in the scene. Some of the technical challenges we expect to face are implementing a nice and fluid animation for the birds' movement.
+We want to model a flock of birds, which have boid like behaviour, flying through a forest scene with a camera following the movement of the flock. The relevance of this task is to create a visually pleasing representation of these birds flying which is a common scene in many movies and one that we think gives for a very cinematic result.  We want the camera to follow the boids in a fluid way and we wish to implement Bezier curves as to have a nice curve for the camera path animation as well as a more cinema-esque movement for the camera. We will also add a Boids algorithm which the birds in our project will follow to mimic real-world movements as well as a fog effect for the same reasons and also to create more intrigue in the scene. We intend to make our own mesh for the birds in the scene and will model them using Blender. We also wish to add normal mapping such that our scene has a more realistic and better lighting for our surfaces. Some of the technical challenges we expect to face are implementing a nice and fluid animation for the birds' movement as well as a good algorithm for the Boids.
 
 
 ## Features
 
 | Feature          | Points | Adapted Points |
 |------------------|--------|----------------|
-| Feature 1        | 5      | 5              |
-| Feature 2        | 10     | 5              |
-| Feature 3        | 10     | 10             |
-| Feature 4        | 20     | 10             |
-| Feature 5        | 20     | 20             |
+| Mesh design      | 5      | 5              |
+| Fog              | 5      | 5              |
+| Normal mapping   | 10     | 10             |
+| Bézier Curves    | 10     | 10             |
+| Boids            | 20     | 20             |
 
 
 ## Schedule
