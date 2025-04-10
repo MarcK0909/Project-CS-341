@@ -9,7 +9,7 @@ title: Project Proposal CS-341 2025
 
 ## Abstract
 
-We want to model a flock of birds, which have boid like behaviour, flying through a forest scene with a camera following the movement of the flock. The relevance of this task is to create a visually pleasing representation of these birds flying which is a common scene in many movies and one that we think gives for a very cinematic result.  We want the camera to follow the boids in a fluid way and we wish to implement Bezier curves as to have a nice curve for the camera path animation as well as a more cinema-esque movement for the camera. We will also add a Boids algorithm which the birds in our project will follow to mimic real-world movements as well as a fog effect for the same reasons and also to create more intrigue in the scene. We intend to make our own mesh for the birds in the scene and will model them using Blender. We also wish to add normal mapping such that our scene has a more realistic and better lighting for our surfaces. Some of the technical challenges we expect to face are implementing a nice and fluid animation for the birds' movement as well as a good algorithm for the Boids.
+We want to model a flock of birds, flying through a forest scene with a camera following the movement of the flock. The goal, inspired by movie scenes (see the example provided in ressources), is to create a cinematic and visually pleasing representation of these birds flying in a synchronized manner around obstacles. We want to model the flock of birds using the Boids algorithm. This will require a 3D implementation of the algorithm and some adjustments in order to control the general flight path of the birds. The camera will follow the birds in a fluid way to add dynamicity to the scene. To achieve this effect we will use Bezier curves for the camera path. We intend to make our own meshes for the birds and trees in the scene and will model them using Blender. We expect the bird models to be challenging as we would like to animate them in flight for more realism. We think we could do that either by exporting keyframes from blender and switching between the models or by constructing the birds from multiple meshes that could be moved separately. Finally, we wish to implement normal mapping to add detail to the models such that our scene has a more realistic feel as well as a fog effect helping with ambience and immersion by obscurring the edges of out scene.
 
 
 ## Features
@@ -89,5 +89,5 @@ We want to model a flock of birds, which have boid like behaviour, flying throug
 
 ## Resources
 
-TODO
+(youtube.com/watch?v=YH4Xr6GIp4U) Exemple scene from the Lord of the Rings, timestamps : from 1:22 to 1:35
 
