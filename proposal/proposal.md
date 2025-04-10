@@ -89,5 +89,5 @@ We want to model a flock of birds, flying through a forest scene with a camera f
 
 ## Resources
 
-(youtube.com/watch?v=YH4Xr6GIp4U) Exemple scene from the Lord of the Rings, timestamps : from 1:22 to 1:35
+<youtube.com/watch?v=YH4Xr6GIp4U>  : Example scene from the Lord of the Rings, timestamps : from 1:22 to 1:35
 
