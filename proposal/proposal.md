@@ -104,4 +104,4 @@ We want to model a flock of birds, flying through a forest scene with a camera f
 
 [Bird design](https://www.youtube.com/watch?v=eSL98LLr1kw&list=WL&index=29)
 
-[Free to use textures](https://freestocktextures.com/)
+[Free to use textures](https://polyhaven.com/)
