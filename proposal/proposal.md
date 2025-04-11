@@ -36,18 +36,18 @@ We want to model a flock of birds, flying through a forest scene with a camera f
 	</tr>
 	<tr>
 		<td>Week 1</td>
-		<td>Proposal & research</td>
-		<td>Proposal & research</td>
-		<td>Proposal & research</td>
+		<td>Mesh design</td>
+		<td>Mesh design</td>
+		<td>Boids POC & scene design</td>
 	</tr>
 	<tr style="background-color: #f9f9f9;">
 		<td colspan="4" align="center">Proposal</td>
 	</tr>
 	<tr>
 		<td>Week 2 (Easter)</td>
-		<td>Mesh design</td>
-		<td>Mesh design</td>
-		<td>Boids POC & scene design</td>
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
 	<tr>
 		<td>Week 3</td>
