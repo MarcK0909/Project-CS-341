@@ -11,7 +11,20 @@ title: Project Proposal CS-341 2025
 
 We want to model a flock of birds, flying through a forest scene with a camera following the movement of the flock. The goal, inspired by movie scenes (see the example provided in ressources), is to create a cinematic and visually pleasing representation of these birds flying in a synchronized manner around obstacles. We want to model the flock of birds using the Boids algorithm. This will require a 3D implementation of the algorithm and some adjustments in order to control the general flight path of the birds. The camera will follow the birds in a fluid way to add dynamicity to the scene. To achieve this effect we will use Bezier curves for the camera path. We intend to make our own meshes for the birds and trees in the scene and will model them using Blender. We expect the bird models to be challenging as we would like to animate them in flight for more realism. We think we could do that either by exporting keyframes from blender and switching between the models or by constructing the birds from multiple meshes that could be moved separately. Finally, we wish to implement normal mapping to add detail to the models such that our scene has a more realistic feel as well as a fog effect helping with ambience and immersion by obscurring the edges of our scene.
 
-![Camera following a flock of birds with fog obscuring the edges of the scene by Chat GPT](images/CompGraph_scene_concept.png){width="300px"}
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+
+  <figure>
+    <img src="images/CompGraph_scene_concept1.png" alt="Image 1" width="300">
+    <figcaption>Camera following a flock of birds with fog<br>obscuring the edges of the scene by Chat GPT</figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/CompGraph_scene_concept2.png" alt="Image 2" width="300">
+    <figcaption>Scene concept created during project tutorial<br>(Backgroud texture by Greg Zaal on polyhaven)</figcaption>
+  </figure>
+
+</div>
 
 ## Features
 
