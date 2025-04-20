@@ -92,6 +92,10 @@ export const sunset_sky = new BackgroundMaterial({
     texture: 'kloppenheim_07_puresky_blur.jpg'
 });
 
+export const misty_forrest = new BackgroundMaterial({
+    texture: 'misty_pines.jpg'
+});
+
 export const gray = new DiffuseMaterial({
     color: [0.4, 0.4, 0.4],
     shininess: 0.5
@@ -100,6 +104,11 @@ export const gray = new DiffuseMaterial({
 export const gold = new DiffuseMaterial({
     texture: 'tex_gold',
     shininess: 14.0
+});
+
+export const black = new DiffuseMaterial({
+    texture: 'tex_black',
+    shininess: 5.0
 });
 
 export const pine = new DiffuseMaterial({
@@ -112,3 +121,5 @@ export const terrain = new TerrainMaterial({
     grass_color: [0.33, 0.43, 0.18],
     peak_color: [0.8, 0.5, 0.4]
 });
+
+export const mirror = new ReflectiveMaterial({})

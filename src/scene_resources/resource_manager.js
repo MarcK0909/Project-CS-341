@@ -136,6 +136,7 @@ export class ResourceManager{
     textures_to_load(){
         return [
             'kloppenheim_07_puresky_blur.jpg',
+            "misty_pines.jpg",
             'pine.png',
           ];
     }
@@ -158,6 +159,8 @@ export class ResourceManager{
     meshes_to_load() {
         return [
         "pine.obj",
+        "birdTest1.obj",
+        "suzanne.obj"
       ];
     }
 
@@ -185,6 +188,7 @@ function generate_textures(regl, resources) {
     }
   
     resources['tex_red'] = make_texture_from_color([0.7, 0.15, 0.05])
+    resources['tex_black'] = make_texture_from_color([0.1, 0.1, 0.1])
     resources['tex_gold'] = make_texture_from_color([0.7, 0.5, 0.0])
     resources['tex_blue'] = make_texture_from_color([0.1, 0.5, 0.7])
     resources['tex_gray'] = make_texture_from_color([0.4, 0.4, 0.4])
