@@ -117,4 +117,10 @@ We want to model a flock of birds, flying through a forest scene with a camera f
 
 [Bird design](https://www.youtube.com/watch?v=eSL98LLr1kw&list=WL&index=29)
 
+[Pine tree](https://www.youtube.com/watch?v=mgJxH_Jc2DI)
+
+[Low Poly](https://www.youtube.com/watch?v=hvxoAX_poI0)
+
+[Rock blend](https://free3d.com/3d-model/low-poly-rock-4631.html)
+
 [Free to use textures](https://polyhaven.com/)
