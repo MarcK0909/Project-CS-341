@@ -160,9 +160,12 @@ export class ResourceManager{
     meshes_to_load() {
         return [
         "pine.obj",
-        //"birdTest1.obj",
-        "suzanne.obj",
-        "Bird0001.obj"
+        "birdTest1.obj",
+        "Bird.obj",
+        "Bird1.obj",
+        "pine_3_stack.obj",
+        "Rock1.obj",
+        "suzanne.obj"
       ];
     }
 

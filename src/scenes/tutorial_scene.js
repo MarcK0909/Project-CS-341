@@ -74,6 +74,14 @@ export class TutorialScene extends Scene {
 
 
     this.objects.push({
+      translation : [0., 0.0, 0.0],
+      scale: [5., 5., 5.],
+      mesh_reference : "Bird1.obj",
+      material : MATERIALS.gold
+    });
+
+
+    this.objects.push({
       translation : [0.0, 0.0, 0.0],
       scale: [150., 150., 150.],
       mesh_reference : "skySphere",
