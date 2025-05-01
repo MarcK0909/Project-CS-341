@@ -165,7 +165,8 @@ export class ResourceManager{
         "Bird1.obj",
         "pine_3_stack.obj",
         "Rock1.obj",
-        "suzanne.obj"
+        "suzanne.obj",
+        "Bird00001.obj"
       ];
     }
 
