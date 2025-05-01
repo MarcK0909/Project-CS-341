@@ -138,6 +138,7 @@ export class ResourceManager{
             'kloppenheim_07_puresky_blur.jpg',
             "misty_pines.jpg",
             'pine.png',
+            'BirdImage.png',
           ];
     }
 
@@ -159,8 +160,9 @@ export class ResourceManager{
     meshes_to_load() {
         return [
         "pine.obj",
-        "birdTest1.obj",
-        "suzanne.obj"
+        //"birdTest1.obj",
+        "suzanne.obj",
+        "Bird0001.obj"
       ];
     }
 
