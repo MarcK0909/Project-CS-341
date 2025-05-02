@@ -83,7 +83,7 @@ export class TutorialScene extends Scene {
 
     this.objects.push({
       translation : [0.0, 0.0, 0.0],
-      scale: [150., 150., 150.],
+      scale: [500., 500., 500.],
       mesh_reference : "skySphere",
       material : MATERIALS.misty_forrest
     });
