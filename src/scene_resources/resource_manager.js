@@ -166,7 +166,23 @@ export class ResourceManager{
         "pine_3_stack.obj",
         "Rock1.obj",
         "suzanne.obj",
-        "Bird00001.obj"
+        "Bird0001.obj",
+        "BirdAnimationOndrej0005.obj",
+        "BirdAnimationOndrej0006.obj",
+        "BirdAnimationOndrej0007.obj",
+        "BirdAnimationOndrej0008.obj",
+        "BirdAnimationOndrej0009.obj",
+        "BirdAnimationOndrej0010.obj",
+        "BirdAnimationOndrej0011.obj",
+        "BirdAnimationOndrej0012.obj",
+        "BirdAnimationOndrej0013.obj",
+        "BirdAnimationOndrej0014.obj",
+        "BirdAnimationOndrej0015.obj",
+        "BirdAnimationOndrej0016.obj",
+        "BirdAnimationOndrej0017.obj",
+        "BirdAnimationOndrej0018.obj",
+        "BirdAnimationOndrej0019.obj",
+        "BirdAnimationOndrej0020.obj"
       ];
     }
 
