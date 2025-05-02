@@ -61,7 +61,7 @@ export class BirdAnimation extends Scene {
           scale: [1., 1., 1.],
           mesh_reference : "BirdAnimationOndrej0005.obj",
           material : MATERIALS.gold,
-          time : 0.
+          time : Math.random() * 2.
         };
   
         this.objects.push(actorBird);
@@ -118,6 +118,7 @@ export class BirdAnimation extends Scene {
         bird.evolve = (dt) => {
           bird.time += dt;
           const index = Number(name.charAt(4)); // relies on naming convention !!!!
+    
           
           //console.log(`evolving: ${index}`);
           const velocity = evolveBoid(dt, this.posList, this.velList, index);
@@ -125,11 +126,9 @@ export class BirdAnimation extends Scene {
           const position = vec3.create();
           vec3.scaleAndAdd(position, this.posList[index], velocity, dt);
 
-          // bird.translation[0] = position[0];
-          // bird.translation[1] = position[1];
-          // bird.translation[2] = position[2];
-
-          console.log(`=======>t = ${bird.time}`);
+          bird.translation[0] = position[0];
+          bird.translation[1] = position[1];
+          bird.translation[2] = position[2];
 
 
 
@@ -173,12 +172,31 @@ export class BirdAnimation extends Scene {
 
 
 function animateBird(bird, time) {
-  const frame = Math.round(time * 16) % 16;
-  if (frame < 5) {
-    bird.mesh_reference = `BirdAnimationOndrej000${frame + 5}.obj`;
+  const frameRate = 25;
+  const frame = Math.round(time * frameRate) % 200;
+  const heightVar = 0.00015;
+  if (frame < 73) {
+    // console.log("Flapping");
+    bird.translation[2] += frame * 117 * heightVar;
+    const animationFrame = frame % 16;
+    if (animationFrame < 5) {
+      bird.mesh_reference = `BirdAnimationOndrej000${animationFrame + 5}.obj`;
+    } else {
+      bird.mesh_reference = `BirdAnimationOndrej00${animationFrame + 5}.obj`;
+    }
+  } else if (frame >= 73 && frame < 78) {
+    // console.log("Coast start");
+    bird.mesh_reference = `BirdCoastStartOndrej00${frame + 5}.obj`;
+    bird.translation[2] += frame * 117 * heightVar;
+  } else if (frame > 194) {
+    // console.log("Coast end");
+    bird.mesh_reference = `BirdCoastEndOndrej000${frame - 195}.obj`;
+    
   } else {
-    bird.mesh_reference = `BirdAnimationOndrej00${frame + 5}.obj`;
+    // console.log("Coasting");
+    bird.translation[2] += (117 - (frame - 78)) * 78 * heightVar;
   }
+
   
   
 }

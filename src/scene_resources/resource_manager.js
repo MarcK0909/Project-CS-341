@@ -182,7 +182,17 @@ export class ResourceManager{
         "BirdAnimationOndrej0017.obj",
         "BirdAnimationOndrej0018.obj",
         "BirdAnimationOndrej0019.obj",
-        "BirdAnimationOndrej0020.obj"
+        "BirdAnimationOndrej0020.obj",
+        "BirdCoastStartOndrej0078.obj",
+        "BirdCoastStartOndrej0079.obj",
+        "BirdCoastStartOndrej0080.obj",
+        "BirdCoastStartOndrej0081.obj",
+        "BirdCoastStartOndrej0082.obj",
+        "BirdCoastEndOndrej0000.obj",
+        "BirdCoastEndOndrej0001.obj",
+        "BirdCoastEndOndrej0002.obj",
+        "BirdCoastEndOndrej0003.obj",
+        "BirdCoastEndOndrej0004.obj",
       ];
     }
 

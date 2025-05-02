@@ -173,11 +173,11 @@ export function evolveBoid(dt, posList, velList, index) {
     const containement = containementForce(posList, index);
     const trajectory = trajectoryForce(posList, index); 
 
-    console.log(`avoidance: ${vec3.str(avoidance)}`);
-    console.log(`cohesion: ${vec3.str(cohesion)}`);
-    console.log(`alignement: ${vec3.str(alignement)}`);
-    console.log(`containement: ${vec3.str(containement)}`);
-    console.log(`trajectory: ${vec3.str(trajectory)}`);
+    // console.log(`avoidance: ${vec3.str(avoidance)}`);
+    // console.log(`cohesion: ${vec3.str(cohesion)}`);
+    // console.log(`alignement: ${vec3.str(alignement)}`);
+    // console.log(`containement: ${vec3.str(containement)}`);
+    // console.log(`trajectory: ${vec3.str(trajectory)}`);
 
     const newVel = vec3.create();
     vec3.scale(newVel, avoidance, avoidanceWeight);
