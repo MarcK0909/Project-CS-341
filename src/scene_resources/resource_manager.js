@@ -35,7 +35,11 @@ export class ResourceManager{
 
         // load textures
         for (const texture_name of this.textures_to_load()) {
-            resource_promises[texture_name] = load_texture(regl, `${path_to_textures_folder}/${texture_name}`);
+          resource_promises[texture_name] = load_texture(
+                regl,
+                `${path_to_textures_folder}/${texture_name}`,
+                texture_name.includes("BirdImage") ? { flipY: true } : {}
+            );
         }
         // load shaders
         for (const shader_name of this.shaders_to_load()) {
