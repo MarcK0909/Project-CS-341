@@ -60,7 +60,10 @@ export class TutorialScene extends Scene {
           translation : position,
           scale: [5., 5., 5.],
           mesh_reference : "birdTest1.obj",
-          material : MATERIALS.black,
+          material : {
+            ...MATERIALS.black,
+            texture: 'BoidsImage.png'
+          }
         };
   
         this.objects.push(actorBird);
@@ -77,7 +80,10 @@ export class TutorialScene extends Scene {
       translation : [0., 0.0, 0.0],
       scale: [5., 5., 5.],
       mesh_reference : "Bird1.obj",
-      material : MATERIALS.gold
+      material : {
+        ...MATERIALS.black,
+        texture: 'BoidsImage.png'
+      }
     });
 
 
