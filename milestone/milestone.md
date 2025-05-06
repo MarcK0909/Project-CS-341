@@ -9,7 +9,6 @@ title: Milestone Report CS-341 2025
 
 1. Summarize what you have accomplished so far.
 
-	Enter your features from the proposal in the table below. For each feature, indicate whether you completed the implementation, it is work in progress, or you have to start it.
 
 	<table>
 		<thead>
@@ -50,8 +49,6 @@ title: Milestone Report CS-341 2025
 		</tbody>
 	</table>
 
-	Add a brief summary of the goals achieved each week. A few words per cell are sufficient.
-
 	<table>
 		<caption>Achieved Goals</caption>
 		<tr>
@@ -68,9 +65,9 @@ title: Milestone Report CS-341 2025
 		</tr>
 		<tr style="background-color: #f0f0f0;">
 			<td>Week 2 (Easter)</td>
-			<td>Creating texture for bird mesh</td>
-			<td>Creating other meshes for forest environment</td>
-			<td>Tweaking bird animation in blender</td>
+			<td>Created texture for bird mesh</td>
+			<td>Created more tree meshes as well as misc objects</td>
+			<td> ?? Regarder push git</td>
 		</tr>
 		<tr>
 			<td>Week 3</td>
@@ -106,22 +103,28 @@ title: Milestone Report CS-341 2025
 
 
 
-3. Optionally present the validation of any feature you have already implemented. This is not mandatory, but can help you get useful feedback for the final report: feature validation will be the main component determining your grade. 
-
-	Follow the following template for each feature you want to validate.
-
+3. Already validated features 
+   
 	- Mesh design
 
 		- Implementation
 
-			Briefly describe how you implemented the feature.
+			We implemented the design of our meshes mainly by following tutorials on youtube which very helpful and provided better results than what we could have achieved on our own as it was our first/second time working with Blender.
 
 		- Validation
 
-			Provide evidence (plots, screenshots, animations, etc.) that the feature works as expected.
+			![Our pine design in Blender](images/Pine_in_Blender.png){width="500px"}
+
+			![A second tree design in Blender](images/Low_poly_tree.png){width="500px"} 
+			
+			![Bird design (w/o texture) in Blender](images/Bird_Blender.png){width="500px"}
+
+			Note : The above objects are not exhaustive of all the meshes we created.
+			
+
 	
 
-4. Report the number of hours each team member worked on the project.
+4. Number of hours each team member worked on the project.
 
 	<table>
 		<caption>Worked Hours</caption>
@@ -157,18 +160,18 @@ title: Milestone Report CS-341 2025
 		</tr>
 	</table>
 
-5. Is the project progressing as expected? Was your workload estimate correct? Critically reflect on your work plan and assess if you are on track.
+5. Workload and progress tracker
 
 We are well coordinated on the workload that we intended to do and it suits our pace well. The work on week 1 (and easter) was a bit harder since we all had to do the tutorial as well as doing what was intended for the project's first week, Marc and Clemens had to get familiar with Blender (altough they did the tutorial on week 1) but since it was easter break they had plenty of time, they were able to finish it in time. Ondrej's workload was a bit high too but as said before, there was enough time to catch up during the break. We are doing pretty well at keeping track of what we have to do and how.
 
 ## Schedule Update
 
-1. Acknowledge any delays or unexpected issues, and motivate proposed changes to the schedule, if needed.
+1. Delays or unexpected issues
 
 	We currently don't have any delays or unexpected issues. We prioritized completing the Boid algorithm and Bird animation over scene design, as these two elements are crucial for our vision of the project, and we wanted to make sure they are doable and working as envisioned. Moreover in the feedback to our proposal it was mentioned that the bird animation could be very challenging.
 	This means that this week and week 5 we will have less work for the bird flock integration and more work in scene creation.
 
-2. Present the work plan for the remaining weeks.
+2. Work plan for the remaining weeks.
 
 	<table>
 		<caption>Updated Schedule</caption>
