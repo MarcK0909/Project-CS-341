@@ -28,7 +28,7 @@ title: Milestone Report CS-341 2025
 			<tr>
 				<td>Fog</td>
 				<td>5</td>
-				<td style="background-color: #fff3cd;">Work in progress</td> <!-- YELLOW -->
+				<td style="background-color: #cce5ff;">Upcoming</td> <!-- YELLOW -->
 			</tr>
 			<tr>
 				<td>Normal Mapping</td>
@@ -102,7 +102,7 @@ title: Milestone Report CS-341 2025
 
 	Follow the following template for each feature you want to validate.
 
-	- Feature Name
+	- Mesh design
 
 		- Implementation
 
@@ -111,7 +111,15 @@ title: Milestone Report CS-341 2025
 		- Validation
 
 			Provide evidence (plots, screenshots, animations, etc.) that the feature works as expected.
+	
+	- Normal mapping
+		- Implementation
 
+			Briefly describe how you implemented the feature.
+
+		- Validation
+
+			Provide evidence (plots, screenshots, animations, etc.) that the feature works as expected.
 
 4. Report the number of hours each team member worked on the project.
 
@@ -143,7 +151,7 @@ title: Milestone Report CS-341 2025
 		</tr>
 		<tr>
 			<td>Week 4</td>
-			<td>1</td>
+			<td>2</td>
 			<td>?</td>
 			<td>?</td>
 		</tr>
@@ -151,13 +159,13 @@ title: Milestone Report CS-341 2025
 
 5. Is the project progressing as expected? Was your workload estimate correct? Critically reflect on your work plan and assess if you are on track.
 
-	
+We are well coordinated on the workload that we intended to do and it suits our pace well. The work on week 1 (and easter) was a bit harder since we all had to do the tutorial as well as doing what was intended for the project's first week, Marc and Clemens had to get familiar with Blender (altough they did the tutorial on week 1) but since it was easter break they had plenty of time, they were able to finish it in time. Ondrej's workload was a bit high too but as said before, there was enough time to catch up during the break. We are doing pretty well at keeping track of what we have to do and how.
 
 ## Schedule Update
 
 1. Acknowledge any delays or unexpected issues, and motivate proposed changes to the schedule, if needed.
 
-	TODO
+	No need
 
 2. Present the work plan for the remaining weeks.
 
@@ -165,26 +173,26 @@ title: Milestone Report CS-341 2025
 		<caption>Updated Schedule</caption>
 		<tr>
 			<th></th>
-			<th>Name 1</th>
-			<th>Name 2</th>
-			<th>Name 3</th>
+			<th>Clemens Möbius</th>
+			<th>Marc Kallergis</th>
+			<th>Ondrej Zedka</th>
 		</tr>
 		<tr>
 			<td>Week 5</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>Camera movement</td>
+			<td>Bird Flock Integration</td>
+			<td>Bird Flock Integration</td>
 		</tr>
 		<tr>
 			<td>Week 6</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>Scene Polishing</td>
+			<td>Scene Polishing</td>
+			<td>Fog effect</td>
 		</tr>
 		<tr>
 			<td>Week 7</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>Feature validation & final report</td>
+			<td>Feature validation & final report</td>
+			<td>Feature validation & video</td>
 		</tr>
 	</table>
