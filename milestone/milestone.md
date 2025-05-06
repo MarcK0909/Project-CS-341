@@ -7,7 +7,7 @@ title: Milestone Report CS-341 2025
 
 ## Progress Summary
 
-1. Summarize what you have accomplished so far.
+1. .
 
 
 	<table>
@@ -66,8 +66,8 @@ title: Milestone Report CS-341 2025
 		<tr style="background-color: #f0f0f0;">
 			<td>Week 2 (Easter)</td>
 			<td>Created texture for bird mesh</td>
-			<td>Created more tree meshes as well as misc objects</td>
-			<td> ?? Regarder push git</td>
+			<td>Creating other meshes for forest environment<s</td>
+			<td>Tweaking bird animation in blender</td>
 		</tr>
 		<tr>
 			<td>Week 3</td>
@@ -137,25 +137,25 @@ title: Milestone Report CS-341 2025
 		<tr>
 			<td>Week 1 (Proposal)</td>
 			<td>2</td>
-			<td>?</td>
+			<td>2</td>
 			<td>6 </td>
 		</tr>
 		<tr style="background-color: #f0f0f0;">
 			<td>Week 2 (Easter)</td>
 			<td>3</td>
-			<td>3?</td>
+			<td>3</td>
 			<td>2</td>
 		</tr>
 		<tr>
 			<td>Week 3</td>
 			<td>4</td>
-			<td>?</td>
+			<td>4</td>
 			<td>3</td>
 		</tr>
 		<tr>
 			<td>Week 4 (in progresss)</td>
 			<td>2</td>
-			<td>?</td>
+			<td>1</td>
 			<td>1</td>
 		</tr>
 	</table>
