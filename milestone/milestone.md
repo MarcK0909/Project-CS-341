@@ -62,27 +62,27 @@ title: Milestone Report CS-341 2025
 		</tr>
 		<tr>
 			<td>Week 1 (Proposal)</td>
-			<td>Creating bird mesh</td>
+			<td>Creating bird mesh & animating it in blender</td>
 			<td>Creating tree meshes</td>
-			<td> ?? Git</td>
+			<td>Implementing 3D boids algorithm & evolving bird position in test scene</td>
 		</tr>
 		<tr style="background-color: #f0f0f0;">
 			<td>Week 2 (Easter)</td>
 			<td>Creating texture for bird mesh</td>
-			<td>Creating Texture for tree meshes</td>
-			<td> ?? Regarder push git</td>
+			<td>Creating other meshes for forest environment</td>
+			<td>Tweaking bird animation in blender</td>
 		</tr>
 		<tr>
 			<td>Week 3</td>
 			<td>Mapping textures to meshes</td>
-			<td>Containement force and boid trajectory</td>
-			<td> Made the bird flock and animated them </td>
+			<td>Adding force to control global trajectory of boids</td>
+			<td>Animating birds in test scene using blender animation as support</td>
 		</tr>
 		<tr>
 			<td>Week 4</td>
 			<td>Milestone report</td>
-			<td>?? TBD</td>
-			<td> ?? TBD</td>
+			<td>Static scene creation</td>
+			<td>Feature validation & showcases for report</td>
 		</tr>
 	</table>
 
@@ -93,9 +93,17 @@ title: Milestone Report CS-341 2025
 
 	![A video of that same flock](videos/boidsdemo.mov){width="500px"}
 
-	Results and state of the projetc :
+	Results and state of the project :
 
-	Until now we have done a good job at keeping up with the pace that we initially planned to have. Ondrej did xyz /!\ MODIF /!\ Marc did the meshes for the trees and their respective texture which we have not yet implemented in the scene, while Clemens did the bird mesh, texture and animation which we have implemented as seen in the previous image and video. During this 4th week Marc will implement the trees we discussed previously, while Ondrej will validate the features (by making sure they all fit what was in the proposal) and Clemens does (is doing) the milestone report.
+	We have made good progress on most of our planned tasks. We did however deviate somewhat from our plannification by prioritizing some tasks than while leaving other tasks for later. 
+	For now we have :
+	- A bird mesh and texture created by Clemens. This model was also animated in Blender by Clemens.
+	- Multiple meshes for trees and other decorative objects created by Marc.
+	- A complete working 3d model of Boid behavior implemented by Ondrej. An evolve function is in place so that actor movement can be controled by the Boid algorithm.
+	- Prototypes for controlling the general direction of the flock of birds, worked on by Marc.
+	- Texture applied to the bird meshes. This was done by Clemens.
+	- Animated birds (flapping their wings) in the scene. This was done by Ondrej by periodicly switching the meshes of the birds in the evolve function.
+
 
 
 3. Optionally present the validation of any feature you have already implemented. This is not mandatory, but can help you get useful feedback for the final report: feature validation will be the main component determining your grade. 
@@ -112,14 +120,6 @@ title: Milestone Report CS-341 2025
 
 			Provide evidence (plots, screenshots, animations, etc.) that the feature works as expected.
 	
-	- Normal mapping
-		- Implementation
-
-			Briefly describe how you implemented the feature.
-
-		- Validation
-
-			Provide evidence (plots, screenshots, animations, etc.) that the feature works as expected.
 
 4. Report the number of hours each team member worked on the project.
 
@@ -135,25 +135,25 @@ title: Milestone Report CS-341 2025
 			<td>Week 1 (Proposal)</td>
 			<td>2</td>
 			<td>?</td>
-			<td>? </td>
+			<td>6 </td>
 		</tr>
 		<tr style="background-color: #f0f0f0;">
 			<td>Week 2 (Easter)</td>
 			<td>3</td>
 			<td>3?</td>
-			<td>3?</td>
+			<td>2</td>
 		</tr>
 		<tr>
 			<td>Week 3</td>
 			<td>4</td>
 			<td>?</td>
-			<td>?</td>
+			<td>3</td>
 		</tr>
 		<tr>
-			<td>Week 4</td>
+			<td>Week 4 (in progresss)</td>
 			<td>2</td>
 			<td>?</td>
-			<td>?</td>
+			<td>1</td>
 		</tr>
 	</table>
 
@@ -165,7 +165,8 @@ We are well coordinated on the workload that we intended to do and it suits our 
 
 1. Acknowledge any delays or unexpected issues, and motivate proposed changes to the schedule, if needed.
 
-	No need
+	We currently don't have any delays or unexpected issues. We prioritized completing the Boid algorithm and Bird animation over scene design, as these two elements are crucial for our vision of the project, and we wanted to make sure they are doable and working as envisioned. Moreover in the feedback to our proposal it was mentioned that the bird animation could be very challenging.
+	This means that this week and week 5 we will have less work for the bird flock integration and more work in scene creation.
 
 2. Present the work plan for the remaining weeks.
 
@@ -180,7 +181,7 @@ We are well coordinated on the workload that we intended to do and it suits our 
 		<tr>
 			<td>Week 5</td>
 			<td>Camera movement</td>
-			<td>Bird Flock Integration</td>
+			<td>Scene texturing</td>
 			<td>Bird Flock Integration</td>
 		</tr>
 		<tr>
