@@ -163,6 +163,7 @@ export class ResourceManager{
 
     meshes_to_load() {
         return [
+        "Tree.obj",
         "pine.obj",
         "birdTest1.obj",
         "Bird.obj",
