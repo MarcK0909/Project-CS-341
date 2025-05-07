@@ -7,7 +7,7 @@ title: Milestone Report CS-341 2025
 
 ## Progress Summary
 
-1. .
+1. Summary of features
 
 
 	<table>
@@ -84,11 +84,11 @@ title: Milestone Report CS-341 2025
 	</table>
 
 
-2. Show some preliminary results.
+2. Preliminary results
 
-	![A flock of birds with their texture](images/BoidsFlock.png){width="300px"}
+	![Textured bird animation rendered in project framework](videos/Bird_animation.mp4){width="500px"}
 
-	![A video of that same flock](videos/boidsdemo.mov){width="500px"}
+	![Animated flock of birds with Boid behavior](videos/boidsdemo.mov){width="500px"}
 
 	Results and state of the project :
 
@@ -102,22 +102,76 @@ title: Milestone Report CS-341 2025
 	- Animated birds (flapping their wings) in the scene. This was done by Ondrej by periodicly switching the meshes of the birds in the evolve function.
 
 
-
-3. Already validated features 
+3. Feature validation 
    
 	- Mesh design
 
 		- Implementation
 
-			We implemented the design of our meshes mainly by following tutorials on youtube which very helpful and provided better results than what we could have achieved on our own as it was our first/second time working with Blender.
+			We designed our meshes in Blender, mainly by following tutorials on youtube ([Pine tree tutorial](https://www.youtube.com/watch?v=mgJxH_Jc2DI), [Tree tutorial](https://www.youtube.com/watch?v=hvxoAX_poI0), [Bird tutorial](https://www.youtube.com/watch?v=eSL98LLr1kw&list=WL&index=29)). These were very helpful as it was our first/second time working with Blender and helped us achieve a good visual result while managing the object complexity. 
 
 		- Validation
 
-			![Our pine design in Blender](images/Pine_in_Blender.png){width="500px"}
+			<div style="display: flex; justify-content: center; gap: 10px;">
 
-			![A second tree design in Blender](images/Low_poly_tree.png){width="500px"} 
+			<figure>
+				<img src="images/Pine_in_Blender.png" alt="Image 1" height="250">
+				<figcaption>Our pine design in Blender</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Pine_render.png" alt="Image 2" height="250">
+				<figcaption>Our pine mesh rendered by the project framework</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Pine_ytb_tuto.png" alt="Image 3" height="250">
+				<figcaption>Pine in the youtube tutorial</figcaption>
+			</figure>
+
+			</div>
+
+
+			<div style="display: flex; justify-content: center; gap: 10px;">
+
+			<figure>
+				<img src="images/Low_poly_tree.png" alt="Image 1" height="170">
+				<figcaption>A second tree design in Blender</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Tree_render.png" alt="Image 2" height="170">
+				<figcaption>Second tree design rendered by the project framework</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Tree_ytb_tuto.png" alt="Image 3" height="170">
+				<figcaption>Tree design in the youtube tutorial</figcaption>
+			</figure>
+
+			</div>
+
+			<div style="display: flex; justify-content: center; gap: 10px;">
+
+			<figure>
+				<img src="images/bird_blender1.png" alt="Image 1" height="170">
+				<figcaption>Our bird mesh in Blender</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Bird_render.png" alt="Image 2" height="170">
+				<figcaption>Our bird design rendered by the project framework</figcaption>
+			</figure>
+
+			<figure>
+				<img src="images/Bird_ytb_tuto.png" alt="Image 3" height="170">
+				<figcaption>Bird design in the youtube tutorial</figcaption>
+			</figure>
+
+			</div>
+		
 			
-			![Bird design (w/o texture) in Blender](images/Bird_Blender.png){width="500px"}
+
 
 			Note : The above objects are not exhaustive of all the meshes we created.
 			
@@ -156,13 +210,14 @@ title: Milestone Report CS-341 2025
 			<td>Week 4 (in progresss)</td>
 			<td>2</td>
 			<td>1</td>
-			<td>1</td>
+			<td>3</td>
 		</tr>
 	</table>
 
 5. Workload and progress tracker
 
-We are well coordinated on the workload that we intended to do and it suits our pace well. The work on week 1 (and easter) was a bit harder since we all had to do the tutorial as well as doing what was intended for the project's first week, Marc and Clemens had to get familiar with Blender (altough they did the tutorial on week 1) but since it was easter break they had plenty of time, they were able to finish it in time. Ondrej's workload was a bit high too but as said before, there was enough time to catch up during the break. We are doing pretty well at keeping track of what we have to do and how.
+The pace and workload in genral match our planification. Some tasks took longer then anticipated, work in Blender for example was quite time intesive. The project is progressing well, we have found and implemented solutions for most of the key components of the final scene.
+
 
 ## Schedule Update
 
