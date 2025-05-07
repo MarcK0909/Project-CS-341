@@ -88,7 +88,7 @@ title: Milestone Report CS-341 2025
 
 	![Textured bird animation rendered in project framework](videos/Bird_animation.mp4){width="500px"}
 
-	![Animated flock of birds with Boid behavior](videos/boidsdemo.mov){width="500px"}
+	![Animated flock of birds with Boid behavior](videos/boidsdemo.mp4){width="500px"}
 
 	Results and state of the project :
 
