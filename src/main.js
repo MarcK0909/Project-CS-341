@@ -20,6 +20,7 @@ import { ProceduralTextureGenerator } from "./render/procedural_texture_generato
 import { BirdAnimation } from "./scenes/birdAnimation_scene.js";
 import { TutorialScene } from "./scenes/tutorial_scene.js";
 import { DemoScene } from "./scenes/demo_scene.js";
+import {BirdTrajectory} from "./scenes/birdTrajectory.js";
 // import { distance } from "../lib/gl-matrix_3.3.0/esm/vec3.js";
 
 DOM_loaded_promise.then(main)
@@ -111,8 +112,9 @@ async function main() {
   const demo_scene = new DemoScene(resource_manager, procedural_texture_generator);
   const tutorial_scene = new TutorialScene(resource_manager);
   const birdAnimation_scene = new BirdAnimation(resource_manager);
+  const trajectoryScene = new BirdTrajectory(resource_manager);
 
-  const active_scene = birdAnimation_scene;   // Assign the scene to be rendered to active_scene
+  const active_scene = trajectoryScene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation

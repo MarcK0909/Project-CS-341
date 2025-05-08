@@ -1,6 +1,8 @@
 import { vec3, mat3 } from "../../lib/gl-matrix_3.3.0/esm/index.js"
 import { fromValues } from "../../lib/gl-matrix_3.3.0/esm/mat2.js";
 
+const scale = 1.;
+
 const maxSpeed = 20.;
 const minSpeed = 5.;
 
@@ -10,7 +12,7 @@ const perceptionRadius = 50.;
 // placeholder
 const worldRadius = 90.;
 
-const avoidanceWeight = 30.;
+const avoidanceWeight = 20.;
 const cohesionWeight = 0.01;
 const alignementWeight = 0.27;
 // const containementWeight = 10.;
@@ -19,7 +21,7 @@ const alignementWeight = 0.27;
 // const cohesionWeight = 0.;
 // const alignementWeight = 0.;
 const containementWeight = 30.;
-const trajectoryWeight = 2.;
+const trajectoryWeight = 0.;
 
 function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
     const diff = vec3.fromValues(0., 0., 0.);
@@ -29,7 +31,7 @@ function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
         if (i != index) {
             const distanceVec = vec3.create();
             vec3.sub(distanceVec, filterList[i], filterList[index]);
-            if (vec3.len(distanceVec) <= perceptionRadius) {
+            if (vec3.len(distanceVec) <= perceptionRadius * scale) {
                 count += 1.;
                 vec3.add(diff, diff, listToMean[i]);
             }
@@ -49,7 +51,7 @@ function avoidanceForce(posList, index) {
         const distanceVec = vec3.create();
         vec3.sub(distanceVec, posList[i], posList[index]);
         const distance = vec3.len(distanceVec);
-        if (distance <= avoidanceRadius && distance != 0.) {
+        if (distance <= avoidanceRadius * scale && distance != 0.) {
             vec3.scaleAndAdd(force, force, vec3.negate(distanceVec, vec3.normalize(distanceVec, distanceVec)), 1. / distance);
         }
     }    
@@ -78,105 +80,215 @@ function containementForce(posList, index) {
     const x = posList[index][0];
     const y = posList[index][1];
     const z = posList[index][2];
-    const horizontalDistSquared = x * x + y * y;
-    if (horizontalDistSquared > 10000.) {
-       vec3.normalize(force, vec3.fromValues(-x * 3., -y * 3., 0.));
-    }
-    else if (horizontalDistSquared < 40.) {
-        vec3.normalize(force, vec3.fromValues(3. * x, 3. * y, 0.));
-    }
-    if (z > 50.) {
-        vec3.normalize(force, vec3.set(force, force[0], force[1], -1.));
-     }
-    else if (z < 50.) {
-        vec3.normalize(force, vec3.set(force, force[0], force[1], 1.));
-    }
-
-    return force;
-}
-
-function trajectoryForce(posList, index){
-    const force = vec3.fromValues(0., 0., 0.);
-    const x = posList[index][0];
-    const y = posList[index][1];
-    const z = posList[index][2];
     const angle = Math.atan2(y, x); 
-    const dist = Math.sqrt(x*x + y*y);
-    
-    //time-based effect based on position
-    const pseudoTime = (dist * 0.01) + (index * 0.1);
-    
-    const sector = Math.floor(((angle + Math.PI) / (Math.PI / 4))) % 8;
+    const horizontalDistSquared = x * x + y * y;
+    const outerRadius = Math.sqrt(2000);
 
-    const mag = 3.0 + Math.sin(dist * 0.05) * 1.5;
+    //first cylinder - second quadrant
+    const cyl1_radius = 8;
+    const cyl1_angle = 130 * (180/Math.PI);
+    const cyl1_x = outerRadius * Math.cos(cyl1_angle);
+    const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    const x_diff = x - cyl1_x;
+    const y_diff = y -cyl1_y;
+    const dist_cyl = x_diff * x_diff + y_diff * y_diff;
 
-    switch (sector) {
-        case 0:
-            //  spiral
-            vec3.set(force, 
-                mag + 3.0 * Math.sin(angle * 3.0), 
-                2.0 * Math.sin(8 * x) + 2.0 * Math.cos(dist * 0.1), 
-                0.5 * Math.sin(dist * 0.1));
-            break;
-        case 1:
-            //  swirl 
-            vec3.set(force, 
-                mag + 4.0 * Math.cos(5 * angle), 
-                mag + 4.0 * Math.sin(5 * angle), 
-                0.8 * Math.sin(angle * 2.0));
-            break;
-        case 2:
-            vec3.set(force, 
-                3.0 * Math.sin(y * 0.1), 
-                mag + 2.0 * Math.cos(x * 0.1), 
-                0.7 * Math.cos(dist * 0.08));
-            break;
-        case 3:
-            vec3.set(force, 
-                -mag + 3.0 * Math.sin(angle * 4.0), 
-                mag + 2.0 * Math.cos(dist * 0.1), 
-                0.5 * Math.sin(x * 0.08));
-            break;
-        case 4:
-            // Oscillation
-            vec3.set(force, 
-                mag + Math.sin(dist * 0.2) * 3.0, 
-                2.0 * Math.sin(8 * x) + Math.cos(dist * 0.15) * 3.0, 
-                0.6 * Math.sin(angle * 3));
-            break;
-        case 5:
-            vec3.set(force, 
-                -mag + 4.0 * Math.cos(6 * angle + dist * 0.05), 
-                -mag + 3.0 * Math.sin(5 * angle + dist * 0.05), 
-                0.7 * Math.cos(angle * 2.0));
-            break;
-        case 6:
-            vec3.set(force, 
-                3.0 * Math.cos(y * 0.15), 
-                -mag + 2.0 * Math.sin(x * 0.2), 
-                0.8 * Math.sin(dist * 0.06));
-            break;
-        case 7:
-            vec3.set(force, 
-                mag + 3.0 * Math.cos(angle * 2.0 + dist * 0.05), 
-                -mag + 3.0 * Math.sin(angle * 3.0 + dist * 0.05), 
-                0.5 * Math.cos(angle * 4.0));
-            break;
+    // Second cylinder - in fourth quadrant
+    const cyl2_radius = 12;
+    const cyl2_angle = 330 * (Math.PI/180); 
+    const cyl2_x = 35 * Math.cos(cyl2_angle); 
+    const cyl2_y = 35 * Math.sin(cyl2_angle);
+    const x_diff2 = x - cyl2_x;
+    const y_diff2 = y - cyl2_y;
+    const dist_cyl2 = x_diff2 * x_diff2 + y_diff2 * y_diff2;
+    
+    // Third cylinder - in fourth quadrant
+    const cyl3_radius = 10;
+    const cyl3_angle = 305 * (Math.PI/180);
+    const cyl3_x = 20 * Math.cos(cyl3_angle);
+    const cyl3_y = 20 * Math.sin(cyl3_angle);
+    const x_diff3 = x - cyl3_x;
+    const y_diff3 = y - cyl3_y;
+    const dist_cyl3 = x_diff3 * x_diff3 + y_diff3 * y_diff3;
+
+    // first cylinder
+    if(angle >= (90 * Math.PI/180) && angle <= (180 * Math.PI/180)){
+        if(dist_cyl < cyl1_radius * cyl1_radius){
+        vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
+        }
     }
+    // second cylinder 
+    if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
+        if(dist_cyl2 < cyl2_radius * cyl2_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
+            vec3.scale(force, force, 6.0);
+        }
+    }
+    
+    // third cylinder
+    if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
+        if(dist_cyl3 < cyl3_radius * cyl3_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
+            vec3.scale(force, force, 6.0);
+        
+    }}
+
+    if (horizontalDistSquared > 2000.) {
+       vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
+    }
+    else if (horizontalDistSquared < 300.) {
+        vec3.normalize(force, vec3.fromValues(x, y, 0.));
+    }
+
+
+    if (z > 60.) {
+        vec3.set(force, 0., 0., -30.);
+    }
+    else if (z > 45.) {
+        vec3.set(force, force[0], force[1], -15.);
+    }
+    else if (z > 40.) {
+        vec3.set(force, force[0], force[1], -8.);
+    }
+    else if (z < 5.) {
+        vec3.set(force, force[0], force[1], 1.);
+    }
+
     return force;
 }
+
+// function trajectoryForce(posList, index){
+//     const force = vec3.fromValues(0., 0., 0.);
+//     const x = posList[index][0];
+//     const y = posList[index][1];
+//     const z = posList[index][2];
+//     const angle = Math.atan2(y, x); 
+//     const dist = Math.sqrt(x*x + y*y);
+    
+//     const normalizedAngle = angle < 0 ? angle + 2 * Math.PI : angle;
+//     const trackPos = normalizedAngle / (2 * Math.PI);
+    
+//     // Base force magnitude
+//     let mag = 8.0;
+    
+//     if (trackPos < 0.05) {
+//         mag = 10.0;
+//         vec3.set(force, -y * 1.5, x * 1.5, 20.0); // Strong upward force
+//     } 
+//     else if (trackPos < 0.1) {
+//         // High altitude section in fog
+//         mag = 10.0;
+//         vec3.set(force, -y * 1.3, x * 1.3, 6.0); // Stay high in fog
+//     }
+//     else if (trackPos < 0.15) {
+//         // Dive out of fog
+//         mag = 12.0; 
+//         vec3.set(force, -y * 1.8, x * 1.8, -65.0); // Strong dive down
+//     }
+//     else if (trackPos < 0.2) {
+//         // Recovery from dive
+//         mag = 6.0;
+//         vec3.set(force, -y * 1.0, x * 1.0, 3.0); // Level out
+//     }
+//     else if (trackPos < 0.25) {
+//         // very sharp turn
+//         mag = 7.0; 
+//         vec3.set(force, -y * 2.5, x * 0.4, 0.0); // Extreme banking
+//     }
+//     else if (trackPos < 0.35) {
+//         mag = 9.0;
+//         const chaosX = 4.0 * Math.sin(trackPos * 120);
+//         const chaosY = 4.0 * Math.cos(trackPos * 130);
+//         vec3.set(force, -y * 1.2 + chaosX, x * 1.2 + chaosY, 2.0 * Math.sin(trackPos * 100));
+//     }
+//     else if (trackPos < 0.4) {
+//         mag = 5.0; 
+//         vec3.set(force, -y * 1.8, x * 1.8, 0.0);
+//         force[0] += 3.0 * Math.sin(trackPos * 70);
+//     }
+//     else if (trackPos < 0.45) {
+//         // Swift upward climb back into fog
+//         mag = 10.0;
+//         vec3.set(force, -y * 1.2, x * 1.2, 8.0); // Strong climb
+//     }
+//     else if (trackPos < 0.5) {
+//         // High fog section
+//         mag = 8.0;
+//         const fogEffect = 1.5 * Math.sin(trackPos * 200);
+//         vec3.set(force, -y + fogEffect, x + fogEffect, 4.0);
+//     }
+//     else if (trackPos < 0.55) {
+//         // Dramatic descent from fog with spiral
+//         mag = 12.0;
+//         const spiralX = 3.0 * Math.sin(trackPos * 80);
+//         const spiralY = 3.0 * Math.cos(trackPos * 80);
+//         vec3.set(force, -y * 1.4 + spiralX, x * 1.4 + spiralY, -15.0);
+//     }
+//     else if (trackPos < 0.65) {
+//         const chicanePhase = Math.sin(trackPos * 90);
+//         vec3.set(force, 
+//             -y + chicanePhase * 6.0,
+//             x + chicanePhase * 6.0, 
+//             8.0 * Math.sin(trackPos * 60));
+//         mag = 5.0;
+//     }
+//     else if (trackPos < 0.7) {
+//         mag = 6.0;
+//         vec3.set(force, -y * 1.0, x * 1.0, -2.0);
+//     }
+//     else if (trackPos < 0.75) {
+//         mag = 12.0;
+//         vec3.set(force, -y * 0.8, x * 0.8, 5.0 + 5.0 * Math.sin(trackPos * 90));
+//     }
+//     else if (trackPos < 0.8) {
+//         // High banking turn
+//         mag = 8.0;
+//         vec3.set(force, -y * 0.5, x * 2.5, 1.0 * Math.cos(trackPos * 40));
+//     }
+//     else if (trackPos < 0.85) {
+//         // Dramatic hairpin with swooping motion
+//         mag = 9.0;
+//         vec3.set(force, -y * 0.3, x * 2.8, -4.0 * Math.sin(trackPos * 50));
+//     }
+//     else if (trackPos < 0.9) {
+//         mag = 11.0;
+//         vec3.set(force, -y * 1.7, x * 1.7, 15.0);
+//     }
+//     else if (trackPos < 0.95) {
+//         mag = 14.0;
+//         vec3.set(force, -y * 2.2, x * 2.2, -10.0);
+//     }
+//     else {
+//         const resetAngle = 0.05;
+        
+//         vec3.set(force,
+//             -Math.sin(resetAngle * 2 * Math.PI) * 20.0,
+//             Math.cos(resetAngle * 2 * Math.PI) * 20.0,
+//             -25.0); // Strong upward boost for next lap
+            
+//         mag = 4.0;
+//     }
+    
+//     force[2] += 2.5 * Math.sin(trackPos * 20.0);
+    
+//     const radiusVar = 1.0 + 1.0 * Math.sin(trackPos * 12.0);
+    
+//     vec3.scale(force, force, mag * radiusVar);
+    
+//     return force;
+// }
 
 export function evolveBoid(dt, posList, velList, index) {
     const avoidance = avoidanceForce(posList, index);
     const cohesion = cohesionForce(posList, index);
     const alignement = alignementForce(posList, velList, index);
     const containement = containementForce(posList, index);
-    const trajectory = trajectoryForce(posList, index); 
+    //const trajectory = trajectoryForce(posList, index); 
 
-    // console.log(`avoidance: ${vec3.str(avoidance)}`);
-    // console.log(`cohesion: ${vec3.str(cohesion)}`);
-    // console.log(`alignement: ${vec3.str(alignement)}`);
-    // console.log(`containement: ${vec3.str(containement)}`);
+    console.log(`avoidance: ${vec3.str(avoidance)}`);
+    console.log(`cohesion: ${vec3.str(cohesion)}`);
+    console.log(`alignement: ${vec3.str(alignement)}`);
+    console.log(`containement: ${vec3.str(containement)}`);
     // console.log(`trajectory: ${vec3.str(trajectory)}`);
 
     const newVel = vec3.create();
@@ -184,15 +296,15 @@ export function evolveBoid(dt, posList, velList, index) {
     vec3.scaleAndAdd(newVel, newVel, cohesion, cohesionWeight);
     vec3.scaleAndAdd(newVel, newVel, alignement, alignementWeight);
     vec3.scaleAndAdd(newVel, newVel, containement, containementWeight);
-    vec3.scaleAndAdd(newVel, newVel, trajectory, trajectoryWeight);
+    //vec3.scaleAndAdd(newVel, newVel, trajectory, trajectoryWeight);
 
     vec3.scaleAndAdd(newVel, velList[index], newVel, dt);
 
     const norm = vec3.len(newVel);
-    if (norm < minSpeed) {
+    if (norm < minSpeed * scale) {
         vec3.normalize(newVel, newVel);
         vec3.scale(newVel, newVel, minSpeed);
-    } else if (norm > maxSpeed) { 
+    } else if (norm > maxSpeed * scale) { 
         vec3.normalize(newVel, newVel);
         vec3.scale(newVel, newVel, maxSpeed);       
     }
