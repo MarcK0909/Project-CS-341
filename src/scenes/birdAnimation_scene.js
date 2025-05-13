@@ -12,7 +12,7 @@ import { Scene } from "./scene.js";
 import { ResourceManager } from "../scene_resources/resource_manager.js";
 
 import { evolveBoid } from "../scene_resources/boids.js";
-import { vec3 } from "../../lib/gl-matrix_3.3.0/esm/index.js";
+import { mat4, quat, vec3 } from "../../lib/gl-matrix_3.3.0/esm/index.js";
 
 export class BirdAnimation extends Scene {
 
@@ -24,7 +24,7 @@ export class BirdAnimation extends Scene {
     super();
     
     this.resource_manager = resource_manager;
-
+    this.scale = 0.1;
     // Boids
     this.posList = [];
     this.newPosList = [];
@@ -54,20 +54,23 @@ export class BirdAnimation extends Scene {
 
     for (let h = 0; h < 2; h++) {
       for (let i = 0; i < 4; i++) {
-        const position = [15.0 * i + 0., 0.0, 10.0 * h + 0.];
-  
+        const position = [this.scale * (10.0 * i + 65.), this.scale* (15.0 * h - 10.), this.scale * (0.0)];
+        const velocity = vec3.fromValues(0., 18. * this.scale, 0.);
+        let bird_material = MATERIALS.black;
+
         const actorBird = {
           translation : position,
-          scale: [1., 1., 1.],
+          rotation : quat.rotationTo(quat.create(), vec3.fromValues(0., 1., 0.), velocity),
+          scale: [1. * this.scale, 1. * this.scale, 1. * this.scale],
           mesh_reference : "BirdAnimationOndrej0005.obj",
-          material : MATERIALS.gold,
+          material : bird_material,
           time : Math.random() * 2.
         };
   
         this.objects.push(actorBird);
         this.actors[`bird${h * 4 + i}`] = actorBird;
         this.posList.push(vec3.fromValues(position[0], position[1], position[2]));
-        this.velList.push(vec3.fromValues(0., 8., 0.));
+        this.velList.push(velocity);
         this.evolvedList.push(false);
       }
       
@@ -82,6 +85,7 @@ export class BirdAnimation extends Scene {
 
     // this.objects.push({
     //   translation : [0., 0.0, 0.0],
+    //   rotation : quat.fromEuler(quat.create(), 0, 0, 0),
     //   scale: [5., 5., 5.],
     //   mesh_reference : "Bird1.obj",
     //   material : MATERIALS.gold
@@ -90,9 +94,10 @@ export class BirdAnimation extends Scene {
 
     this.objects.push({
       translation : [0.0, 0.0, 0.0],
+      rotation : quat.fromEuler(quat.create(), 0, 0, 0),
       scale: [150., 150., 150.],
       mesh_reference : "skySphere",
-      material : MATERIALS.misty_forrest
+      material : MATERIALS.test_sphere
     });
 
   }
@@ -128,13 +133,19 @@ export class BirdAnimation extends Scene {
 
           bird.translation[0] = position[0];
           bird.translation[1] = position[1];
-          bird.translation[2] = position[2];
+          //bird.translation[2] = position[2];
+          bird.translation[2] = 0.; // TEMPORARY 2D!!!!
 
-
+          bird.rotation = quat.rotationTo(quat.create(), vec3.fromValues(0., 1., 0.), vec3.normalize(vec3.create(), velocity));
+          if (index == 3) {
+            const angle = 360 * vec3.angle(vec3.fromValues(1., 0., 0.), velocity) / (2 * Math.PI);
+            console.log(angle);
+          }
 
           animateBird(bird, bird.time);
 
           // change to newPosList and newVelList and uncomment paragraph undeneath to use same values for all birds in one step
+          vec3.set(position, position[0], position[1], 0.) // TEMPORARY 2D!!!!
           this.posList[index] = position;
           this.velList[index] = velocity;
 

@@ -7,9 +7,9 @@ import { deg_to_rad, mat4_to_string, vec_to_string, mat4_matmul_many } from "../
 export class TurntableCamera {
 
     constructor() {
-        this.angle_z = Math.PI * 0.2; // in radians!
-        this.angle_y = -Math.PI / 6; // in radians!
-        this.distance_factor = 1.;
+        this.angle_z = - Math.PI / 2.; // in radians!
+        this.angle_y = -Math.PI / 2; // in radians!
+        this.distance_factor = 2.;
         this.distance_base = 15.;
         this.look_at = [0, 0, 0];
         
@@ -82,8 +82,9 @@ export class TurntableCamera {
         // Construct mat_model_to_world from translation and scale.
         // If we wanted to have a rotation too, we could use mat4.fromRotationTranslationScale.
         const mat_model_to_world = mat4.create();
-        mat4.fromTranslation(mat_model_to_world, object.translation);
-        mat4.scale(mat_model_to_world, mat_model_to_world, object.scale);
+        mat4.fromRotationTranslationScale(mat_model_to_world, object.rotation, object.translation, object.scale);
+        // mat4.fromTranslation(mat_model_to_world, object.translation);
+        // mat4.scale(mat_model_to_world, mat_model_to_world, object.scale);
 
         const mat_model_view = mat4.create();
         const mat_model_view_projection = mat4.create();

@@ -140,6 +140,7 @@ export class ResourceManager{
     textures_to_load(){
         return [
             'kloppenheim_07_puresky_blur.jpg',
+            'testSkySphere.jpg',
             "misty_pines.jpg",
             'pine.png',
             'BirdImage.png',

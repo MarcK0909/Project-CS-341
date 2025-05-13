@@ -76,42 +76,58 @@ function containementForce(posList, index) {
     //    vec3.negate(force, vec3.normalize(force, posList[index]));
     // }
 
-    // 2 containement cylinders
+    // Centered in origin
     const x = posList[index][0];
     const y = posList[index][1];
     const horizontalDistSquared = x * x + y * y;
-    const outerRadius = Math.sqrt(2000);
+    const outerRadius = 100 * scale;
+    const midRadius = 60 * scale;
+    const innerRadius = 40 * scale;
 
     //first cylinder - second quadrant
-    const cyl1_radius = 10;
-    const cyl1_angle = 3 * (Math.PI/4);
-    const cyl1_x = outerRadius * Math.cos(cyl1_angle);
-    const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    // const cyl1_radius = 40 * scale;
+    // const cyl1_angle = 3 * (Math.PI/4);
+    // const cyl1_x = outerRadius * Math.cos(cyl1_angle);
+    // const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    const cyl1_radius = 220 * scale;
+    const cyl1_x = -200;
+    const cyl1_y = 200;
     const x_diff = x - cyl1_x;
     const y_diff = y -cyl1_y;
     const dist_cyl = x_diff * x_diff + y_diff * y_diff;
 
+    const cyl1b_radius = 80 * scale;
+    const cyl1b_x = -100;
+    const cyl1b_y = 100;
+    const x_diff1b = x - cyl1b_x;
+    const y_diff1b = y - cyl1b_y;
+    const dist_cyl1b = x_diff * x_diff + y_diff * y_diff;
+
     // Second cylinder - in fourth quadrant
-    const cyl2_radius = 8;
+    const cyl2_radius = 20 * scale;
     const cyl2_angle = 330 * (Math.PI/180); 
-    // const cyl2_x = 30; 
-    // const cyl2_y = -15;
-    const cyl2_x = 35 * Math.cos(cyl2_angle); 
-    const cyl2_y = -35 * Math.sin(cyl2_angle);
+    const cyl2_distFromOrigin = 100 * scale;
+    const cyl2_x = cyl2_distFromOrigin * Math.cos(cyl2_angle); 
+    const cyl2_y = cyl2_distFromOrigin * Math.sin(cyl2_angle);
     const x_diff2 = x - cyl2_x;
     const y_diff2 = y - cyl2_y;
     const dist_cyl2 = x_diff2 * x_diff2 + y_diff2 * y_diff2;
     
     // Third cylinder - in fourth quadrant
-    const cyl3_radius = 8;
-    const cyl3_angle = 305 * (Math.PI/180);
-    // const cyl3_x = 15;
-    // const cyl3_y = -30;
-    const cyl3_x = 20 * Math.cos(cyl3_angle);
-    const cyl3_y = -20 * Math.sin(cyl3_angle);
+    const cyl3_radius = 20 * scale;
+    const cyl3_angle = 295 * (Math.PI/180);
+    const cyl3_distFromOrigin = 60 * scale;
+    const cyl3_x = cyl3_distFromOrigin * Math.cos(cyl3_angle);
+    const cyl3_y = cyl3_distFromOrigin * Math.sin(cyl3_angle);
     const x_diff3 = x - cyl3_x;
     const y_diff3 = y - cyl3_y;
     const dist_cyl3 = x_diff3 * x_diff3 + y_diff3 * y_diff3;
+
+    let angle = Math.atan2(y, x);
+    if (angle < 0.) {
+        angle += 2 * Math.PI;
+    }
+    console.log(`ANGLE : ${angle / Math.PI * 180}`);
 
     // first cylinder
     if(angle >=  Math.PI/2 && angle <= Math.PI){
@@ -119,27 +135,34 @@ function containementForce(posList, index) {
             vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
             //vec3.scale(force,force,5.0);
         }
+        if(dist_cyl1b < cyl1b_radius * cyl1b_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff1b, y_diff1b , 0.));
+            //vec3.scale(force,force,5.0);
+        }
     }
     // second cylinder 
     if(angle >= (3 * Math.PI/2) && angle <= 2 * Math.PI){
         if(dist_cyl2 < cyl2_radius * cyl2_radius){
             vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
-            vec3.scale(force, force, 5.0);
+            // vec3.scale(force, force, 5.0);
+        }
+        if(dist_cyl3 < cyl3_radius * cyl3_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
         }
     }
     
     // third cylinder
-    if(angle >= (3 * Math.PI/2) && angle <= 2 * Math.PI){
-        if(dist_cyl3 < cyl3_radius * cyl3_radius){
-            vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
-            vec3.scale(force, force, 5.0);
-    }}
+    if(angle <= (Math.PI/2) || angle >= Math.PI){
+        if (horizontalDistSquared < midRadius * midRadius) {
+            vec3.normalize(force, vec3.fromValues(x, y, 0.));
+        }
+    }
 
-    if (horizontalDistSquared > 2000.) {
+    if (horizontalDistSquared > outerRadius * outerRadius) {
        vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
        console.log("out of bounds : TOO FAR");
     }
-    else if (horizontalDistSquared < 1600.  * scale * scale) {
+    else if (horizontalDistSquared < innerRadius * innerRadius) {
         vec3.normalize(force, vec3.fromValues(x, y, 0.));
         console.log("out of bounds : TOO CLOSE");
     }
