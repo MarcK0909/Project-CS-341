@@ -9,6 +9,9 @@ const minSpeed = 5. * scale;
 const avoidanceRadius = 15. * scale;
 const perceptionRadius = 80. * scale;
 
+
+// cohesion force angle 
+const forceAngle = 5 * Math.PI / 12;
 // placeholder
 const worldRadius = 90. * scale;
 
@@ -85,23 +88,23 @@ function containementForce(posList, index) {
     const innerRadius = 40 * scale;
 
     //first cylinder - second quadrant
-    // const cyl1_radius = 40 * scale;
-    // const cyl1_angle = 3 * (Math.PI/4);
-    // const cyl1_x = outerRadius * Math.cos(cyl1_angle);
-    // const cyl1_y = outerRadius * Math.sin(cyl1_angle);
-    const cyl1_radius = 220 * scale;
-    const cyl1_x = -200;
-    const cyl1_y = 200;
+    const cyl1_radius = 40 * scale;
+    const cyl1_angle = 3 * (Math.PI/4);
+    const cyl1_x = outerRadius * Math.cos(cyl1_angle);
+    const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    // const cyl1_radius = 220 * scale;
+    // const cyl1_x = -200;
+    // const cyl1_y = 200;
     const x_diff = x - cyl1_x;
     const y_diff = y -cyl1_y;
     const dist_cyl = x_diff * x_diff + y_diff * y_diff;
 
-    const cyl1b_radius = 80 * scale;
-    const cyl1b_x = -100;
-    const cyl1b_y = 100;
-    const x_diff1b = x - cyl1b_x;
-    const y_diff1b = y - cyl1b_y;
-    const dist_cyl1b = x_diff * x_diff + y_diff * y_diff;
+    // const cyl1b_radius = 80 * scale;
+    // const cyl1b_x = -100;
+    // const cyl1b_y = 100;
+    // const x_diff1b = x - cyl1b_x;
+    // const y_diff1b = y - cyl1b_y;
+    // const dist_cyl1b = x_diff * x_diff + y_diff * y_diff;
 
     // Second cylinder - in fourth quadrant
     const cyl2_radius = 20 * scale;
@@ -133,21 +136,25 @@ function containementForce(posList, index) {
     if(angle >=  Math.PI/2 && angle <= Math.PI){
         if(dist_cyl < cyl1_radius * cyl1_radius){
             vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
+            vec3.rotateZ(force, force, vec3.create(), - forceAngle);
             //vec3.scale(force,force,5.0);
         }
-        if(dist_cyl1b < cyl1b_radius * cyl1b_radius){
-            vec3.normalize(force, vec3.fromValues(x_diff1b, y_diff1b , 0.));
-            //vec3.scale(force,force,5.0);
-        }
+        // if(dist_cyl1b < cyl1b_radius * cyl1b_radius){
+        //     vec3.normalize(force, vec3.fromValues(x_diff1b, y_diff1b , 0.));
+        //     vec3.rotateZ(force, force, vec3.create(), - forceAngle);
+        //     //vec3.scale(force,force,5.0);
+        // }
     }
     // second cylinder 
     if(angle >= (3 * Math.PI/2) && angle <= 2 * Math.PI){
         if(dist_cyl2 < cyl2_radius * cyl2_radius){
             vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
+            vec3.rotateZ(force, force, vec3.create(), forceAngle)
             // vec3.scale(force, force, 5.0);
         }
         if(dist_cyl3 < cyl3_radius * cyl3_radius){
             vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
+            vec3.rotateZ(force, force, vec3.create(), - forceAngle)
         }
     }
     
@@ -155,15 +162,18 @@ function containementForce(posList, index) {
     if(angle <= (Math.PI/2) || angle >= Math.PI){
         if (horizontalDistSquared < midRadius * midRadius) {
             vec3.normalize(force, vec3.fromValues(x, y, 0.));
+            vec3.rotateZ(force, force, vec3.create(), forceAngle)
         }
     }
 
     if (horizontalDistSquared > outerRadius * outerRadius) {
        vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
+       vec3.rotateZ(force, force, vec3.create(), - forceAngle)
        console.log("out of bounds : TOO FAR");
     }
     else if (horizontalDistSquared < innerRadius * innerRadius) {
         vec3.normalize(force, vec3.fromValues(x, y, 0.));
+        vec3.rotateZ(force, force, vec3.create(), forceAngle)
         console.log("out of bounds : TOO CLOSE");
     }
 
