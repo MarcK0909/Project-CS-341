@@ -80,7 +80,62 @@ function containementForce(posList, index) {
     const x = posList[index][0];
     const y = posList[index][1];
     const horizontalDistSquared = x * x + y * y;
-    if (horizontalDistSquared > 10000. * scale * scale) {
+    const outerRadius = Math.sqrt(2000);
+
+    //first cylinder - second quadrant
+    const cyl1_radius = 10;
+    const cyl1_angle = 3 * (Math.PI/4);
+    const cyl1_x = outerRadius * Math.cos(cyl1_angle);
+    const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    const x_diff = x - cyl1_x;
+    const y_diff = y -cyl1_y;
+    const dist_cyl = x_diff * x_diff + y_diff * y_diff;
+
+    // Second cylinder - in fourth quadrant
+    const cyl2_radius = 8;
+    const cyl2_angle = 330 * (Math.PI/180); 
+    // const cyl2_x = 30; 
+    // const cyl2_y = -15;
+    const cyl2_x = 35 * Math.cos(cyl2_angle); 
+    const cyl2_y = -35 * Math.sin(cyl2_angle);
+    const x_diff2 = x - cyl2_x;
+    const y_diff2 = y - cyl2_y;
+    const dist_cyl2 = x_diff2 * x_diff2 + y_diff2 * y_diff2;
+    
+    // Third cylinder - in fourth quadrant
+    const cyl3_radius = 8;
+    const cyl3_angle = 305 * (Math.PI/180);
+    // const cyl3_x = 15;
+    // const cyl3_y = -30;
+    const cyl3_x = 20 * Math.cos(cyl3_angle);
+    const cyl3_y = -20 * Math.sin(cyl3_angle);
+    const x_diff3 = x - cyl3_x;
+    const y_diff3 = y - cyl3_y;
+    const dist_cyl3 = x_diff3 * x_diff3 + y_diff3 * y_diff3;
+
+    // first cylinder
+    if(angle >=  Math.PI/2 && angle <= Math.PI){
+        if(dist_cyl < cyl1_radius * cyl1_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
+            //vec3.scale(force,force,5.0);
+        }
+    }
+    // second cylinder 
+    if(angle >= (3 * Math.PI/2) && angle <= 2 * Math.PI){
+        if(dist_cyl2 < cyl2_radius * cyl2_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
+            vec3.scale(force, force, 5.0);
+        }
+    }
+    
+    // third cylinder
+    if(angle >= (3 * Math.PI/2) && angle <= 2 * Math.PI){
+        if(dist_cyl3 < cyl3_radius * cyl3_radius){
+            vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
+            vec3.scale(force, force, 5.0);
+    }}
+
+    if (horizontalDistSquared > 2000.) {
        vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
        console.log("out of bounds : TOO FAR");
     }
@@ -316,10 +371,10 @@ export function evolveBoid(dt, posList, velList, index) {
     vec3.scaleAndAdd(newVel, velList[index], newVel, dt);
 
     const norm = vec3.len(newVel);
-    if (norm < minSpeed * scale) {
+    if (norm < minSpeed) {
         vec3.normalize(newVel, newVel);
         vec3.scale(newVel, newVel, minSpeed);
-    } else if (norm > maxSpeed * scale) { 
+    } else if (norm > maxSpeed) { 
         vec3.normalize(newVel, newVel);
         vec3.scale(newVel, newVel, maxSpeed);       
     }
