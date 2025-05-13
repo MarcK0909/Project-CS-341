@@ -1,26 +1,26 @@
 import { vec3, mat3 } from "../../lib/gl-matrix_3.3.0/esm/index.js"
 import { fromValues } from "../../lib/gl-matrix_3.3.0/esm/mat2.js";
 
-const scale = 1.;
+const scale = 0.1;
 
-const maxSpeed = 20.;
-const minSpeed = 5.;
+const maxSpeed = 20. * scale;
+const minSpeed = 5. * scale;
 
-const avoidanceRadius = 12.;
-const perceptionRadius = 50.;
+const avoidanceRadius = 15. * scale;
+const perceptionRadius = 80. * scale;
 
 // placeholder
-const worldRadius = 90.;
+const worldRadius = 90. * scale;
 
-const avoidanceWeight = 20.;
-const cohesionWeight = 0.01;
-const alignementWeight = 0.27;
+const avoidanceWeight = 15.;
+const cohesionWeight = 0.002;
+const alignementWeight = 0.027;
 // const containementWeight = 10.;
 // const trajectoryWeight = 12.;
 // const avoidanceWeight = 0.;
 // const cohesionWeight = 0.;
 // const alignementWeight = 0.;
-const containementWeight = 30.;
+const containementWeight = 5.;
 const trajectoryWeight = 0.;
 
 function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
@@ -79,82 +79,97 @@ function containementForce(posList, index) {
     // 2 containement cylinders
     const x = posList[index][0];
     const y = posList[index][1];
-    const z = posList[index][2];
-    const angle = Math.atan2(y, x); 
     const horizontalDistSquared = x * x + y * y;
-    const outerRadius = Math.sqrt(2000);
-
-    //first cylinder - second quadrant
-    const cyl1_radius = 8;
-    const cyl1_angle = 130 * (180/Math.PI);
-    const cyl1_x = outerRadius * Math.cos(cyl1_angle);
-    const cyl1_y = outerRadius * Math.sin(cyl1_angle);
-    const x_diff = x - cyl1_x;
-    const y_diff = y -cyl1_y;
-    const dist_cyl = x_diff * x_diff + y_diff * y_diff;
-
-    // Second cylinder - in fourth quadrant
-    const cyl2_radius = 12;
-    const cyl2_angle = 330 * (Math.PI/180); 
-    const cyl2_x = 35 * Math.cos(cyl2_angle); 
-    const cyl2_y = 35 * Math.sin(cyl2_angle);
-    const x_diff2 = x - cyl2_x;
-    const y_diff2 = y - cyl2_y;
-    const dist_cyl2 = x_diff2 * x_diff2 + y_diff2 * y_diff2;
-    
-    // Third cylinder - in fourth quadrant
-    const cyl3_radius = 10;
-    const cyl3_angle = 305 * (Math.PI/180);
-    const cyl3_x = 20 * Math.cos(cyl3_angle);
-    const cyl3_y = 20 * Math.sin(cyl3_angle);
-    const x_diff3 = x - cyl3_x;
-    const y_diff3 = y - cyl3_y;
-    const dist_cyl3 = x_diff3 * x_diff3 + y_diff3 * y_diff3;
-
-    // first cylinder
-    if(angle >= (90 * Math.PI/180) && angle <= (180 * Math.PI/180)){
-        if(dist_cyl < cyl1_radius * cyl1_radius){
-        vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
-        }
-    }
-    // second cylinder 
-    if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
-        if(dist_cyl2 < cyl2_radius * cyl2_radius){
-            vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
-            vec3.scale(force, force, 6.0);
-        }
-    }
-    
-    // third cylinder
-    if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
-        if(dist_cyl3 < cyl3_radius * cyl3_radius){
-            vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
-            vec3.scale(force, force, 6.0);
-        
-    }}
-
-    if (horizontalDistSquared > 2000.) {
+    if (horizontalDistSquared > 10000. * scale * scale) {
        vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
+       console.log("out of bounds : TOO FAR");
     }
-    else if (horizontalDistSquared < 300.) {
+    else if (horizontalDistSquared < 1600.  * scale * scale) {
         vec3.normalize(force, vec3.fromValues(x, y, 0.));
-    }
-
-
-    if (z > 60.) {
-        vec3.set(force, 0., 0., -30.);
-    }
-    else if (z > 45.) {
-        vec3.set(force, force[0], force[1], -15.);
-    }
-    else if (z > 40.) {
-        vec3.set(force, force[0], force[1], -8.);
-    }
-    else if (z < 5.) {
-        vec3.set(force, force[0], force[1], 1.);
+        console.log("out of bounds : TOO CLOSE");
     }
 
     return force;
+
+    // // 2 containement cylinders
+    // const x = posList[index][0];
+    // const y = posList[index][1];
+    // const z = posList[index][2];
+    // const angle = Math.atan2(y, x); 
+    // const horizontalDistSquared = x * x + y * y;
+    // const outerRadius = Math.sqrt(2000);
+
+    // //first cylinder - second quadrant
+    // const cyl1_radius = 8;
+    // const cyl1_angle = 130 * (180/Math.PI);
+    // const cyl1_x = outerRadius * Math.cos(cyl1_angle);
+    // const cyl1_y = outerRadius * Math.sin(cyl1_angle);
+    // const x_diff = x - cyl1_x;
+    // const y_diff = y -cyl1_y;
+    // const dist_cyl = x_diff * x_diff + y_diff * y_diff;
+
+    // // Second cylinder - in fourth quadrant
+    // const cyl2_radius = 12;
+    // const cyl2_angle = 330 * (Math.PI/180); 
+    // const cyl2_x = 35 * Math.cos(cyl2_angle); 
+    // const cyl2_y = 35 * Math.sin(cyl2_angle);
+    // const x_diff2 = x - cyl2_x;
+    // const y_diff2 = y - cyl2_y;
+    // const dist_cyl2 = x_diff2 * x_diff2 + y_diff2 * y_diff2;
+    
+    // // Third cylinder - in fourth quadrant
+    // const cyl3_radius = 10;
+    // const cyl3_angle = 305 * (Math.PI/180);
+    // const cyl3_x = 20 * Math.cos(cyl3_angle);
+    // const cyl3_y = 20 * Math.sin(cyl3_angle);
+    // const x_diff3 = x - cyl3_x;
+    // const y_diff3 = y - cyl3_y;
+    // const dist_cyl3 = x_diff3 * x_diff3 + y_diff3 * y_diff3;
+
+    // // first cylinder
+    // if(angle >= (90 * Math.PI/180) && angle <= (180 * Math.PI/180)){
+    //     if(dist_cyl < cyl1_radius * cyl1_radius){
+    //     vec3.normalize(force, vec3.fromValues(x_diff, y_diff , 0.));
+    //     }
+    // }
+    // // second cylinder 
+    // if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
+    //     if(dist_cyl2 < cyl2_radius * cyl2_radius){
+    //         vec3.normalize(force, vec3.fromValues(x_diff2, y_diff2, 0.));
+    //         vec3.scale(force, force, 6.0);
+    //     }
+    // }
+    
+    // // third cylinder
+    // if(angle >= (270 * Math.PI/180) && angle <= (360 * Math.PI/180)){
+    //     if(dist_cyl3 < cyl3_radius * cyl3_radius){
+    //         vec3.normalize(force, vec3.fromValues(x_diff3, y_diff3, 0.));
+    //         vec3.scale(force, force, 6.0);
+        
+    // }}
+
+    // if (horizontalDistSquared > 2000.) {
+    //    vec3.normalize(force, vec3.fromValues(-x, -y, 0.));
+    // }
+    // else if (horizontalDistSquared < 300.) {
+    //     vec3.normalize(force, vec3.fromValues(x, y, 0.));
+    // }
+
+
+    // if (z > 60.) {
+    //     vec3.set(force, 0., 0., -30.);
+    // }
+    // else if (z > 45.) {
+    //     vec3.set(force, force[0], force[1], -15.);
+    // }
+    // else if (z > 40.) {
+    //     vec3.set(force, force[0], force[1], -8.);
+    // }
+    // else if (z < 5.) {
+    //     vec3.set(force, force[0], force[1], 1.);
+    // }
+
+    // return force;
 }
 
 // function trajectoryForce(posList, index){
@@ -285,10 +300,10 @@ export function evolveBoid(dt, posList, velList, index) {
     const containement = containementForce(posList, index);
     //const trajectory = trajectoryForce(posList, index); 
 
-    console.log(`avoidance: ${vec3.str(avoidance)}`);
-    console.log(`cohesion: ${vec3.str(cohesion)}`);
-    console.log(`alignement: ${vec3.str(alignement)}`);
-    console.log(`containement: ${vec3.str(containement)}`);
+    // console.log(`avoidance: ${vec3.str(avoidance)}`);
+    // console.log(`cohesion: ${vec3.str(cohesion)}`);
+    // console.log(`alignement: ${vec3.str(alignement)}`);
+    // console.log(`containement: ${vec3.str(containement)}`);
     // console.log(`trajectory: ${vec3.str(trajectory)}`);
 
     const newVel = vec3.create();
