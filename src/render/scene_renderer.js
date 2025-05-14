@@ -6,6 +6,7 @@ import { ShadowsShaderRenderer } from "./shader_renderers/shadows_sr.js"
 import { MapMixerShaderRenderer } from "./shader_renderers/map_mixer_sr.js"
 import { TerrainShaderRenderer } from "./shader_renderers/terrain_sr.js"
 import { PreprocessingShaderRenderer } from "./shader_renderers/pre_processing_sr.js"
+import { NormalRenderer } from "./shader_renderers/normal_sr.js"
 import { ResourceManager } from "../scene_resources/resource_manager.js"
 
 export class SceneRenderer {
@@ -27,6 +28,7 @@ export class SceneRenderer {
         this.flat_color = new FlatColorShaderRenderer(regl, resource_manager);
         this.blinn_phong = new BlinnPhongShaderRenderer(regl, resource_manager);
         this.terrain = new TerrainShaderRenderer(regl, resource_manager);
+        this.normal = new NormalRenderer(regl, resource_manager);
 
         this.mirror = new MirrorShaderRenderer(regl, resource_manager);
         this.shadows = new ShadowsShaderRenderer(regl, resource_manager);
@@ -119,14 +121,16 @@ export class SceneRenderer {
 
             // Render shaded objects
             this.blinn_phong.render(scene_state);
+            
+            this.normal.render(scene_state);
 
             // Render the reflection of mirror objects on top
-            this.mirror.render(scene_state, (s_s) => {
-                this.pre_processing.render(scene_state);
-                this.flat_color.render(s_s);
-                this.terrain.render(scene_state);
-                this.blinn_phong.render(s_s);
-            });
+            // this.mirror.render(scene_state, (s_s) => {
+            //     this.pre_processing.render(scene_state);
+            //     this.flat_color.render(s_s);
+            //     this.terrain.render(scene_state);
+            //     this.blinn_phong.render(s_s);
+            // });
         })
 
         /*---------------------------------------------------------------

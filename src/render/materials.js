@@ -100,6 +100,10 @@ export const test_sphere = new BackgroundMaterial({
     texture: 'testSkySphere.jpg'
 });
 
+export const normal_ground_forest = new TerrainMaterial({
+    texture: 'ground_normal.png'
+});
+
 export const gray = new DiffuseMaterial({
     color: [0.4, 0.4, 0.4],
     shininess: 0.5

@@ -144,6 +144,7 @@ export class ResourceManager{
             "misty_pines.jpg",
             'pine.png',
             'BirdImage.png',
+            'ground_normal.png',
           ];
     }
 
@@ -159,6 +160,7 @@ export class ResourceManager{
             'noise.vert.glsl', 'noise.frag.glsl',
             `buffer_to_screen.vert.glsl`, `buffer_to_screen.frag.glsl`,
             'terrain.vert.glsl', 'terrain.frag.glsl',
+            'normal.frag.glsl', 'normal.vert.glsl',
           ];
     }
 
@@ -199,6 +201,7 @@ export class ResourceManager{
         "BirdCoastEndOndrej0002.obj",
         "BirdCoastEndOndrej0003.obj",
         "BirdCoastEndOndrej0004.obj",
+        'floor.obj',
       ];
     }
 
