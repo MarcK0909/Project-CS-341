@@ -1,4 +1,4 @@
-import { texture_data, light_to_cam_view } from "../../cg_libraries/cg_render_utils.js"
+import { texture_data, light_to_cam_view, normal_data } from "../../cg_libraries/cg_render_utils.js"
 import { ResourceManager } from "../../scene_resources/resource_manager.js";
 import { ShaderRenderer } from "./shader_renderer.js"
 
@@ -44,6 +44,7 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
                 const mesh = this.resource_manager.get_mesh(obj.mesh_reference);
                 const {texture, is_textured} = texture_data(obj, this.resource_manager);
+                // const {normal_mapping, isNormal} = normal_data(obj, this.resource_manager);
                 
                 const { 
                     mat_model_view, 
@@ -64,6 +65,8 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
                     ambient_factor : ambient_factor,
 
+                    // normal_map: normal_mapping,
+                    // hasNormalMap: isNormal,
                     material_texture: texture,
                     is_textured: is_textured,
                     material_base_color: obj.material.color,

@@ -8,6 +8,8 @@ varying vec2 v2f_uv;
 // Global variables specified in "uniforms" entry of the pipeline
 uniform sampler2D material_texture;
 uniform bool is_textured;
+// uniform bool hasNormalMap;
+// uniform sampler2D normal_map;
 uniform vec3 material_base_color;
 uniform float material_shininess;
 uniform vec3 light_color;
@@ -21,6 +23,11 @@ void main()
         vec4 frag_color_from_texture = texture2D(material_texture, v2f_uv);
         material_color = frag_color_from_texture.xyz;
     }
+
+    // if(hasNormalMap){
+    //     vec4 frag_displacement_from_normal = texture2D(normal_map, v2f_uv);
+
+    // }
 
 	float material_ambient = 0.6;
 
