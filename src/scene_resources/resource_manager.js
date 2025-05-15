@@ -38,7 +38,7 @@ export class ResourceManager{
           resource_promises[texture_name] = load_texture(
                 regl,
                 `${path_to_textures_folder}/${texture_name}`,
-                texture_name.includes("BirdImage") ? { flipY: true } : {}
+                (texture_name.includes("BirdImage") || texture_name.includes("map")) ? { flipY: true } : {}
             );
         }
         // load shaders
@@ -145,6 +145,7 @@ export class ResourceManager{
             'pine.png',
             'BirdImage.png',
             'ground_normal.png',
+            'map.png',
           ];
     }
 
@@ -166,6 +167,7 @@ export class ResourceManager{
 
     meshes_to_load() {
         return [
+        'square.obj',
         "Tree.obj",
         "pine.obj",
         "birdTest1.obj",

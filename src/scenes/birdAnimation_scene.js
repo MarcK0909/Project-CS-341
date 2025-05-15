@@ -52,23 +52,23 @@ export class BirdAnimation extends Scene {
     });
 
 
-    for (let h = 0; h < 2; h++) {
-      for (let i = 0; i < 4; i++) {
-        const position = [this.scale * (10.0 * i + 65.), this.scale* (15.0 * h - 10.), this.scale * (0.0)];
+    for (let h = 0; h < 4; h++) {
+      for (let i = 0; i < 9; i++) {
+        const position = [this.scale * (3.0 * i + 71.), this.scale* (5.0 * h - 5.), this.scale * (0.0)];
         const velocity = vec3.fromValues(0., 18. * this.scale, 0.);
         let bird_material = MATERIALS.black;
 
         const actorBird = {
           translation : position,
           rotation : quat.rotationTo(quat.create(), vec3.fromValues(0., 1., 0.), velocity),
-          scale: [1. * this.scale, 1. * this.scale, 1. * this.scale],
+          scale: [0.3 * this.scale, 0.3 * this.scale, 0.3 * this.scale],
           mesh_reference : "BirdAnimationOndrej0005.obj",
           material : bird_material,
           time : Math.random() * 2.
         };
   
         this.objects.push(actorBird);
-        this.actors[`bird${h * 4 + i}`] = actorBird;
+        this.actors[`bird${h * 9 + i + 100}`] = actorBird;
         this.posList.push(vec3.fromValues(position[0], position[1], position[2]));
         this.velList.push(velocity);
         this.evolvedList.push(false);
@@ -90,7 +90,21 @@ export class BirdAnimation extends Scene {
     //   mesh_reference : "Bird1.obj",
     //   material : MATERIALS.gold
     // });
+    this.objects.push({
+      translation : [0.65, 0.78, 0.0],
+      rotation : quat.fromEuler(quat.create(), 0, 0, 90),
+      scale: [12.5, 13, 13.],
+      mesh_reference : "square.obj",
+      material : MATERIALS.map_material
+    });
 
+    //  this.objects.push({
+    //   translation : [0.0, 0.0, 0.0],
+    //   rotation : quat.fromEuler(quat.create(), 0, 0, 0),
+    //   scale: [5.1, 5.1, 5.1],
+    //   mesh_reference : "skySphere",
+    //   material : MATERIALS.gold
+    // });
 
     this.objects.push({
       translation : [0.0, 0.0, 0.0],
@@ -122,7 +136,7 @@ export class BirdAnimation extends Scene {
         const bird = this.actors[name];
         bird.evolve = (dt) => {
           bird.time += dt;
-          const index = Number(name.charAt(4)); // relies on naming convention !!!!
+          const index = Number(name.substring(4, 7)) - 100; // relies on naming convention MAX bird count = 100 !!!!
     
           
           //console.log(`evolving: ${index}`);

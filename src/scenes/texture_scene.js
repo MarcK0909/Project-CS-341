@@ -13,7 +13,7 @@ import { Scene } from "./scene.js";
 import { ResourceManager } from "../scene_resources/resource_manager.js";
 
 import { evolveBoid } from "../scene_resources/boids.js";
-import { vec3 } from "../../lib/gl-matrix_3.3.0/esm/index.js";
+import { vec3, quat } from "../../lib/gl-matrix_3.3.0/esm/index.js";
 
 export class TextureScene extends Scene {
 
@@ -55,6 +55,7 @@ export class TextureScene extends Scene {
   
         const actorBird = {
           translation : position,
+          rotation : quat.fromEuler(quat.create(), 0, 0, 0),
           scale: [1., 1., 1.],
           mesh_reference : "BirdAnimationOndrej0005.obj",
           material : MATERIALS.black,
@@ -73,6 +74,7 @@ export class TextureScene extends Scene {
     
     this.objects.push({
       translation : [0.0, 0.0, -10.0],
+      rotation : quat.fromEuler(quat.create(), 0, 0, 0),
       scale: [75., 75., 1.],
       mesh_reference : "floor.obj",
       material : MATERIALS.gray

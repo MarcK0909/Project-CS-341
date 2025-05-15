@@ -28,6 +28,14 @@ class Material {
 
 }
 
+class TexturedObjectMaterial extends Material {
+    constructor({texture = default_texture}){
+        super()
+        this.texture = texture;
+        this.properties.push("environment");
+    }
+}
+
 class BackgroundMaterial extends Material {
 
     constructor({texture = default_texture}){
@@ -98,6 +106,10 @@ export const misty_forrest = new BackgroundMaterial({
 
 export const test_sphere = new BackgroundMaterial({
     texture: 'testSkySphere.jpg'
+});
+
+export const map_material = new TexturedObjectMaterial({
+    texture: 'map.png'
 });
 
 export const normal_ground_forest = new TerrainMaterial({

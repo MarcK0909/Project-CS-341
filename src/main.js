@@ -17,6 +17,7 @@ import { ResourceManager } from "./scene_resources/resource_manager.js"
 import { ProceduralTextureGenerator } from "./render/procedural_texture_generator.js";
 
 // Scenes
+import { TextureScene } from "./scenes/texture_scene.js";
 import { BirdAnimation } from "./scenes/birdAnimation_scene.js";
 import { TutorialScene } from "./scenes/tutorial_scene.js";
 import { DemoScene } from "./scenes/demo_scene.js";
@@ -113,6 +114,7 @@ async function main() {
   const tutorial_scene = new TutorialScene(resource_manager);
   const birdAnimation_scene = new BirdAnimation(resource_manager);
   const trajectoryScene = new BirdTrajectory(resource_manager);
+  const textureScene = new TextureScene(resource_manager);
 
   const active_scene = birdAnimation_scene;   // Assign the scene to be rendered to active_scene
   
@@ -147,7 +149,7 @@ async function main() {
     prev_regl_time = frame.time;
 
     // If the time is not paused, iterate over all actors and call their evolve function
-    if (!ui_global_params.is_paused){
+    if (!ui_global_params.is_paused && frame.time > 3){
       for (const name in active_scene.actors){
         active_scene.actors[name].evolve(dt);
       }
