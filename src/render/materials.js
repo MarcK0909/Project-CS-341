@@ -54,6 +54,7 @@ class DiffuseMaterial extends Material {
         shininess = default_shininess
     }){
         super()
+        this.properties.push("no_normals");
         this.texture = texture;
         this.color = color;
         this.shininess = shininess;
@@ -132,8 +133,8 @@ export const black = new DiffuseMaterial({
 });
 
 export const pine = new DiffuseMaterial({
-    texture: 'pine.png',
-    shininess: 0.5
+    color: [0.1, 0.3, 0.1],     // Primary color is green needles
+    shininess: 8.0
 });
 
 export const terrain = new TerrainMaterial({
