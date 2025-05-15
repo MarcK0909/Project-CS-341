@@ -1,3 +1,4 @@
+import { mat3 } from "../../../lib/gl-matrix_3.3.0/esm/index.js";
 import { texture_data, light_to_cam_view, normal_data } from "../../cg_libraries/cg_render_utils.js"
 import { ResourceManager } from "../../scene_resources/resource_manager.js";
 import { ShaderRenderer } from "./shader_renderer.js"
@@ -44,8 +45,8 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
                 const mesh = this.resource_manager.get_mesh(obj.mesh_reference);
                 const {texture, is_textured} = texture_data(obj, this.resource_manager);
-                // const {normal_mapping, isNormal} = normal_data(obj, this.resource_manager);
-                
+                const {normal_mapping, isNormal} = normal_data(obj, this.resource_manager);
+
                 const { 
                     mat_model_view, 
                     mat_model_view_projection, 
@@ -65,8 +66,8 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
                     ambient_factor : ambient_factor,
 
-                    // normal_map: normal_mapping,
-                    // hasNormalMap: isNormal,
+                    normal_map: normal_mapping,
+                    hasNormalMap: isNormal,
                     material_texture: texture,
                     is_textured: is_textured,
                     material_base_color: obj.material.color,
@@ -124,7 +125,10 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
             material_texture: regl.prop('material_texture'),
             is_textured: regl.prop('is_textured'),
             material_base_color: regl.prop('material_base_color'),
-            material_shininess: regl.prop('material_shininess')
+            material_shininess: regl.prop('material_shininess'),
+
+            normal_map: regl.prop('normal_map'),
+            hasNormalMap: regl.prop('hasNormalMap')
         };
     }
 }

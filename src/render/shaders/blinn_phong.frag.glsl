@@ -4,12 +4,14 @@ precision mediump float;
 varying vec3 v2f_frag_pos;
 varying vec3 v2f_normal;
 varying vec2 v2f_uv;
+varying vec3 v2f_bitangent;
+varying vec3 v2f_tangent;
 
 // Global variables specified in "uniforms" entry of the pipeline
+uniform sampler2D normal_map;
+uniform bool hasNormalMap;
 uniform sampler2D material_texture;
 uniform bool is_textured;
-// uniform bool hasNormalMap;
-// uniform sampler2D normal_map;
 uniform vec3 material_base_color;
 uniform float material_shininess;
 uniform vec3 light_color;
@@ -23,11 +25,13 @@ void main()
         vec4 frag_color_from_texture = texture2D(material_texture, v2f_uv);
         material_color = frag_color_from_texture.xyz;
     }
-
-    // if(hasNormalMap){
-    //     vec4 frag_displacement_from_normal = texture2D(normal_map, v2f_uv);
-
-    // }
+    vec3 normal_displacement = vec3(0,0,1);
+    if(hasNormalMap){
+        vec4 frag_displacement_from_normal = texture2D(normal_map, v2f_uv);
+        normal_displacement = 2.0 * frag_displacement_from_normal.xyz - vec3(1,1,1);
+        
+    }
+    
 
 	float material_ambient = 0.6;
 
@@ -36,6 +40,11 @@ void main()
     vec3 l = normalize(light_position - v2f_frag_pos);
     vec3 n = normalize(v2f_normal);
 	vec3 h = normalize(l + v);
+
+    vec3 b = normalize(v2f_bitangent);
+    vec3 t = normalize(v2f_tangent);
+    
+    n = normalize(normal_displacement.x * t + normal_displacement.y * b + normal_displacement.z * n);
 
     float h_dot_n = clamp(dot(h, n), 1e-12, 1.);
 

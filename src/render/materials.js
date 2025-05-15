@@ -1,4 +1,4 @@
-import { normalFromMat4 } from "../../lib/gl-matrix_3.3.0/esm/mat3";
+// import { normalFromMat4 } from "../../lib/gl-matrix_3.3.0/esm/mat3";
 
 const default_texture = null; 
 const default_base_color = [1.0, 0.0, 1.0];  // magenta, used when no texture is provided
@@ -39,14 +39,14 @@ class BackgroundMaterial extends Material {
     }
 }
 
-// class NormalTexturedMaterial extends Material {
-//     constructor({texture = default_texture, normal_map = default_texture}){
-//         super();
-//         this.properties.push("normal_mapping");
-//         this.texture = texture;
-//         this.normal_map = normal_map;
-//     }
-// }
+class NormalTexturedMaterial extends Material {
+    constructor({texture = default_texture, normal_map = default_texture}){
+        super();
+        this.properties.push("normal_mapping");
+        this.texture = texture;
+        this.normal_map = normal_map;
+    }
+}
 
 class DiffuseMaterial extends Material {
 
@@ -111,9 +111,14 @@ export const test_sphere = new BackgroundMaterial({
     texture: 'testSkySphere.jpg'
 });
 
-export const normal_ground_forest = new TerrainMaterial({
-    texture: 'ground_normal.png'
+export const normal_ground_forest = new NormalTexturedMaterial({
+    normal_map: 'ground_normal.png',
+    texture: 'ground.jpg'
 });
+export const ground2 = new NormalTexturedMaterial({
+    normal_map: 'ground2_normal.png',
+    texture: 'ground2.jpg'
+})
 
 export const gray = new DiffuseMaterial({
     color: [0.4, 0.4, 0.4],
