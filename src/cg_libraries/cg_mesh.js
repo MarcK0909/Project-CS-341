@@ -98,6 +98,18 @@ export function cg_mesh_make_plane(){
 		[0, 0, 1],
 		[0, 0, 1],
 		],
+		vertex_bitangent: [
+		[1, 0, 0],
+		[1, 0, 0],
+		[1, 0, 0],
+		[1, 0, 0],
+		],
+		vertex_tangent: [
+		[0, 1, 0],
+		[0, 1, 0],
+		[0, 1, 0],
+		[0, 1, 0],
+		],
 		vertex_tex_coords: [
 		[0, 0], //top left
 		[1, 0],
@@ -119,7 +131,10 @@ export function cg_mesh_make_plane(){
  */
 export async function cg_mesh_load_obj(url, material_colors_by_name) {
 	const obj_data = await load_text(url);
-	const mesh_loaded_obj = new Mesh(obj_data);
+	const mesh_loaded_obj = new Mesh(obj_data, {
+        calcTangentsAndBitangents: true
+    });	
+	console.log(mesh_loaded_obj.bitangents);
 
 	const faces_from_materials = [].concat(...mesh_loaded_obj.indicesPerMaterial);
 	
@@ -144,6 +159,8 @@ export async function cg_mesh_load_obj(url, material_colors_by_name) {
 		vertex_positions: mesh_loaded_obj.vertices,
 		vertex_tex_coords: mesh_loaded_obj.textures,
 		vertex_normals: mesh_loaded_obj.vertexNormals,
+		vertex_bitangent: mesh_loaded_obj.bitangents,
+		vertex_tangent: mesh_loaded_obj.tangents,
 		vertex_colors: vertex_colors,
 		
 		// https://github.com/regl-project/regl/blob/master/API.md#elements
@@ -171,7 +188,7 @@ export function mesh_upload_to_buffer(regl, mesh) {
 
 	
 	// Some of these fields may be null or undefined
-	for(const name of ['vertex_positions', 'vertex_normals', 'vertex_tex_coords', 'vertex_colors']) {
+	for(const name of ['vertex_positions', 'vertex_normals', 'vertex_tex_coords', 'vertex_colors', 'vertex_tangent', 'vertex_bitangent']) {
 		const vertex_data = mesh[name];
 		if(vertex_data) {
 			mesh_buffers[name] = regl.buffer(vertex_data);

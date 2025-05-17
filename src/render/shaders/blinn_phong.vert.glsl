@@ -2,11 +2,16 @@
 attribute vec3 vertex_positions;
 attribute vec3 vertex_normal;
 attribute vec2 vertex_tex_coords; // optional
+attribute vec3 vertex_tangent;
+attribute vec3 vertex_bitangent;
 
 // Varying values passed to fragment shader
 varying vec2 v2f_uv;
 varying vec3 v2f_frag_pos;
 varying vec3 v2f_normal;
+varying vec3 v2f_bitangent;
+varying vec3 v2f_tangent;
+
 
 // Global variables specified in "uniforms" entry of the pipeline
 uniform mat4 mat_model_view;
@@ -25,6 +30,8 @@ void main() {
 
 	// normals in camera view
 	v2f_normal = normalize(mat_normals_model_view * vertex_normal);
+	v2f_bitangent = normalize(mat_normals_model_view * vertex_bitangent);
+	v2f_tangent = normalize(mat_normals_model_view * vertex_tangent);
 
 	// vertex position on canvas
 	gl_Position = mat_model_view_projection * vec4(vertex_positions, 1);

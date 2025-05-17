@@ -56,8 +56,7 @@ export class NormalRenderer extends ShaderRenderer {
     exclude_object(obj){
         // Do not visualize normals for objects with these properties
         return obj.material.properties.includes('environment') || 
-               obj.material.properties.includes('no_normals') ||
-               obj.mesh_reference.includes('Bird');
+               obj.material.properties.includes('no_normals');
     }
 
     depth(){

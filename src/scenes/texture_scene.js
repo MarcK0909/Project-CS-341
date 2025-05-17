@@ -13,7 +13,7 @@ import { Scene } from "./scene.js";
 import { ResourceManager } from "../scene_resources/resource_manager.js";
 
 import { evolveBoid } from "../scene_resources/boids.js";
-import { vec3, quat } from "../../lib/gl-matrix_3.3.0/esm/index.js";
+import { mat4, quat, vec3 } from "../../lib/gl-matrix_3.3.0/esm/index.js";
 
 export class TextureScene extends Scene {
 
@@ -55,8 +55,8 @@ export class TextureScene extends Scene {
   
         const actorBird = {
           translation : position,
-          rotation : quat.fromEuler(quat.create(), 0, 0, 0),
           scale: [1., 1., 1.],
+          rotation : quat.fromEuler(quat.create(), 0, 0, 0),
           mesh_reference : "BirdAnimationOndrej0005.obj",
           material : MATERIALS.black,
           time : Math.random() * 2.
@@ -72,12 +72,14 @@ export class TextureScene extends Scene {
     }
 
     
+    this.resource_manager.add_procedural_mesh("floor", cg_mesh_make_plane());
+    // this.resource_manager.add_procedural_mesh("spehe", );
     this.objects.push({
       translation : [0.0, 0.0, -10.0],
+      scale: [30., 30., 30.],
       rotation : quat.fromEuler(quat.create(), 0, 0, 0),
-      scale: [75., 75., 1.],
-      mesh_reference : "floor.obj",
-      material : MATERIALS.gray
+      mesh_reference : "floor",
+      material : MATERIALS.ground2
     });
 
   }

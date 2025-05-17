@@ -39,4 +39,18 @@ export function texture_data(obj, resource_manager){
     return {texture, is_textured}
 }
 
+export function normal_data(obj, resource_manager){
+
+    if(!obj.material.normal_map){
+        let normal_mapping = resource_manager.get_texture("pine.png");
+        let isNormal = false;
+        return {normal_mapping, isNormal};
+    }
+
+    let normal_mapping = resource_manager.get_texture(obj.material.normal_map);
+    let isNormal = true;
+    
+    return {normal_mapping, isNormal};
+}
+
 

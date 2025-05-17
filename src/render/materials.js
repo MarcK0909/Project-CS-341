@@ -1,3 +1,4 @@
+// import { normalFromMat4 } from "../../lib/gl-matrix_3.3.0/esm/mat3";
 
 const default_texture = null; 
 const default_base_color = [1.0, 0.0, 1.0];  // magenta, used when no texture is provided
@@ -28,14 +29,6 @@ class Material {
 
 }
 
-class TexturedObjectMaterial extends Material {
-    constructor({texture = default_texture}){
-        super()
-        this.texture = texture;
-        this.properties.push("environment");
-    }
-}
-
 class BackgroundMaterial extends Material {
 
     constructor({texture = default_texture}){
@@ -43,6 +36,15 @@ class BackgroundMaterial extends Material {
         this.texture = texture;
         this.properties.push("environment");
         this.properties.push("no_blinn_phong");
+    }
+}
+
+class NormalTexturedMaterial extends Material {
+    constructor({texture = default_texture, normal_map = default_texture}){
+        super();
+        this.properties.push("normal_mapping");
+        this.texture = texture;
+        this.normal_map = normal_map;
     }
 }
 
@@ -109,13 +111,14 @@ export const test_sphere = new BackgroundMaterial({
     texture: 'testSkySphere.jpg'
 });
 
-export const map_material = new TexturedObjectMaterial({
-    texture: 'map.png'
+export const normal_ground_forest = new NormalTexturedMaterial({
+    normal_map: 'ground_normal.png',
+    texture: 'ground.jpg'
 });
-
-export const normal_ground_forest = new TerrainMaterial({
-    texture: 'ground_normal.png'
-});
+export const ground2 = new NormalTexturedMaterial({
+    normal_map: 'ground2_normal.png',
+    texture: 'ground2.jpg'
+})
 
 export const gray = new DiffuseMaterial({
     color: [0.4, 0.4, 0.4],
@@ -133,8 +136,8 @@ export const black = new DiffuseMaterial({
 });
 
 export const pine = new DiffuseMaterial({
-    color: [0.1, 0.3, 0.1],     // Primary color is green needles
-    shininess: 8.0
+    texture: 'pine.png',
+    shininess: 0.5
 });
 
 export const terrain = new TerrainMaterial({
@@ -142,5 +145,8 @@ export const terrain = new TerrainMaterial({
     grass_color: [0.33, 0.43, 0.18],
     peak_color: [0.8, 0.5, 0.4]
 });
+export const ground = new BackgroundMaterial({
+    texture: 'ground.jpg'
+})
 
 export const mirror = new ReflectiveMaterial({})
