@@ -116,7 +116,7 @@ async function main() {
   const trajectoryScene = new BirdTrajectory(resource_manager);
   const textureScene = new TextureScene(resource_manager);
 
-  const active_scene = birdAnimation_scene;   // Assign the scene to be rendered to active_scene
+  const active_scene = textureScene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation
