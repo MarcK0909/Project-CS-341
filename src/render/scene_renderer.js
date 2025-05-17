@@ -28,7 +28,6 @@ export class SceneRenderer {
         this.flat_color = new FlatColorShaderRenderer(regl, resource_manager);
         this.blinn_phong = new BlinnPhongShaderRenderer(regl, resource_manager);
         this.terrain = new TerrainShaderRenderer(regl, resource_manager);
-        this.normal = new NormalRenderer(regl, resource_manager);
 
         this.mirror = new MirrorShaderRenderer(regl, resource_manager);
         this.shadows = new ShadowsShaderRenderer(regl, resource_manager);
@@ -122,8 +121,6 @@ export class SceneRenderer {
             // Render shaded objects
             this.blinn_phong.render(scene_state);
             
-            this.normal.render(scene_state);
-
             // Render the reflection of mirror objects on top
             // this.mirror.render(scene_state, (s_s) => {
             //     this.pre_processing.render(scene_state);

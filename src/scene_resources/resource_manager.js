@@ -146,6 +146,10 @@ export class ResourceManager{
             'BirdImage.png',
             'ground_normal.png',
             'map.png',
+            'ground.jpg',
+            'ground_normal.png',
+            'ground2.jpg',
+            'ground2_normal.png'
           ];
     }
 
