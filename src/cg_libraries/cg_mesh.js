@@ -134,7 +134,6 @@ export async function cg_mesh_load_obj(url, material_colors_by_name) {
 	const mesh_loaded_obj = new Mesh(obj_data, {
         calcTangentsAndBitangents: true
     });	
-	console.log(mesh_loaded_obj.bitangents);
 
 	const faces_from_materials = [].concat(...mesh_loaded_obj.indicesPerMaterial);
 	

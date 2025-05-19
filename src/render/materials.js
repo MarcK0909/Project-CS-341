@@ -38,6 +38,13 @@ class BackgroundMaterial extends Material {
         this.properties.push("no_blinn_phong");
     }
 }
+class TexturedObjectMaterial extends Material {
+    constructor({texture = default_texture}){
+        super()
+        this.texture = texture;
+        this.properties.push("environment");
+    }
+}
 
 class NormalTexturedMaterial extends Material {
     constructor({texture = default_texture, normal_map = default_texture}){
@@ -101,6 +108,9 @@ class TerrainMaterial extends Material {
  */
 export const sunset_sky = new BackgroundMaterial({
     texture: 'kloppenheim_07_puresky_blur.jpg'
+});
+export const map_material = new TexturedObjectMaterial({
+    texture: 'map.png'
 });
 
 export const misty_forrest = new BackgroundMaterial({

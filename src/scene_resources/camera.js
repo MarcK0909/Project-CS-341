@@ -1,5 +1,6 @@
 import { vec2, vec3, vec4, mat3, mat4 } from "../../lib/gl-matrix_3.3.0/esm/index.js"
 import { deg_to_rad, mat4_to_string, vec_to_string, mat4_matmul_many } from "../cg_libraries/cg_math.js"
+import * as bezier from "./bezier.js"
 
 /**
  * Create a new turntable camera
@@ -185,5 +186,200 @@ export class TurntableCamera {
         this.look_at[2] += up[2] * movementY * scaleFactor;
 
         this.update_cam_transform();
+    }
+}
+
+export class BezierCamera {
+    constructor() {
+        this.time = 0;
+        this.time_factor = 1.0; // Controls animation speed
+        this.debug = false;     // Enable logging for debugging
+        
+        this.position = vec3.create();
+        this.direction = vec3.create();
+        this.shutter = 1.0;     // Shutter value for transitions
+        
+        this.mat = {
+            projection: mat4.create(),
+            view: mat4.create()
+        };
+        
+        // Default camera settings
+        this.update_format_ratio(100, 100);
+        this.update_cam_transform();
+    }
+    
+    /**
+     * Recompute the camera perspective matrix based on the new ratio
+     * @param {number} width The width of the canvas
+     * @param {number} height The height of the canvas
+     */
+    update_format_ratio(width, height) {
+        mat4.perspective(this.mat.projection,
+            deg_to_rad * 60, // fov y
+            width / height,  // aspect ratio
+            0.01,           // near
+            512,            // far
+        );
+    }
+    
+    /**
+     * Update camera time for animations
+     * @param {number} deltaTime Time elapsed since last frame in seconds
+     */
+    update_time(deltaTime) {
+        // Cap delta time to avoid large jumps when tab is inactive
+        const clampedDelta = Math.min(deltaTime, 0.1);
+        
+        if (this.debug) {
+            console.log(`Time update: ${this.time.toFixed(2)} → ${(this.time + clampedDelta * this.time_factor).toFixed(2)} (Δ=${clampedDelta.toFixed(4)}s)`);
+        }
+        
+        this.time += clampedDelta * this.time_factor; //only needed if time factor > 1
+        this.update_cam_transform();
+    }
+    
+    /**
+     * Reset animation time to beginning
+     */
+    reset_time() {
+        this.time = 0;
+        this.update_cam_transform();
+    }
+    
+    /**
+     * Set time directly
+     * @param {number} time New time value
+     */
+    set_time(time) {
+        this.time = time;
+        this.update_cam_transform();
+    }
+    
+    /**
+     * Set time factor to control animation speed
+     * @param {number} factor Speed factor (1.0 = normal speed)
+     */
+    set_time_factor(factor) {
+        this.time_factor = factor;
+    }
+    
+    /**
+     * Enable or disable debugging
+     * @param {boolean} enabled Whether to enable debug output
+     */
+    set_debug(enabled) {
+        this.debug = enabled;
+    }
+    
+    /**
+     * Recompute the view matrix (mat.view) using Bezier paths
+     */
+    update_cam_transform() {
+        // Create UV coordinates (centered)
+        const uv = [0.0, 0.0];
+        
+        // const { ro, rd, shutter } = bezier.simpleCircleCam(uv, this.time);
+        
+        const { ro, rd, shutter } = bezier.animateCam(uv, this.time);
+        
+        // Store values for later use
+        vec3.copy(this.position, ro);
+        vec3.copy(this.direction, rd);
+        this.shutter = shutter;
+        
+        if (this.debug) {
+            console.log(`Camera pos: [${this.position[0].toFixed(2)}, ${this.position[1].toFixed(2)}, ${this.position[2].toFixed(2)}]`);
+        }
+        
+        // Calculate look-at point
+        const lookAt = vec3.create();
+        vec3.add(lookAt, this.position, this.direction);
+        
+        // Create view matrix
+        mat4.lookAt(
+            this.mat.view,
+            this.position,
+            lookAt,
+            vec3.fromValues(0,0,1)
+        );
+    }
+    
+    /**
+     * Compute all the objects transformation matrices
+     * @param {Array} scene_objects Objects in the scene
+     */
+    compute_objects_transformation_matrices(scene_objects) {
+        this.object_matrices = new Map();
+        
+        // Compute and store the objects matrices
+        for (const obj of scene_objects) {
+            const transformation_matrices = this.compute_transformation_matrices(obj);
+            this.object_matrices.set(obj, transformation_matrices);
+        }
+    }
+    
+    /**
+     * Compute the transformation matrices for an object
+     * @param {Object} object The scene object
+     * @returns {Object} Transformation matrices
+     */
+    compute_transformation_matrices(object) {
+        const mat_projection = this.mat.projection;
+        const mat_view = this.mat.view;
+        
+        // Create model-to-world matrix
+        const mat_model_to_world = mat4.create();
+        mat4.fromRotationTranslationScale(
+            mat_model_to_world,
+            object.rotation,
+            object.translation,
+            object.scale
+        );
+        
+        // Create derived matrices
+        const mat_model_view = mat4.create();
+        const mat_model_view_projection = mat4.create();
+        const mat_normals_model_view = mat3.create();
+        
+        // Calculate matrices
+        mat4_matmul_many(mat_model_view, mat_view, mat_model_to_world);
+        mat4_matmul_many(mat_model_view_projection, mat_projection, mat_model_view);
+        
+        // Normal matrix is the transpose of the inverse of model_view's upper-left 3x3
+        mat3.fromMat4(mat_normals_model_view, mat_model_view);
+        mat3.invert(mat_normals_model_view, mat_normals_model_view);
+        mat3.transpose(mat_normals_model_view, mat_normals_model_view);
+        
+        return { mat_model_view, mat_model_view_projection, mat_normals_model_view };
+    }
+    
+    /**
+     * Get current camera position
+     * @returns {vec3} Camera position
+     */
+    get_position() {
+        return this.position;
+    }
+    
+    /**
+     * Get current camera direction
+     * @returns {vec3} Camera direction
+     */
+    get_direction() {
+        return this.direction;
+    }
+    
+    /**
+     * Log current camera state to console
+     */
+    log_current_state() {
+        console.log(
+            "BezierCamera State:",
+            "\ntime:", this.time,
+            "\nposition:", vec3.str(this.position),
+            "\ndirection:", vec3.str(this.direction),
+            "\nshutter:", this.shutter
+        );
     }
 }

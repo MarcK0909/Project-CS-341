@@ -1,14 +1,8 @@
 
-import { TurntableCamera } from "../scene_resources/camera.js"
+import { BezierCamera } from "../scene_resources/camera.js"
 import * as MATERIALS from "../render/materials.js"
-import { cg_mesh_make_plane, cg_mesh_make_uv_sphere } from "../cg_libraries/cg_mesh.js"
-import { load_image, load_text, load_texture } from "../cg_libraries/cg_web.js"
+import { cg_mesh_make_plane } from "../cg_libraries/cg_mesh.js"
 
-import { 
-  create_slider, 
-  create_button_with_hotkey, 
-  create_hotkey_action 
-} from "../cg_libraries/cg_web.js";
 import { Scene } from "./scene.js";
 import { ResourceManager } from "../scene_resources/resource_manager.js";
 
@@ -25,6 +19,7 @@ export class TextureScene extends Scene {
     super();
     
     this.resource_manager = resource_manager;
+    this.camera = new BezierCamera();
 
     // Boids
     this.posList = [];
