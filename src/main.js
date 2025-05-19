@@ -116,7 +116,7 @@ async function main() {
   const trajectoryScene = new BirdTrajectory(resource_manager);
   const textureScene = new TextureScene(resource_manager);
 
-  const active_scene = textureScene;   // Assign the scene to be rendered to active_scene
+  const active_scene = birdAnimation_scene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation
@@ -149,7 +149,7 @@ async function main() {
     prev_regl_time = frame.time;
 
     // If the time is not paused, iterate over all actors and call their evolve function
-    if (!ui_global_params.is_paused && frame.time > 3){
+    if (!ui_global_params.is_paused && frame.time > 15){
       for (const name in active_scene.actors){
         active_scene.actors[name].evolve(dt);
       }

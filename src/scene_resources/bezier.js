@@ -364,7 +364,7 @@ export function animateCam(uv, t) {
     t = t % 30;
 
     if(t < 15 && t > 0){
-        console.log('skibdii')
+        console.log('t < 15')
         let start = vec3.fromValues(12, 6, 2);
         let end = vec3.fromValues(-12, 6, 2);
 
@@ -384,7 +384,7 @@ export function animateCam(uv, t) {
         cd = result.cd;
         shutter = result.shutter;
     } else {
-        console.log("Aaaaa");
+        console.log("t > 15");
         let start = vec3.fromValues(-12, 6, 2);
         let end = vec3.fromValues(12, 6, 2);
 

@@ -1,5 +1,6 @@
 
 import { TurntableCamera } from "../scene_resources/camera.js"
+import { BezierCamera } from "../scene_resources/camera.js"
 import * as MATERIALS from "../render/materials.js"
 import { cg_mesh_make_uv_sphere } from "../cg_libraries/cg_mesh.js"
 
@@ -25,6 +26,7 @@ export class BirdAnimation extends Scene {
     
     this.resource_manager = resource_manager;
     this.scale = 0.1;
+    this.camera = new BezierCamera();
     // Boids
     this.posList = [];
     this.newPosList = [];
@@ -298,6 +300,8 @@ export class BirdAnimation extends Scene {
       material : MATERIALS.test_sphere
     });
 
+    this.actors["camera"] = this.camera;
+
   }
 
   /**
@@ -315,8 +319,13 @@ export class BirdAnimation extends Scene {
     //   }
     // }
     for (const name in this.actors) {
-      // bird
-      if (name.includes("bird")){
+      if (name.includes("camera")) {
+        const bezierCam = this.actors[name];
+        bezierCam.evolve = (dt) => {
+          bezierCam.update_time(dt);
+        }
+        
+      } else if (name.includes("bird")){
         const bird = this.actors[name];
         bird.evolve = (dt) => {
           bird.time += dt;
