@@ -318,7 +318,7 @@ export function simpleCircleCam(uv, t) {
  * @param {number} t Current time
  * @returns {Object} Camera ray information
  */
-export function animateCam(uv, t) {
+export function animateCam(uv, t, mapScale) {
     let cp, cd, shutter = 0.0;
     
     // Loop time every 15 seconds
@@ -366,10 +366,14 @@ export function animateCam(uv, t) {
     if(t < 15 && t > 0){
         console.log('t < 15')
         let start = vec3.fromValues(12, 6, 2);
+        vec3.scale(start, start, mapScale);
         let end = vec3.fromValues(-12, 6, 2);
+        vec3.scale(end, end, mapScale);
 
         let p1 = vec3.fromValues(8, 4, 2);
+        vec3.scale(p1, p1, mapScale);
         let p2 = vec3.fromValues(-8, 4, 2);
+        vec3.scale(p2, p2, mapScale);
         
         const result = c_cam_path(
             0, 15, 1.,
@@ -386,10 +390,14 @@ export function animateCam(uv, t) {
     } else {
         console.log("t > 15");
         let start = vec3.fromValues(-12, 6, 2);
+        vec3.scale(start, start, mapScale);
         let end = vec3.fromValues(12, 6, 2);
+        vec3.scale(end, end, mapScale);
 
         let p1 = vec3.fromValues(-8, -4, 2);
+        vec3.scale(p1, p1, mapScale);
         let p2 = vec3.fromValues(8, -4, 2);
+        vec3.scale(p2, p2, mapScale);
         
         const result = c_cam_path(
             15, 30, 1.,

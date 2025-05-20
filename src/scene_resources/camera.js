@@ -194,6 +194,7 @@ export class BezierCamera {
         this.time = 0;
         this.time_factor = 1.0; // Controls animation speed
         this.debug = false;     // Enable logging for debugging
+        this.scale = 1.0;
         
         this.position = vec3.create();
         this.direction = vec3.create();
@@ -256,6 +257,10 @@ export class BezierCamera {
         this.update_cam_transform();
     }
     
+    set_scale_for_camera(scale){
+        this.scale = scale;
+    }
+
     /**
      * Set time factor to control animation speed
      * @param {number} factor Speed factor (1.0 = normal speed)
@@ -281,7 +286,7 @@ export class BezierCamera {
         
         // const { ro, rd, shutter } = bezier.simpleCircleCam(uv, this.time);
         
-        const { ro, rd, shutter } = bezier.animateCam(uv, this.time);
+        const { ro, rd, shutter } = bezier.animateCam(uv, this.time, this.scale);
         
         // Store values for later use
         vec3.copy(this.position, ro);
