@@ -363,16 +363,35 @@ export function animateCam(uv, t, mapScale) {
 
     t = t % 30;
 
-    if(t < 15 && t > 0){
+    if(t < 30 && t > 0){
         console.log('t < 15')
-        let start = vec3.fromValues(12, 6, 2);
+        // let start = vec3.fromValues(12, 6, 2);
+        // vec3.scale(start, start, mapScale);
+        // let end = vec3.fromValues(-12, 6, 2);
+        // vec3.scale(end, end, mapScale);
+
+        // let p1 = vec3.fromValues(8, 4, 2);
+        // vec3.scale(p1, p1, mapScale);
+        // let p2 = vec3.fromValues(-8, 4, 2);
+        // vec3.scale(p2, p2, mapScale);
+
+        // let start = vec3.fromValues(120, 0, 15);
+        // vec3.scale(start, start, mapScale);
+        // let end = vec3.fromValues(-40, 80, 15);
+        // vec3.scale(end, end, mapScale);
+
+        // let p1 = vec3.fromValues(80, 60, 15);
+        // vec3.scale(p1, p1, mapScale);
+        // let p2 = vec3.fromValues(40, 100, 15);
+        // vec3.scale(p2, p2, mapScale);
+        let start = vec3.fromValues(100, 0, 15);
         vec3.scale(start, start, mapScale);
-        let end = vec3.fromValues(-12, 6, 2);
+        let end = vec3.fromValues(0, 100, 15);
         vec3.scale(end, end, mapScale);
 
-        let p1 = vec3.fromValues(8, 4, 2);
+        let p1 = vec3.fromValues(100, 52, 15);
         vec3.scale(p1, p1, mapScale);
-        let p2 = vec3.fromValues(-8, 4, 2);
+        let p2 = vec3.fromValues(60, 92, 15);
         vec3.scale(p2, p2, mapScale);
         
         const result = c_cam_path(

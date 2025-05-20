@@ -27,6 +27,8 @@ export class BirdAnimation extends Scene {
     this.resource_manager = resource_manager;
     this.scale = 0.1;
     this.camera = new BezierCamera();
+    this.camera.set_scale_for_camera(0.1);
+    this.camera.set_time_factor(1.2);
     // Boids
     this.posList = [];
     this.newPosList = [];
@@ -324,8 +326,8 @@ export class BirdAnimation extends Scene {
         bezierCam.evolve = (dt) => {
           bezierCam.update_time(dt);
         }
-        
-      } else if (name.includes("bird")){
+      }  
+      if (name.includes("bird")){
         const bird = this.actors[name];
         bird.evolve = (dt) => {
           bird.time += dt;
