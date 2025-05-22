@@ -13,11 +13,11 @@ const perceptionRadius = 40. * scale;
 
 // cohesion force angle 
 const forceAngle = 5 * Math.PI / 12;
-const dynamicMaxSpeedWeight = 1.;
+const dynamicMaxSpeedWeight = 10.;
 const avoidanceForceLimit = 3.;
 
 const avoidanceWeight = 15.;
-const cohesionWeight = 0.01;
+const cohesionWeight = 0.08;
 const alignementWeight = 0.09;
 // const containementWeight = 10.;
 // const trajectoryWeight = 12.;
@@ -131,6 +131,9 @@ function cylinder(distFromOrigin, angleDeg, radius, direction) {
 
 function containementForce(posList, index) {
     let force = vec3.fromValues(0., 0., 0.);
+
+
+    /* ################ XY CONTAINEMENT ################### */
     const birdXYPos = vec3.set(vec3.create(), posList[index][0], posList[index][1], 0);
     // console.log(`Bird pos xy : ${vec3.str(birdXYPos)}`)
 
@@ -219,6 +222,33 @@ function containementForce(posList, index) {
     } else {
 
     }
+
+
+    /* ################ Z CONTAINEMENT ################### */
+    const z = posList[index][2];
+
+    //
+    const lowerLimit = 2 * scale;
+    const upperLimit = 10 * scale;
+
+    // Global lower and upper bound
+    if (z < lowerLimit) {
+        const newForce = vec3.fromValues(0, 0, 1);
+        vec3.rotateX(newForce, newForce, -forceAngle);
+        vec3.rotateZ(newForce, newForce, angle);
+        vec3.add(force, force, newForce);
+        console.log("TOO LOW");
+    } else if (z > upperLimit) {
+        const newForce = vec3.fromValues(0, 0, -1);
+        vec3.rotateX(newForce, newForce, forceAngle);
+        vec3.rotateZ(newForce, newForce, angle);
+        vec3.add(force, force, newForce);      
+        console.log("TOO HIGH");
+    }
+
+
+
+
 
 
     return force;

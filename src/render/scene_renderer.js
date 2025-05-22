@@ -30,7 +30,7 @@ export class SceneRenderer {
         this.terrain = new TerrainShaderRenderer(regl, resource_manager);
 
         this.mirror = new MirrorShaderRenderer(regl, resource_manager);
-        this.shadows = new ShadowsShaderRenderer(regl, resource_manager);
+        // this.shadows = new ShadowsShaderRenderer(regl, resource_manager);
         this.map_mixer = new MapMixerShaderRenderer(regl, resource_manager);
 
         // Create textures & buffer to save some intermediate renders into a texture
@@ -141,7 +141,7 @@ export class SceneRenderer {
             this.pre_processing.render(scene_state);
 
             // Render the shadows
-            this.shadows.render(scene_state);
+            //this.shadows.render(scene_state);
         })
 
         /*---------------------------------------------------------------

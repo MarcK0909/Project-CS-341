@@ -73,6 +73,8 @@ export function cg_mesh_make_uv_sphere(divisions, inverted) {
 		name: `UvSphere(${divisions})`,
 		vertex_positions: vertex_positions,
 		vertex_normals: normals, // on a unit sphere, position is equivalent to normal
+		vertex_tangent: [],
+		vertex_bitangent: [],
 		vertex_tex_coords: tex_coords,
 		faces: faces,
 	};

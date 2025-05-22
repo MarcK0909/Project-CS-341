@@ -1,4 +1,4 @@
-import { mat3 } from "../../../lib/gl-matrix_3.3.0/esm/index.js";
+import { mat3, vec2, vec3, vec4 } from "../../../lib/gl-matrix_3.3.0/esm/index.js";
 import { texture_data, light_to_cam_view, normal_data } from "../../cg_libraries/cg_render_utils.js"
 import { ResourceManager } from "../../scene_resources/resource_manager.js";
 import { ShaderRenderer } from "./shader_renderer.js"
@@ -18,6 +18,7 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
             `blinn_phong.vert.glsl`, 
             `blinn_phong.frag.glsl`
         );
+        this.scale = 0.1;
     }
     
     /**
@@ -71,7 +72,11 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
                     material_texture: texture,
                     is_textured: is_textured,
                     material_base_color: obj.material.color,
-                    material_shininess: obj.material.shininess
+                    material_shininess: obj.material.shininess,
+
+                    fog_color: vec3.fromValues(0.392, 0.537, 0.561),
+                    fog_nearFar: vec2.fromValues(10.0 * this.scale, 72.0 * this.scale),
+                    fog_minMax: vec2.fromValues(0.6, 1.)
                 });
 
             }
@@ -84,6 +89,7 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
     exclude_object(obj){
         // Do not shade objects that use other dedicated shader
+        console.log(`OBJ MESH ${obj.mesh_reference} MAT NAME ${obj.material.name} : ${obj.material.properties.includes('no_blinn_phong')}`)
         return obj.material.properties.includes('no_blinn_phong');
     }
 
@@ -127,8 +133,14 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
             material_base_color: regl.prop('material_base_color'),
             material_shininess: regl.prop('material_shininess'),
 
+            // normal map data
             normal_map: regl.prop('normal_map'),
-            hasNormalMap: regl.prop('hasNormalMap')
+            hasNormalMap: regl.prop('hasNormalMap'),
+
+            // fog params
+            fog_color: regl.prop("fog_color"),
+            fog_nearFar: regl.prop("fog_nearFar"),
+            fog_minMax: regl.prop("fog_minMax")
         };
     }
 }

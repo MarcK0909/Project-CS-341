@@ -17,6 +17,9 @@ uniform float material_shininess;
 uniform vec3 light_color;
 uniform vec3 light_position;
 uniform float ambient_factor;
+uniform vec3 fog_color;
+uniform vec2 fog_nearFar;
+uniform vec2 fog_minMax;
 
 void main()
 {
@@ -60,8 +63,14 @@ void main()
     float light_distance = length(light_position - v2f_frag_pos);
     float attenuation = 1.0 / pow(light_distance, 0.25);
 
-    // Compute pixel color
+    // Compute pixel color without fog
     vec3 color = ambient + (attenuation * light_color * material_color * (diffuse + specular));
+
+    // compute fog
+    float intensity = (length(v2f_frag_pos) - fog_nearFar.x) / (fog_nearFar.y - fog_nearFar.x);
+    float intensityClamped = clamp(intensity, fog_minMax.x, fog_minMax.y);
+
+    color = mix(color, fog_color, intensityClamped);
 
 	gl_FragColor = vec4(color, 1.);; // output: RGBA in 0..1 range
 }
