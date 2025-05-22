@@ -113,6 +113,10 @@ export const map_material = new TexturedObjectMaterial({
     texture: 'map.png'
 });
 
+export const ground_test = new TexturedObjectMaterial({
+    texture: 'ground_blurr4.png'
+});
+
 export const misty_forrest = new BackgroundMaterial({
     texture: 'misty_pines.jpg'
 });
@@ -127,7 +131,7 @@ export const normal_ground_forest = new NormalTexturedMaterial({
 });
 export const ground2 = new NormalTexturedMaterial({
     normal_map: 'ground2_normal.png',
-    texture: 'ground2.jpg'
+    texture: 'ground_blurr4.png'
 })
 
 export const gray = new DiffuseMaterial({
@@ -146,15 +150,27 @@ export const black = new DiffuseMaterial({
 });
 
 export const pine = new DiffuseMaterial({
-    texture: 'pine.png',
+    texture: 'text.jpg',
     shininess: 0.5
 });
+
+export const pine_norm = new NormalTexturedMaterial({
+    normal_map :  'pine_texture_2_normal_blurr2.jpg',
+    texture :  'pine_texture_2_blurr2.jpg'
+})
+
+export const pine_test = new TexturedObjectMaterial({
+    texture : 'pine_texture_2_blurr2.jpg'
+})
+
+
 
 export const terrain = new TerrainMaterial({
     water_color: [0.29, 0.51, 0.62],
     grass_color: [0.33, 0.43, 0.18],
     peak_color: [0.8, 0.5, 0.4]
 });
+
 export const ground = new BackgroundMaterial({
     texture: 'ground.jpg'
 })
