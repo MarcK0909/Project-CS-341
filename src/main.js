@@ -149,7 +149,7 @@ async function main() {
     prev_regl_time = frame.time;
 
     // If the time is not paused, iterate over all actors and call their evolve function
-    if (!ui_global_params.is_paused && frame.time > 15){
+    if (!ui_global_params.is_paused && frame.time > 5){
       for (const name in active_scene.actors){
         active_scene.actors[name].evolve(dt);
       }
