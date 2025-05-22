@@ -114,9 +114,9 @@ export function cg_mesh_make_plane(){
 		],
 		vertex_tex_coords: [
 		[0, 0], //top left
-		[1, 0],
-		[1, 1],
-		[0, 1], //top right
+		[16, 0],
+		[16, 16],
+		[0, 16], //top right
 		],
 		faces: [
 		[0, 1, 2],

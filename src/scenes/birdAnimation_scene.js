@@ -2,7 +2,7 @@
 import { TurntableCamera } from "../scene_resources/camera.js"
 import { BezierCamera } from "../scene_resources/camera.js"
 import * as MATERIALS from "../render/materials.js"
-import { cg_mesh_make_uv_sphere } from "../cg_libraries/cg_mesh.js"
+import { cg_mesh_make_uv_sphere, cg_mesh_make_plane } from "../cg_libraries/cg_mesh.js"
 
 import { 
   create_slider, 
@@ -47,6 +47,7 @@ export class BirdAnimation extends Scene {
     // TODO
 
     this.resource_manager.add_procedural_mesh("skySphere", cg_mesh_make_uv_sphere(20));
+    this.resource_manager.add_procedural_mesh("plane", cg_mesh_make_plane(200));
 
     this.lights.push({
       position : [0.0 , 0.0, 15.],
@@ -100,8 +101,8 @@ export class BirdAnimation extends Scene {
       translation : [0.65, 0.78, 0.0],
       rotation : quat.fromEuler(quat.create(), 0, 0, 90),
       scale: [12.5, 13, 13.],
-      mesh_reference : "square.obj",
-      material : MATERIALS.map_material
+      mesh_reference : "plane",
+      material : MATERIALS.ground2
     });
 
     
@@ -283,8 +284,8 @@ export class BirdAnimation extends Scene {
         translation: [this.scale * pos[0], this.scale * pos[1], this.scale * pos[2]],
         rotation: quat.fromEuler(quat.create(), 0, 0, rotFactor),
         scale: [sizeFactor * this.scale, sizeFactor *this.scale, sizeFactor *this.scale],
-        mesh_reference: "pine_3_stack.obj",
-        material: MATERIALS.pine
+        mesh_reference: "pine_3_stack_2.obj",
+        material: MATERIALS.pine_norm
       });
     }
 

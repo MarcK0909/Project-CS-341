@@ -35,10 +35,16 @@ export class ResourceManager{
 
         // load textures
         for (const texture_name of this.textures_to_load()) {
+          let tex_load_options = {}
+          if (texture_name.includes("BirdImage") || texture_name.includes("map") || texture_name.includes("pine_3_stack_2.obj")) {
+            tex_load_options = {flipY : true}
+          } else if(texture_name.includes("ground_blurr4.png") || texture_name.includes("ground_normal.png")){
+            tex_load_options = {wrap : 'repeat'}
+          }
           resource_promises[texture_name] = load_texture(
                 regl,
                 `${path_to_textures_folder}/${texture_name}`,
-                (texture_name.includes("BirdImage") || texture_name.includes("map")) ? { flipY: true } : {}
+                tex_load_options
             );
         }
         // load shaders
@@ -149,7 +155,15 @@ export class ResourceManager{
             'ground.jpg',
             'ground_normal.png',
             'ground2.jpg',
-            'ground2_normal.png'
+            'ground2_normal.png',
+            "text.jpg",
+            "text_normal.png",
+            "pine_texture.png",
+            "pine_texture_2.png",
+            "pine_texture_2_normal.png",
+            "pine_texture_2_normal_blurr2.jpg",
+            "pine_texture_2_blurr2.jpg",
+            "ground_blurr4.png"
           ];
     }
 
@@ -178,6 +192,7 @@ export class ResourceManager{
         "Bird.obj",
         "Bird1.obj",
         "pine_3_stack.obj",
+        "pine_3_stack_2.obj",
         "Rock1.obj",
         "suzanne.obj",
         "Bird0001.obj",
