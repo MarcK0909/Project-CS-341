@@ -130,7 +130,7 @@ export const normal_ground_forest = new NormalTexturedMaterial({
     texture: 'ground.jpg'
 });
 export const ground2 = new NormalTexturedMaterial({
-    normal_map: 'ground2_normal.png',
+    normal_map: 'ground_normal.png',
     texture: 'ground_blurr4.png'
 })
 
