@@ -327,7 +327,7 @@ export function animateCam(uv, t, mapScale) {
 
         let p1 = vec3.fromValues(40, 20, 15); //OK
         vec3.scale(p1, p1, mapScale);
-        let p2 = vec3.fromValues(40, 100, 15); //OK
+        let p2 = vec3.fromValues(40, 96, 15); //OK
         vec3.scale(p2, p2, mapScale);
 
         const result = c_cam_path(
