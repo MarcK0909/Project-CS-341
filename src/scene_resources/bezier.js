@@ -156,7 +156,7 @@ export function dcb(a, b, c, d, t) {
  */
 export function smoothstep(edge0, edge1, x) {
     const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
-    return t * t * (3 - 2 * t);
+    return t; //* t * (3 - 2 * t);
 }
 
 /**
@@ -318,77 +318,48 @@ export function animateCam(uv, t, mapScale) {
 
     t = t % 30;
 
-    if(t < 9 && t >= 0){
-        console.log('t < 9.5')
-
-        let start = vec3.fromValues(120, 0, 15);
+    if(t >= 0 && t < 9.72){
+        console.log("PART 1");
+        let start = vec3.fromValues(120, 0, 10); //OK
         vec3.scale(start, start, mapScale);
-        let end = vec3.fromValues(-40, 80, 10);
+        let end = vec3.fromValues(-40, 80, 15); //OK
         vec3.scale(end, end, mapScale);
 
-        let p1 = vec3.fromValues(40, 20, 12);
+        let p1 = vec3.fromValues(40, 20, 15); //OK
         vec3.scale(p1, p1, mapScale);
-        let p2 = vec3.fromValues(40, 100, 7);
+        let p2 = vec3.fromValues(40, 100, 15); //OK
         vec3.scale(p2, p2, mapScale);
-        
+
         const result = c_cam_path(
-            0, 9.5, 0.25,
+            0, 9.72, 0.25,
             start,
             p1,
             p2,
             end,
-
             t
         )
+
         cp = result.cp;
         cd = result.cd;
+
         shutter = result.shutter;
-    } else if(t < 17 && t >= 9){
-        //2.1
-        console.log("t > 17.5");
-        /* NO Z CHANGE CUBE*/
-        // let start = vec3.fromValues(-40, 80, 15);
-        // vec3.scale(start, start, mapScale);
-        // let end = vec3.fromValues(-100, -60, 15);
-        // vec3.scale(end, end, mapScale);
-
-        // let p1 = vec3.fromValues(-100, 60, 15);
-        // vec3.scale(p1, p1, mapScale);
-        // let p2 = vec3.fromValues(-130, 0, 15);
-        // vec3.scale(p2, p2, mapScale);
-
-        /* Z CHANGE CUBE */
-        // let start = vec3.fromValues(-60, 120, 50);
-        // vec3.scale(start, start, mapScale);
-        // let end = vec3.fromValues(-80, -40, 15);
-        // vec3.scale(end, end, mapScale);
-
-        // let p1 = vec3.fromValues(-120,20, 25);
-        // vec3.scale(p1, p1, mapScale);
-        // let p2 = vec3.fromValues(-80, -40, 10);
-        // vec3.scale(p2, p2, mapScale);
-        
-        // const result = c_cam_path(
-        //     9, 17.5, 0.25,
-        //     start,
-        //     p1,
-        //     p2,
-        //     end,
-        //     t
-        // )
-        
-        let start = vec3.fromValues(-60, 150, 50);
+    } else if(t >= 9.72 && t < 17.22){
+        console.log("PART 2");
+        let start = vec3.fromValues(-40, 80, 15); //OK
         vec3.scale(start, start, mapScale);
-        let end = vec3.fromValues(-60, -40, 15);
+        let end = vec3.fromValues(-80, -40, 15); //OK
         vec3.scale(end, end, mapScale);
 
-        let p1 = vec3.fromValues(-92, 20, 5);
+        let p1 = vec3.fromValues(-80, 72, 15); //OK
         vec3.scale(p1, p1, mapScale);
+        let p2 = vec3.fromValues(-120, 20, 15); //OK
+        vec3.scale(p2, p2, mapScale);
 
-        const result = q_cam_path(
-            9, 17.5, 0.25,
+        const result = c_cam_path(
+            9.72, 17.22, 0.25,
             start,
             p1,
+            p2,
             end,
             t
         )
@@ -398,31 +369,32 @@ export function animateCam(uv, t, mapScale) {
 
         shutter = result.shutter;
     } else {
-        console.log("t > 30");
-        let start = vec3.fromValues(-40, -40, 15);
+        console.log("PART 3");
+        let start = vec3.fromValues(-80, -40, 15);
         vec3.scale(start, start, mapScale);
         let end = vec3.fromValues(100, 0, 15);
         vec3.scale(end, end, mapScale);
 
-        let p1 = vec3.fromValues(0, -100, 15);
+        let p1 = vec3.fromValues(-40, -100, 15);
         vec3.scale(p1, p1, mapScale);
-        let p2 = vec3.fromValues(80, -60, 15);
+        let p2 = vec3.fromValues(60, -100, 15);
         vec3.scale(p2, p2, mapScale);
-        
+
         const result = c_cam_path(
-            17, 30.5, 0.25,
+            17.22, 30, 0.25,
             start,
             p1,
             p2,
             end,
             t
         )
+
         cp = result.cp;
         cd = result.cd;
+
         shutter = result.shutter;
     }
     
-    // Create camera ray
     const { ro, rd } = createCameraRay(uv, cp, cd, 1.0);
     
     return { ro, rd, shutter };
