@@ -8,9 +8,9 @@ import * as bezier from "./bezier.js"
 export class TurntableCamera {
 
     constructor() {
-        this.angle_z = - Math.PI / 2.; // in radians!
-        this.angle_y = -Math.PI / 2; // in radians!
-        this.distance_factor = 2.;
+        this.angle_z = - Math.PI / 6.; // in radians!
+        this.angle_y = -Math.PI / 6; // in radians!
+        this.distance_factor = 3.5;
         this.distance_base = 15.;
         this.look_at = [0, 0, 0];
         
@@ -141,10 +141,10 @@ export class TurntableCamera {
      * @param {*} deltaY the variation
      */
     zoom_action(deltaY){
-        const factor_mul_base = 1.18;
+        const factor_mul_base = 1.01;
         const factor_mul = (deltaY > 0) ? factor_mul_base : 1. / factor_mul_base;
         this.distance_factor *= factor_mul;
-        this.distance_factor = Math.max(0.02, Math.min(this.distance_factor, 4));
+        this.distance_factor = Math.max(0.02, Math.min(this.distance_factor, 20.));
 
         this.update_cam_transform();
     }
