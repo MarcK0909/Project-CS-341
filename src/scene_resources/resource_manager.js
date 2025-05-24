@@ -150,6 +150,7 @@ export class ResourceManager{
             "misty_pines.jpg",
             'pine.png',
             'BirdImage.png',
+            'BirdImageDarker.png',
             'ground_normal.png',
             'map.png',
             'ground.jpg',

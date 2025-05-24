@@ -1,4 +1,5 @@
 precision mediump float;
+//precision highp float;
 
 // Varying values passed from the vertex shader
 varying vec3 v2f_frag_pos;
@@ -72,5 +73,7 @@ void main()
 
     color = mix(color, fog_color, intensityClamped);
 
-	gl_FragColor = vec4(color, 1.);; // output: RGBA in 0..1 range
+  
+
+	gl_FragColor = vec4(color, 1.); // output: RGBA in 0..1 range
 }

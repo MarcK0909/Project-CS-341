@@ -112,6 +112,9 @@ export const sunset_sky = new BackgroundMaterial({
 export const map_material = new TexturedObjectMaterial({
     texture: 'map.png'
 });
+export const bird = new TexturedObjectMaterial({
+    texture: 'BirdImageDarker.png'
+});
 
 export const ground_test = new TexturedObjectMaterial({
     texture: 'ground_blurr4.png'

@@ -27,8 +27,8 @@ export class BirdAnimation extends Scene {
     this.resource_manager = resource_manager;
     this.scale = 0.1;
     this.camera = new BezierCamera();
-    this.camera.set_scale_for_camera(0.1);
-    this.camera.set_time_factor(1.2);
+    this.camera.set_scale_for_camera(this.scale);
+    this.camera.set_time_factor(0.8);
     // Boids
     this.posList = [];
     this.newPosList = [];
@@ -49,10 +49,11 @@ export class BirdAnimation extends Scene {
     // TODO
 
     this.resource_manager.add_procedural_mesh("skySphere", cg_mesh_make_uv_sphere(20));
-    this.resource_manager.add_procedural_mesh("plane", cg_mesh_make_plane(200));
+    this.resource_manager.add_procedural_mesh("plane", cg_mesh_make_plane());
 
-    this.lights.push({
-      position : [0.0 , 0.0, 15.],
+
+      this.lights.push({
+      position : [0.0 , 0.0, 100.],
       color: [1.0, 1.0, 0.9]
     });
 
@@ -60,9 +61,9 @@ export class BirdAnimation extends Scene {
     for (let h = 0; h < 4; h++) {
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 2; j++) {
-          const position = [this.scale * (3.0 * i + 71.), this.scale * (5.0 * h - 5.), this.scale * (3.0 * j + 3)];
+          const position = [this.scale * (3.0 * i + 71. + 1. * j), this.scale * (5.0 * h - 5. + 0.5 * j), this.scale * (3.0 * j + 3)];
           const velocity = vec3.fromValues(0., 18. * this.scale, 0.);
-          let bird_material = MATERIALS.black;
+          let bird_material = MATERIALS.bird;
 
           const actorBird = {
             translation : position,
@@ -70,7 +71,7 @@ export class BirdAnimation extends Scene {
             scale: [0.3 * this.scale, 0.3 * this.scale, 0.3 * this.scale],
             mesh_reference : "BirdAnimationOndrej0005.obj",
             material : bird_material,
-            time : Math.random() * 2.
+            time : Math.random() * 10.
           };
     
           this.objects.push(actorBird);
@@ -84,6 +85,7 @@ export class BirdAnimation extends Scene {
       }
       
     }
+
 
     // this.objects.push({
     //   translation : [20., 0.0, 0.0],
@@ -102,7 +104,7 @@ export class BirdAnimation extends Scene {
     this.objects.push({
       translation : [0.65, 0.78, 0.0],
       rotation : quat.fromEuler(quat.create(), 0, 0, 90),
-      scale: [12.5, 13, 13.],
+      scale: [150 * this.scale, 150. * this.scale, 150. * this.scale],
       mesh_reference : "plane",
       material : MATERIALS.ground2
     });
@@ -302,10 +304,11 @@ export class BirdAnimation extends Scene {
     this.objects.push({
       translation : [0.0, 0.0, 0.0],
       rotation : quat.fromEuler(quat.create(), 0, 0, 0),
-      scale: [150., 150., 150.],
+      scale: [200., 200., 200.],
       mesh_reference : "skySphere",
       material : MATERIALS.black
     });
+
 
     this.actors["camera"] = this.camera;
 
@@ -331,8 +334,7 @@ export class BirdAnimation extends Scene {
         bezierCam.evolve = (dt) => {
           bezierCam.update_time(dt);
         }
-      }  
-      if (name.includes("bird")){
+      } else if (name.includes("bird")){
         const bird = this.actors[name];
         bird.evolve = (dt) => {
           bird.time += dt;
@@ -349,6 +351,8 @@ export class BirdAnimation extends Scene {
           bird.translation[1] = position[1];
           bird.translation[2] = position[2];
           // bird.translation[2] = 0.; // TEMPORARY 2D!!!!
+          // console.log(`pos: ${vec3.str(position)}`);
+          // console.log(`vel: ${vec3.str(velocity)}`);
 
           bird.rotation = quat.rotationTo(quat.create(), vec3.fromValues(0., 1., 0.), vec3.normalize(vec3.create(), velocity));
           if (index == 3) {
@@ -419,6 +423,7 @@ function animateBird(bird, time, scale) {
     
   } else {
     // console.log("Coasting");
+    bird.mesh_reference = `BirdCoastStartOndrej0082.obj`;
     bird.translation[2] += (117 - (frame - 78)) * 78 * heightVar;
   }
 

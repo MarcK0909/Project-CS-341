@@ -74,9 +74,9 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
                     material_base_color: obj.material.color,
                     material_shininess: obj.material.shininess,
 
-                    fog_color: vec3.fromValues(0.392, 0.537, 0.561),
+                    fog_color: vec3.fromValues(0.9, 0.9, 0.9), // vec3.fromValues(0.392, 0.537, 0.561),
                     fog_nearFar: vec2.fromValues(10.0 * this.scale, 72.0 * this.scale),
-                    fog_minMax: vec2.fromValues(0.6, 1.)
+                    fog_minMax: vec2.fromValues(0.6, 1.) //0.6, 1.
                 });
 
             }
@@ -89,7 +89,7 @@ export class BlinnPhongShaderRenderer extends ShaderRenderer {
 
     exclude_object(obj){
         // Do not shade objects that use other dedicated shader
-        console.log(`OBJ MESH ${obj.mesh_reference} MAT NAME ${obj.material.name} : ${obj.material.properties.includes('no_blinn_phong')}`)
+        // console.log(`OBJ MESH ${obj.mesh_reference} MAT NAME ${obj.material.name} : ${obj.material.properties.includes('no_blinn_phong')}`)
         return obj.material.properties.includes('no_blinn_phong');
     }
 

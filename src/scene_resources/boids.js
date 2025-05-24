@@ -13,19 +13,22 @@ const perceptionRadius = 40. * scale;
 
 // cohesion force angle 
 const forceAngle = 5 * Math.PI / 12;
-const dynamicMaxSpeedWeight = 10.;
-const avoidanceForceLimit = 3.;
+const dynamicMaxSpeedWeight = 1.;
+const avoidanceForceLimit = 30. * scale;
 
-const avoidanceWeight = 15.;
-const cohesionWeight = 0.08;
-const alignementWeight = 0.09;
+const avoidanceWeight = 150. * scale;
+const cohesionWeight = 0.8 * scale;
+const alignementWeight = 0.9 * scale;
 // const containementWeight = 10.;
 // const trajectoryWeight = 12.;
 // const avoidanceWeight = 0.;
 // const cohesionWeight = 0.;
 // const alignementWeight = 0.;
-const containementWeight = 5.;
+const containementWeight = 50. * scale;
 const trajectoryWeight = 0.;
+
+// useful vec3
+const origin = vec3.create();
 
 // possibility to increase max speed for stragling birds
 function dynamicMaxSpeed(posList, index) {
@@ -115,7 +118,7 @@ function cylinderCheck(birdXYPos, cylCenter, cylRadius, direction, force) {
     //console.log(`cylCenter : ${vec3.str(cylCenter)}  len diff : ${vec3.len(diff)}`)
     if (vec3.len(diff) < cylRadius) {    
         vec3.normalize(force, diff);
-        vec3.rotateZ(force, force, vec3.create(), direction * forceAngle);
+        vec3.rotateZ(force, force, origin, direction * forceAngle);
     }
     return force;
 }
@@ -176,10 +179,10 @@ function containementForce(posList, index) {
     // Global outer limit check
     if (vec3.len(birdXYPos) > outerRadius) {
         vec3.normalize(force, vec3.negate(vec3.create(), birdXYPos));
-        vec3.rotateZ(force, force, vec3.create(), - forceAngle);
+        vec3.rotateZ(force, force, origin, - forceAngle);
     }
     // Global inner limit
-    force = cylinderCheck(birdXYPos, vec3.create(), innerRadiusSmall, 1, force);
+    force = cylinderCheck(birdXYPos, origin, innerRadiusSmall, 1, force);
 
 
 
@@ -213,7 +216,7 @@ function containementForce(posList, index) {
         force = cylinderCheck(birdXYPos, firstRightCyl_Q2.center, firstRightCyl_Q2.radius, firstRightCyl_Q2.direction, force);
         force = cylinderCheck(birdXYPos, leftCyl_Q2.center, leftCyl_Q2.radius, leftCyl_Q2.direction, force);
         force = cylinderCheck(birdXYPos, secondRightCyl_Q2.center, secondRightCyl_Q2.radius, secondRightCyl_Q2.direction, force);
-        force = cylinderCheck(birdXYPos, vec3.create(), innerRadiusBig, 1, force);
+        force = cylinderCheck(birdXYPos, origin, innerRadiusBig, 1, force);
     
     } else if (angle > Math.PI && angle <= 3 * Math.PI / 2) {
         force = cylinderCheck(birdXYPos, leftCyl_Q3.center, leftCyl_Q3.radius, leftCyl_Q3.direction, force);
@@ -234,21 +237,15 @@ function containementForce(posList, index) {
     // Global lower and upper bound
     if (z < lowerLimit) {
         const newForce = vec3.fromValues(0, 0, 1);
-        vec3.rotateX(newForce, newForce, -forceAngle);
-        vec3.rotateZ(newForce, newForce, angle);
+        vec3.rotateX(newForce, newForce, origin, -forceAngle);
+        vec3.rotateZ(newForce, newForce,origin, angle);
         vec3.add(force, force, newForce);
-        console.log("TOO LOW");
     } else if (z > upperLimit) {
         const newForce = vec3.fromValues(0, 0, -1);
-        vec3.rotateX(newForce, newForce, forceAngle);
-        vec3.rotateZ(newForce, newForce, angle);
+        vec3.rotateX(newForce, newForce, origin, forceAngle);
+        vec3.rotateZ(newForce, newForce, origin, angle);
         vec3.add(force, force, newForce);      
-        console.log("TOO HIGH");
     }
-
-
-
-
 
 
     return force;
@@ -576,7 +573,7 @@ export function evolveBoid(dt, posList, velList, index) {
     // console.log(`avoidance: ${vec3.str(avoidance)}`);
     // console.log(`cohesion: ${vec3.str(cohesion)}`);
     // console.log(`alignement: ${vec3.str(alignement)}`);
-    // console.log(`containement: ${vec3.str(containement)}`);
+    console.log(`containement: ${vec3.str(containement)}`);
     // console.log(`trajectory: ${vec3.str(trajectory)}`);
 
     const newVel = vec3.create();
