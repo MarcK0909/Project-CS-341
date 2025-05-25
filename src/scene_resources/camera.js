@@ -128,11 +128,17 @@ export class TurntableCamera {
      * the camera to define a preset view
      */
     log_current_state(){
+        const x = - this.distance_base * this.distance_factor * Math.cos(this.angle_y) * Math.cos(this.angle_z)
+        const y = - this.distance_base * this.distance_factor * Math.cos(this.angle_y) * Math.sin(this.angle_z)
+        const z = - this.distance_base * this.distance_factor * Math.sin(this.angle_y)
         console.log(
             "distance_factor: " + this.distance_factor,
             "angle_z: " + this.angle_z,
             "angle_y: " + this.angle_y,
             "look_at " + this.look_at,
+            "x:"+ x,
+            "y" + y,
+            "z" + z,
         );
     }
 
@@ -287,6 +293,7 @@ export class BezierCamera {
         // const { ro, rd, shutter } = bezier.simpleCircleCam(uv, this.time);
         
         const { ro, rd, shutter } = bezier.animateCam(uv, this.time, this.scale);
+        // const { ro, rd, shutter } = bezier.camDemo(uv, this.time, this.scale);
         
         // Store values for later use
         vec3.copy(this.position, ro);

@@ -399,3 +399,35 @@ export function animateCam(uv, t, mapScale) {
     
     return { ro, rd, shutter };
 }
+
+
+export function camDemo(uv, t, mapScale) {
+    let cp, cd, shutter = 0.0;
+
+    t = t % 12;
+
+    let start = vec3.fromValues(-5.625000000000001, -3.2475952641916446, 3.7499999999999996); //OK
+    let end = vec3.fromValues(15, 4, 2); //OK
+
+    let p1 = vec3.fromValues(-5.625000000000001/ 4, -3.2475952641916446 / 4, 3.7499999999999996 / 4); //OK
+    let p2 = vec3.fromValues(-10, 0, 1); //OK
+
+    const result = c_cam_path(
+        0, 9.72, 0.25,
+        start,
+        p1,
+        p2,
+        end,
+        t
+    )
+
+    cp = result.cp;
+    cd = result.cd;
+
+    shutter = result.shutter;
+    
+    
+    const { ro, rd } = createCameraRay(uv, cp, cd, 1.0);
+    
+    return { ro, rd, shutter };
+}

@@ -24,6 +24,7 @@ import { DemoScene } from "./scenes/demo_scene.js";
 import {BirdTrajectory} from "./scenes/birdTrajectory.js";
 import {BirdDemo} from "./scenes/birdDemo_scene.js";
 import {BoidsDemo} from "./scenes/boidsDemo_scene.js";
+import {BezierDemo} from "./scenes/bezierDemo_scene.js";
 // import { distance } from "../lib/gl-matrix_3.3.0/esm/vec3.js";
 
 DOM_loaded_promise.then(main)
@@ -119,8 +120,9 @@ async function main() {
   const textureScene = new TextureScene(resource_manager);
   const birdDemoScene = new BirdDemo(resource_manager);
   const boidsDemoScene = new BoidsDemo(resource_manager);
+  const bezierDemoScene = new BezierDemo(resource_manager);
 
-  const active_scene = boidsDemoScene;   // Assign the scene to be rendered to active_scene
+  const active_scene = bezierDemoScene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation
