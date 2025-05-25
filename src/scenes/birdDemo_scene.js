@@ -57,7 +57,7 @@ export class BirdDemo extends Scene {
       translation : [0., 0., 0.],
       rotation : quat.fromEuler(quat.create(), 0, 0, 0),
       scale: [3., 3., 3.],
-      mesh_reference : "BirdAnimationOndrej0005.obj",
+      mesh_reference : "BirdCoastStartOndrej0082.obj",
       material : MATERIALS.bird,
       time : 2.
     };
@@ -106,7 +106,7 @@ export class BirdDemo extends Scene {
     
           bird.translation[2] = 0.;
           if (bird.time > 6.) {
-            animateBird(bird, bird.time - 6., 1.);
+            animateBird(bird, bird.time + 1.7, 1.);
           }
           
         };
@@ -131,6 +131,7 @@ export class BirdDemo extends Scene {
 function animateBird(bird, time, scale) {
   const frameRate = 25;
   const frame = Math.round(time * frameRate) % 200;
+  console.log(`frame: ${frame}`);
   const heightVar = 0.00015 * scale;
   if (frame < 73) {
     // console.log("Flapping");
