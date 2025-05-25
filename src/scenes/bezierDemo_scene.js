@@ -56,7 +56,7 @@ export class BezierDemo extends Scene {
 
 
       this.lights.push({
-      position : [0.0 , 0.0, 100.],
+      position : [0.0 , 0.0, 90.],
       color: [1.0, 1.0, 0.9]
     });
 
@@ -313,7 +313,7 @@ export class BezierDemo extends Scene {
       rotation : quat.fromEuler(quat.create(), 0, 0, 0),
       scale: [70., 70., 70.],
       mesh_reference : "skySphere",
-      material : MATERIALS.sunset_sky
+      material : MATERIALS.black
     });
 
 

@@ -16,9 +16,9 @@ const forceAngle = 5 * Math.PI / 12;
 const dynamicMaxSpeedWeight = 1.;
 const avoidanceForceLimit = 30. * scale;
 
-const avoidanceWeight = 150. * scale;
-const cohesionWeight = 0.8 * scale;
-const alignementWeight = 0.9 * scale;
+const avoidanceWeight = 2. * scale;
+const cohesionWeight = 5. * scale;
+const alignementWeight = 2. * scale;
 // const containementWeight = 10.;
 // const trajectoryWeight = 12.;
 // const avoidanceWeight = 0.;
@@ -68,7 +68,7 @@ function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
         if (i != index) {
             const distanceVec = vec3.create();
             vec3.sub(distanceVec, filterList[i], filterList[index]);
-            if (vec3.len(distanceVec) <= perceptionRadius * scale) {
+            if (vec3.len(distanceVec) <= perceptionRadius) {
                 count += 1.;
                 vec3.add(diff, diff, listToMean[i]);
             }
@@ -77,6 +77,7 @@ function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
 
     if (count != 0) {
         vec3.scale(diff, diff, 1. / count);
+        vec3.sub(diff, diff, listToMean[index]);
     }
 
     return diff;    
@@ -88,7 +89,7 @@ function avoidanceForce(posList, index) {
         const distanceVec = vec3.create();
         vec3.sub(distanceVec, posList[i], posList[index]);
         const distance = vec3.len(distanceVec);
-        if (distance <= avoidanceRadius * scale && distance != 0.) {
+        if (distance <= avoidanceRadius && distance != 0.) {
             vec3.negate(distanceVec, vec3.normalize(distanceVec, distanceVec));
             const scaledVec = vec3.scale(vec3.create(), distanceVec, 1. / distance);
             if (vec3.len(scaledVec) > avoidanceForceLimit) {
@@ -570,9 +571,9 @@ export function evolveBoid(dt, posList, velList, index) {
     const containement = containementForce(posList, index);
     //const trajectory = trajectoryForce(posList, index); 
 
-    // console.log(`avoidance: ${vec3.str(avoidance)}`);
-    // console.log(`cohesion: ${vec3.str(cohesion)}`);
-    // console.log(`alignement: ${vec3.str(alignement)}`);
+    console.log(`avoidance: ${vec3.str(avoidance)}`);
+    console.log(`cohesion: ${vec3.str(cohesion)}`);
+    console.log(`alignement: ${vec3.str(alignement)}`);
     console.log(`containement: ${vec3.str(containement)}`);
     // console.log(`trajectory: ${vec3.str(trajectory)}`);
 

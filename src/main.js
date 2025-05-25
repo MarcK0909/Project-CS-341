@@ -122,7 +122,7 @@ async function main() {
   const boidsDemoScene = new BoidsDemo(resource_manager);
   const bezierDemoScene = new BezierDemo(resource_manager);
 
-  const active_scene = bezierDemoScene;   // Assign the scene to be rendered to active_scene
+  const active_scene = birdAnimation_scene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation

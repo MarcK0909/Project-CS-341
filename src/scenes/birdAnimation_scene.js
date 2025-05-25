@@ -28,7 +28,7 @@ export class BirdAnimation extends Scene {
     this.scale = 0.1;
     this.camera = new BezierCamera();
     this.camera.set_scale_for_camera(this.scale);
-    this.camera.set_time_factor(0.8);
+    this.camera.set_time_factor(1.);
     // Boids
     this.posList = [];
     this.newPosList = [];
