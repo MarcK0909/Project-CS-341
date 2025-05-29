@@ -1,6 +1,4 @@
 import { vec3, mat3 } from "../../lib/gl-matrix_3.3.0/esm/index.js"
-import { fromValues } from "../../lib/gl-matrix_3.3.0/esm/mat2.js";
-import { angle } from "../../lib/gl-matrix_3.3.0/esm/vec3.js";
 
 const scale = 0.1;
 
@@ -19,11 +17,6 @@ const avoidanceForceLimit = 30. * scale;
 const avoidanceWeight = 2. * scale;
 const cohesionWeight = 5. * scale;
 const alignementWeight = 2. * scale;
-// const containementWeight = 10.;
-// const trajectoryWeight = 12.;
-// const avoidanceWeight = 0.;
-// const cohesionWeight = 0.;
-// const alignementWeight = 0.;
 const containementWeight = 50. * scale;
 const trajectoryWeight = 0.;
 
@@ -63,7 +56,6 @@ function dynamicMaxSpeed(posList, index) {
 function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
     const diff = vec3.fromValues(0., 0., 0.);
     let count = 0.;
-    // assuming the index of corresponding elements in filterList and listToMean is identical 
 
     for (let i = 0; i < filterList.length; i++) {
         if (i != index) {
@@ -75,7 +67,6 @@ function diffFromMeanPerceptionFiltered(filterList, listToMean, index) {
             }
         }
     } 
-    // console.log(`number of birds in perception radius: ${count}`);
 
     if (count != 0) {
         vec3.scale(diff, diff, 1. / count);
@@ -105,8 +96,6 @@ function avoidanceForce(posList, index) {
 }
 
 function cohesionForce(posList, index) {
-    // console.log(`CALCULATING COHESION FORCE ON BIRD NUMBER ${index}`);
-    // console.log(`bird position ${vec3.str(posList[index])}`);
     const force = diffFromMeanPerceptionFiltered(posList, posList, index);
     return force;
 }
@@ -120,7 +109,6 @@ function alignementForce(posList, velList, index) {
 // helper function for all BASIC EXCLUSION cylinders  (direction 1 for trigonometric -1 for inverse)
 function cylinderCheck(birdXYPos, cylCenter, cylRadius, direction, force) {
     const diff = vec3.subtract(vec3.create(), birdXYPos, cylCenter);
-    //console.log(`cylCenter : ${vec3.str(cylCenter)}  len diff : ${vec3.len(diff)}`)
     if (vec3.len(diff) < cylRadius) {    
         vec3.normalize(force, diff);
         vec3.rotateZ(force, force, origin, direction * forceAngle);
@@ -167,20 +155,12 @@ export function evolveBoid(dt, posList, velList, index) {
     const cohesion = cohesionForce(posList, index);
     const alignement = alignementForce(posList, velList, index);
     const containement = containementForce(posList, index);
-    //const trajectory = trajectoryForce(posList, index); 
-
-    // console.log(`avoidance: ${vec3.str(avoidance)}`);
-    // console.log(`cohesion: ${vec3.str(cohesion)}`);
-    // console.log(`alignement: ${vec3.str(alignement)}`);
-    // console.log(`containement: ${vec3.str(containement)}`);
-    // console.log(`trajectory: ${vec3.str(trajectory)}`);
 
     const newVel = vec3.create();
     vec3.scale(newVel, avoidance, avoidanceWeight);
     vec3.scaleAndAdd(newVel, newVel, cohesion, cohesionWeight);
     vec3.scaleAndAdd(newVel, newVel, alignement, alignementWeight);
     vec3.scaleAndAdd(newVel, newVel, containement, containementWeight);
-    //vec3.scaleAndAdd(newVel, newVel, trajectory, trajectoryWeight);
 
     vec3.scaleAndAdd(newVel, velList[index], newVel, dt);
 

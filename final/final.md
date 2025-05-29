@@ -178,11 +178,50 @@ Here is a full representation of our normal mapping taken from internet for refe
 
 #### Implementation
 
-TODO
+Our Boids algorithm simulates the flocking behavior of birds by applying a set of rules to each individual boid (bird) in the simulation. Each boid has a current position and velocity. In each step of the simulation, a new velocity is calculated for every boid based on several influencing forces, and its position is then updated. These are the forces we used :
+
+- **The avoidanceForce** function checks for other boids within a defined avoidanceRadius. If a nearby boid is detected, a repulsive force is generated, pushing the current boid away from it. The strength of this repulsion is inversely proportional to the distance (stronger for closer boids) and is capped by avoidanceForceLimit to prevent excessively strong reactions.
+  
+- **The cohesionForce** function calculates the center of mass of neighboring boids within a perceptionRadius. It then generates a force vector pointing from the current boid's position towards this perceived center. The diffFromMeanPerceptionFiltered helper function is used to find this average position of neighbors.
+
+- **The alignementForce** function calculates the average velocity of neighboring boids within the perceptionRadius. It then generates a force that attempts to steer the current boid towards this average velocity. Again, diffFromMeanPerceptionFiltered is used, this time to average the velocities of neighbors.
+
+- **The containementForce** function uses a sophisticated system of virtual "cylinders" and boundary checks:
+ - Cylinder Definitions: The cylinder helper function defines cylindrical zones in the XY plane, each with a center, radius, and a preferred direction of movement (trigonometric or inverse) for boids interacting with it.
+ - Cylinder Interaction: The cylinderCheck function determines if a boid's XY position is within a cylinder. If so, it applies a force to steer the boid along the cylinder's edge in the specified direction, using a forceAngle to guide the turn.
+ - Quadrant-Specific Logic: The containment logic is divided into quadrants based on the boid's angle around the Z-axis. Different sets of guiding cylinders are active in different quadrants, creating a complex, predefined flight path.
+ - Global Boundaries: There's a global outer radius to prevent boids from flying too far away and an inner radius to keep them from collapsing into the origin.
+ - Z-Axis Containment: Simple upper and lower limits are enforced on the Z-axis, pushing boids back towards the median flight altitude if they stray too high or too low.
+
+- **Putting everything together :** The forces calculated from Avoidance, Cohesion, Alignment, and Containment are each multiplied by their respective weights (avoidanceWeight, cohesionWeight, alignementWeight, containementWeight). These weights determine the relative influence of each behavior which is demonstrated below in the attached videos.
+The weighted forces are summed up to get a net acceleration vector.
+This acceleration is then added to the boid's current velocity (scaled by the timestep dt) to compute the new velocity. The boids' speed is always clamped between the dynamicMaxSpeed which can temporarily increase the maxSpeed for boids that are lagging behind the average angular position of the flock, helping them catch up and minSpeed which doesn't ever change.
 
 #### Validation
 
-TODO
+
+<figure style="text-align: center;">
+  <video src="videos/boidsDemo.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>Illustrative video of our boids' behavior</figcaption>
+</figure>
+
+The above video showcases how our boids behave in a containment sphere isolated from all other obstacles which means the only forces they are affected by are from themselves and the containment force, this scene can be found in the file named boidsDemo_scene.js. We modified our standard boids.js file and created a new one called boidsDemo.js because we had to modify the containmentForce to work differently than in the final scene. We only included a sphere in this test scene so that the boids are isolated and their interactions are more visible than if they were flying around cylinders which explains the need for a new file. Other than that, the code in this Demo boids algorithm is the same as in our "real" scene. As we can see in the video the boids behave as expected and the below videos show what happens when adjusting the weights of certain forces so that you can better observe their effects on the boids.
+
+<figure style="text-align: center;">
+  <video src="videos/boidsDemoS.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>Max speed increased as well as avoidance weight</figcaption>
+</figure>
+
+In this second video we increased the max speed our boids could have by 1/3 and also multiplied the avoidance by 6 to better showcase how the forces work. As we can see, the boids' behavior seems more erratic, this is simply due to the fact that the outputted force when two birds get too close to each other is much bigger which is why some boids change directions very quickly. The speed increase is also noticeable as the boids seem to fly around much faster.
+
+<figure style="text-align: center;">
+  <video src="videos/boidsDemoC.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>Alignment and cohesion weight both doubled</figcaption>
+</figure>
+
+In this third video we doubled both the alignement and cohesion weights again to better showcase their effects. As can be seen, the birds now seem to split into two groups (which is the way we make them spawn) and, contrary to the other two videos, they stay in these two groups throughout the video which is simply due to the fact that the forces attracting them together is much stronger and thus overshadow the other forces affecting the boids.
+
+We think these three videos showcase well the effects each force has on the boids and how they work all together to create a cohesive result overall.We decided not to include a video for each force as this wouldn't have been very useful and wouldn't have been a better showcase of the feature.
 
 
 ### Boids
