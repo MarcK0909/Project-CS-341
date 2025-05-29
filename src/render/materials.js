@@ -116,6 +116,10 @@ export const bird = new TexturedObjectMaterial({
     texture: 'BirdImageDarker.png'
 });
 
+export const WhiteBackground = new BackgroundMaterial({
+    texture: 'WhiteBackground.png'
+});
+
 export const ground_test = new TexturedObjectMaterial({
     texture: 'ground_blurr4.png'
 });
