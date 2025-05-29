@@ -174,7 +174,7 @@ Here is a full representation of our normal mapping taken from internet for refe
 <video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;"></video>
 </div>
 
-### Bézier Curves
+### Boids
 
 #### Implementation
 
@@ -224,7 +224,7 @@ In this third video we doubled both the alignement and cohesion weights again to
 We think these three videos showcase well the effects each force has on the boids and how they work all together to create a cohesive result overall.We decided not to include a video for each force as this wouldn't have been very useful and wouldn't have been a better showcase of the feature.
 
 
-### Boids
+### Bézier Curves
 
 #### Implementation
 
@@ -287,14 +287,14 @@ Using our visualization we made on GGB, we then were able to manually place the 
 		</tr>
 		<tr>
 			<td>Marc</td>
-			<td></td>
+			<td>3</td>
 			<td style="background-color: #f0f0f0;"></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>2</td>
+			<td>4</td>
+			<td>6</td>
+			<td>6</td>
+			<td>6</td>
+			<td>28</td>
 		</tr>
 		<tr>
 			<td>Clemens</td>

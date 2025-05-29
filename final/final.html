@@ -47,10 +47,12 @@
           <ul>
           <li><a href="#mesh-design" id="toc-mesh-design">Mesh
           Design</a></li>
-          <li><a href="#feature-2" id="toc-feature-2">Feature 2</a></li>
-          <li><a href="#feature-3" id="toc-feature-3">Feature 3</a></li>
+          <li><a href="#fog" id="toc-fog">Fog</a></li>
+          <li><a href="#normal-mapping" id="toc-normal-mapping">Normal
+          Mapping</a></li>
           <li><a href="#boids" id="toc-boids">Boids</a></li>
-          <li><a href="#feature-5" id="toc-feature-5">Feature 5</a></li>
+          <li><a href="#bézier-curves" id="toc-bézier-curves">Bézier
+          Curves</a></li>
           </ul></li>
           <li><a href="#discussion" id="toc-discussion">Discussion</a>
           <ul>
@@ -270,16 +272,55 @@ Bird design in the YouTube tutorial
 </div>
 <p><em>Note: The above objects are not exhaustive of all the meshes we
 created.</em></p>
-<h3 id="feature-2">Feature 2</h3>
+<h3 id="fog">Fog</h3>
 <h4 id="implementation-1">Implementation</h4>
 <p>TODO</p>
 <h4 id="validation-1">Validation</h4>
 <p>TODO</p>
-<h3 id="feature-3">Feature 3</h3>
+<h3 id="normal-mapping">Normal Mapping</h3>
 <h4 id="implementation-2">Implementation</h4>
-<p>TODO</p>
+<p>We implemented the mapping following the course’s material as well as
+the implementation we did in the GL1 homework. For that we decided to
+create a new material called “NormalTexturedMaterial” which takes two
+parameters, which are the texture and its normal map and added a
+property along with it. We implemented the normal mapping directly in
+the blinn phong shader renderer to keep the code clean and simple.
+Inside the shader renderer, we used a method called “normal_data” inside
+cg_render_utils.js that we created for us to load the correct
+ressources, in order to process the normal mapping. We then loaded the
+necessairy ressources, by adding them to the inputs and uniforming them,
+to the frag and vert shaders, got the normals, tangent and bitangent
+vectors, for the bi-tangent vectors we used the Mesh’s property
+“calcTangentsAndBitangents” when loading a mesh in “cg_mesh.js” (which
+we then normalized inside the vertex shader). We then used all the
+loaded ressources and computed the normal displacement to finally get
+the wanted result. As we will see in the validation</p>
 <h4 id="validation-2">Validation</h4>
-<p>TODO</p>
+<figure style="text-align: center;">
+<img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="170">
+<figcaption>
+Texture without normal mapping
+</figcaption>
+</figure>
+<figure style="text-align: center;">
+<img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="170">
+<figcaption>
+Texture with normal mapping
+</figcaption>
+</figure>
+<figure style="text-align: center;">
+<img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="170">
+<figcaption>
+Reference texture from PolyHeaven
+(https://polyhaven.com/a/brown_mud_leaves_01)
+</figcaption>
+</figure>
+Here is a full representation of our normal mapping taken from internet
+for reference (https://en.wikipedia.org/wiki/Normal_mapping) :
+<div>
+<video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;">
+</video>
+</div>
 <h3 id="boids">Boids</h3>
 <h4 id="implementation-3">Implementation</h4>
 <p>Our Boids algorithm simulates the flocking behavior of birds by
@@ -394,7 +435,7 @@ on the boids and how they work all together to create a cohesive result
 overall.We decided not to include a video for each force as this
 wouldn’t have been very useful and wouldn’t have been a better showcase
 of the feature.</p>
-<h3 id="feature-5">Feature 5</h3>
+<h3 id="bézier-curves">Bézier Curves</h3>
 <h4 id="implementation-4">Implementation</h4>
 <p>TODO</p>
 <h4 id="validation-4">Validation</h4>
@@ -519,20 +560,28 @@ Marc
 Clemens
 </td>
 <td>
+2
 </td>
 <td style="background-color: #f0f0f0;">
+3
 </td>
 <td>
+4
 </td>
 <td>
+5
 </td>
 <td>
+6
 </td>
 <td>
+5
 </td>
 <td>
+5
 </td>
 <td>
+30
 </td>
 </tr>
 </tbody>
