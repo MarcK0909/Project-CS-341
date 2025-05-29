@@ -138,7 +138,7 @@ We designed our meshes in Blender, mainly by following tutorials on youtube ([Pi
 *Note: The above objects are not exhaustive of all the meshes we created.*
 
 
-### Feature 2
+### Fog
 
 #### Implementation
 
@@ -149,7 +149,32 @@ TODO
 TODO
 
 
-### Feature 3
+### Normal Mapping
+
+#### Implementation
+
+We implemented the mapping following the course's material as well as the implementation we did in the GL1 homework. For that we decided to create a new material called "NormalTexturedMaterial" which takes two parameters, which are the texture and its normal map and added a property along with it. We implemented the normal mapping directly in the blinn phong shader renderer to keep the code clean and simple. Inside the shader renderer, we used a method called "normal_data" inside cg_render_utils.js that we created for us to load the correct ressources, in order to process the normal mapping. We then loaded the necessairy ressources, by adding them to the inputs and uniforming them, to the frag and vert shaders, got the normals, tangent and bitangent vectors, for the bi-tangent vectors we used the Mesh's property "calcTangentsAndBitangents" when loading a mesh in "cg_mesh.js" (which we then normalized inside the vertex shader). We then used all the loaded ressources and computed the normal displacement to finally get the wanted result. As we will see in the validation
+
+#### Validation
+
+<figure style="text-align: center;">
+    <img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="170">
+    <figcaption>Texture without normal mapping</figcaption>
+</figure>
+<figure style="text-align: center;">
+    <img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="170">
+    <figcaption>Texture with normal mapping</figcaption>
+</figure>
+<figure style="text-align: center;">
+    <img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="170">
+    <figcaption>Reference texture from PolyHeaven (https://polyhaven.com/a/brown_mud_leaves_01)</figcaption>
+</figure>
+Here is a full representation of our normal mapping taken from internet for reference (https://en.wikipedia.org/wiki/Normal_mapping) : 
+<div>
+<video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;"></video>
+</div>
+
+### Bézier Curves
 
 #### Implementation
 
@@ -160,18 +185,7 @@ TODO
 TODO
 
 
-### Feature 4
-
-#### Implementation
-
-TODO
-
-#### Validation
-
-TODO
-
-
-### Feature 5
+### Boids
 
 #### Implementation
 
@@ -245,14 +259,14 @@ Using our visualization we made on GGB, we then were able to manually place the 
 		</tr>
 		<tr>
 			<td>Clemens</td>
-			<td></td>
-			<td style="background-color: #f0f0f0;"></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>2</td>
+			<td style="background-color: #f0f0f0;">3</td>
+			<td>4</td>
+			<td>5</td>
+			<td>6</td>
+			<td>5</td>
+			<td>5</td>
+			<td>30</td>
 		</tr>
 	</tbody>
 </table>

@@ -6,7 +6,6 @@ import { ShadowsShaderRenderer } from "./shader_renderers/shadows_sr.js"
 import { MapMixerShaderRenderer } from "./shader_renderers/map_mixer_sr.js"
 import { TerrainShaderRenderer } from "./shader_renderers/terrain_sr.js"
 import { PreprocessingShaderRenderer } from "./shader_renderers/pre_processing_sr.js"
-import { NormalRenderer } from "./shader_renderers/normal_sr.js"
 import { ResourceManager } from "../scene_resources/resource_manager.js"
 
 export class SceneRenderer {

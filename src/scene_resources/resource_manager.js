@@ -165,7 +165,10 @@ export class ResourceManager{
             "pine_texture_2_normal.png",
             "pine_texture_2_normal_blurr2.jpg",
             "pine_texture_2_blurr2.jpg",
-            "ground_blurr4.png"
+            "ground_blurr4.png",
+            "ground_normal_2.png",
+            'normal_map_map.png',
+            'normal_validation.png'
           ];
     }
 
@@ -225,6 +228,7 @@ export class ResourceManager{
         "BirdCoastEndOndrej0003.obj",
         "BirdCoastEndOndrej0004.obj",
         'floor.obj',
+        "brown_mud_leaves_01_4k.obj"
       ];
     }
 
