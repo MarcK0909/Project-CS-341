@@ -221,7 +221,7 @@ In this second video we increased the max speed our boids could have by 1/3 and 
 
 In this third video we doubled both the alignement and cohesion weights again to better showcase their effects. As can be seen, the birds now seem to split into two groups (which is the way we make them spawn) and, contrary to the other two videos, they stay in these two groups throughout the video which is simply due to the fact that the forces attracting them together is much stronger and thus overshadow the other forces affecting the boids.
 
-We think these three videos showcase well the effects each force has on the boids and how they work all together to create a cohesive result overall.We decided not to include a video for each force as this wouldn't have been very useful and wouldn't have been a better showcase of the feature.
+We think these three videos showcase the effects well for each force on the boids and how they work all together to create a cohesive result.We decided not to include a video for each force individually as this wouldn't have been very useful and wouldn't have been a better showcase of the feature in our opinion.
 
 
 ### Bézier Curves
@@ -243,17 +243,24 @@ TODO
 
 ### Failed Experiments
 
-TODO
+One of our biggest shortcomings was our original plan on how to enforce a trajectory for the boids, which would ensure our boids circle around the origin but also have some variation with their movement (up-down, left-right). Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the distance of the birds. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. We then thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird and split our trajectory circle into 8 quadrants, we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up or the opposite to make it go down). We thus implemented a new function called trajectoryForce (whose code can be found commented out in the boids.js file from lines 235 to 354) but the results of this proved to work in a very robotic and unnatural way, not at all what we were wishing for in the beginning. Indeed, as all the boids had the  exact same force vector applied to them at almost the same time (because 8 quadrants wasn't that big to seperate them and because we originally tested this with few boids) they all followed each other almost like if it were a carousel. The below video showcases this failed experiment and puts it into video.
+
+<figure style="text-align: center;">
+  <video src="videos/boidsDemoC.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>Original trajectory idea for our boids</figcaption>
+</figure>
+
+In the end we opted for another approach to fix this, and get what we wnated, which is detailed below in the Challenges section.
 
 ### Challenges
 
-Our first big challenge to face was the implementation of a general trajectory for the boids. Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the distance of the birds. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. Then we thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up) but the results of this proved to be robotic and unnatural, not at all what we were wishing for in the beginning. We thus opted for another approach which was to place "cylinders" across our scene as these seemed to provide the best results as the boids would dodge the obstacles in a much more natural manner. We placed the cylinders on Geogebra and thus could easily represent what was happening in our scene. 
+Our first big challenge to face was the implementation of a general trajectory for the boids. We thus opted for another approach which was to place "cylinders" across our scene, similar to the ones we originally used to contain the boids as our base step, as these seemed to provide the best results since the boids would dodge the obstacles in a much more natural manner. We started by multiplying our entire scene by a scale to have a "miniature" one so that we could better visualize what was going on. We also implemented a camera which filmed our scene from above the origin so that we could see the boids circling around. Using all these tools we opted to place the cylinders, which would mimick the trees, on Geogebra and thus could easily visually represent what was happening in our scene.
 <div style="text-align: center;">
 <img src="images/trajectory_on_ggb.png" height="300px">
 <figcaption style="text-align: center;">The trajectory we implemented using Geogebra</figcaption>
 </div>
 
-Using our visualization we made on GGB, we then were able to manually place the pine trees inside/close to the cylinders we placed to give the illusion that the birds were dodging them which created the look we were going for. This proved to be quite challenging as the process of placing the trees was quite tedious and the existing code for the birds' trajectory had to be extensively modified (mainly the containment force which was fully reworked).  
+Using our visualization, we then were able to manually place the pine trees inside/close to the cylinders we placed to give the illusion that the birds were dodging them which created the look we were going for. This proved to be quite challenging as the process of placing the trees was quite tedious and the existing code for the birds' trajectory had to be extensively modified, mainly the containment force which was fully reworked and helper functions had to be added to better modularize the code which can all be seen in our boids.js class.
 
 
 ## Contributions
@@ -293,8 +300,8 @@ Using our visualization we made on GGB, we then were able to manually place the 
 			<td>4</td>
 			<td>6</td>
 			<td>6</td>
-			<td>6</td>
-			<td>28</td>
+			<td>7</td>
+			<td>29</td>
 		</tr>
 		<tr>
 			<td>Clemens</td>
