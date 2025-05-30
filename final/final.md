@@ -13,7 +13,7 @@ title: Final Project Report CS-341 2025
 
 ## Abstract
 
-The goal of our project, "In Flight," is to create a dynamic and visually engaging 3D scene showcasing bird animation and flocking behavior. We aimed to implement the boids algorithm to simulate the behavior of a flock of birds flying through a forest filled with pines swirling in between them and dodging them to create a movie-like scene. 
+The goal of our project, "In Flight," is to create a dynamic and visually engaging 3D scene showcasing bird animation and flocking behavior. We aimed to implement the boids algorithm to simulate the behavior of a flock of birds flying through a forest filled with pines swirling in between them and dodging them to create a movie-like scene which is the video refernced below in our Ressources section.
 
 
 ## Overview
@@ -235,10 +235,10 @@ TODO
 
 ### Failed Experiments
 
-One of our biggest shortcomings was our original plan on how to enforce a trajectory for the boids, which would ensure our boids circle around the origin but also have some variation with their movement (up-down, left-right). Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the distance of the birds. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. We then thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird and split our trajectory circle into 8 quadrants, we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up or the opposite to make it go down). We thus implemented a new function called trajectoryForce (whose code can be found commented out in the boids.js file from lines 235 to 354) but the results of this proved to work in a very robotic and unnatural way, not at all what we were wishing for in the beginning. Indeed, as all the boids had the  exact same force vector applied to them at almost the same time (because 8 quadrants wasn't that big to seperate them and because we originally tested this with few boids) they all followed each other almost like if it were a carousel. The below video showcases this failed experiment and puts it into video.
+One of our biggest shortcomings was our original plan on how to enforce a trajectory for the boids, which would ensure our boids circle around the origin but also have some variation with their movement (up-down, left-right). Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the distance of the birds. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. We then thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird and split our trajectory circle into 8 quadrants, we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up or the opposite to make it go down). We thus implemented a new function called trajectoryForce (whose code can be found commented out in the boids.js file from lines 235 to 354) but the results of this proved to work in a very robotic and unnatural way, not at all what we were wishing for in the beginning. Indeed, as all the boids had the  exact same force vector applied to them at almost the same time (because 8 quadrants wasn't that big to seperate them and because we originally tested this with few boids) they all followed each other almost like if it were a carousel. The below video showcases this failed experiment (don't mind the artifact in the middle of the screen) and puts it into video form.
 
 <figure style="text-align: center;">
-  <video src="videos/boidsDemoC.mp4" height="300px" autoplay loop muted></video>
+  <video src="videos/ShowcaseFailure.mp4" height="300px" autoplay loop muted></video>
   <figcaption>Original trajectory idea for our boids</figcaption>
 </figure>
 
