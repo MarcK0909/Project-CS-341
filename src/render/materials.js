@@ -99,7 +99,7 @@ class TerrainMaterial extends Material {
 }
 
 /*---------------------------------------------------------------
-	Material Instantiation
+    Material Instantiation
 ---------------------------------------------------------------*/
 /**
  * Here materials are defined to later be assigned to objects.
@@ -115,40 +115,40 @@ export const bird = new TexturedObjectMaterial({
     texture: 'BirdImageDarker.png'
 });
 
-export const WhiteBackground = new BackgroundMaterial({
-    texture: 'WhiteBackground.png'
-});
+// export const WhiteBackground = new BackgroundMaterial({
+//     texture: 'WhiteBackground.png'
+// });
 
-export const ground_test = new TexturedObjectMaterial({
-    texture: 'ground_blurr4.png'
-});
+// export const ground_test = new TexturedObjectMaterial({
+//     texture: 'ground_blurr4.png'
+// });
 
-export const misty_forrest = new BackgroundMaterial({
-    texture: 'misty_pines.jpg'
-});
+// export const misty_forrest = new BackgroundMaterial({
+//     texture: 'misty_pines.jpg'
+// });
 
-export const test_sphere = new BackgroundMaterial({
-    texture: 'testSkySphere.jpg'
-});
+// export const test_sphere = new BackgroundMaterial({
+//     texture: 'testSkySphere.jpg'
+// });
 
-export const normal_ground_forest = new NormalTexturedMaterial({
-    normal_map: 'ground_normal.png',
-    texture: 'ground.jpg'
-});
+// export const normal_ground_forest = new NormalTexturedMaterial({
+//     normal_map: 'ground_normal.png',
+//     texture: 'ground.jpg'
+// });
 export const ground2 = new NormalTexturedMaterial({
     normal_map: 'ground_normal.png',
     texture: 'ground_blurr4.png'
 })
 
-export const gray = new DiffuseMaterial({
-    color: [0.4, 0.4, 0.4],
-    shininess: 0.5
-});
+// export const gray = new DiffuseMaterial({
+//     color: [0.4, 0.4, 0.4],
+//     shininess: 0.5
+// });
 
-export const gold = new DiffuseMaterial({
-    texture: 'tex_gold',
-    shininess: 14.0
-});
+// export const gold = new DiffuseMaterial({
+//     texture: 'tex_gold',
+//     shininess: 14.0
+// });
 
 export const black = new DiffuseMaterial({
     texture: 'tex_black',
@@ -165,20 +165,12 @@ export const pine_norm = new NormalTexturedMaterial({
     texture :  'pine_texture_2_blurr2.jpg'
 })
 
-export const pine_test = new TexturedObjectMaterial({
-    texture : 'pine_texture_2_blurr2.jpg'
-})
+// export const pine_test = new TexturedObjectMaterial({
+//     texture : 'pine_texture_2_blurr2.jpg'
+// })
 
 
 
-export const terrain = new TerrainMaterial({
-    water_color: [0.29, 0.51, 0.62],
-    grass_color: [0.33, 0.43, 0.18],
-    peak_color: [0.8, 0.5, 0.4]
-});
-
-export const ground = new BackgroundMaterial({
-    texture: 'ground.jpg'
-})
-
-export const mirror = new ReflectiveMaterial({})
+// export const ground = new BackgroundMaterial({
+//     texture: 'ground.jpg'
+// })

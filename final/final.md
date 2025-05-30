@@ -434,6 +434,6 @@ TODO
 
 [Low Poly](https://www.youtube.com/watch?v=hvxoAX_poI0)
 
-[Rock blend](https://free3d.com/3d-model/low-poly-rock-4631.html)
+[Ground texture](https://polyhaven.com/a/brown_mud_leaves_01)
 
-[Free to use textures](https://polyhaven.com/)
+[Normal map reference](https://en.wikipedia.org/wiki/Normal_mapping)
