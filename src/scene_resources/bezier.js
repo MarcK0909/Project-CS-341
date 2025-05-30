@@ -7,9 +7,6 @@ import { vec2, vec3, vec4, mat3, mat4 } from "../../lib/gl-matrix_3.3.0/esm/inde
 
 // Constants
 export const UP = vec3.fromValues(0.0, 1.0, 0.0);  // An Up vector
-export const DOWN = vec3.fromValues(0.0, -1.0, 0.0);
-export const FRONT = vec3.fromValues(0.0,0.0,1.0);
-export const RIGHT = vec3.fromValues(-1.0,0.0,0.0);
 
 /**
  * A linear Bezier function.
@@ -148,7 +145,7 @@ export function dcb(a, b, c, d, t) {
 }
 
 /**
- * Smoothstep function (similar to GLSL)
+ * Smoothstep function
  * @param {number} edge0 Lower edge
  * @param {number} edge1 Upper edge
  * @param {number} x Value to interpolate
@@ -156,7 +153,7 @@ export function dcb(a, b, c, d, t) {
  */
 export function smoothstep(edge0, edge1, x) {
     const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
-    return t; //* t * (3 - 2 * t);
+    return t;
 }
 
 /**
@@ -273,38 +270,6 @@ export function c_cam_path(s, e, f, a, b, c, d, t) {
     const shutter = shutterfade(s, e, t, f);
     
     return { cp, cd, shutter };
-}
-
-/**
- * Simple circular path for testing camera movement
- * @param {vec2} uv Screen coordinates
- * @param {number} t Current time
- * @returns {Object} Camera ray information
- */
-export function simpleCircleCam(uv, t) {
-    // Create a simple circular path
-    const radius = 5.0;
-    const height = 1.0;
-    const speed = 0.5; // Controls rotation speed
-    
-    // Calculate position on a circle
-    const x = radius * Math.cos(t * speed);
-    const z = radius * Math.sin(t * speed);
-    const y = height;
-    
-    const cp = vec3.fromValues(x, y, z);
-    
-    // Look at center
-    const cd = vec3.create();
-    vec3.set(cd, -x, -0.5, -z);
-    vec3.normalize(cd, cd);
-    
-    const shutter = 1.0; // Always visible
-    
-    // Create camera ray
-    const { ro, rd } = createCameraRay(uv, cp, cd, 1.0);
-    
-    return { ro, rd, shutter };
 }
 
 /**

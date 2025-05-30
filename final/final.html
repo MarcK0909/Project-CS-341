@@ -281,31 +281,43 @@ vertex shader where we interpolate all three before passing them to the
 fragment shader where the final computation is done following the
 formula seen in the lectures.</p>
 <h4 id="validation-2">Validation</h4>
+<p>As shown below we have 1 implementation where we turned off normal
+mapping (which gives a texture without any details, as it should), next
+we have our implementation of the texture where we added normal mapping,
+for reference we have the original sphere from polyheaven, when we
+downloaded it. As we can see the mapping clearly works.</p>
+<div style="display: flex; justify-content: center; gap: 10px;">
 <figure style="text-align: center;">
-<img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="170">
+<img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="200px">
 <figcaption>
 Texture without normal mapping
 </figcaption>
 </figure>
 <figure style="text-align: center;">
-<img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="170">
+<img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="200px">
 <figcaption>
 Texture with normal mapping
 </figcaption>
 </figure>
 <figure style="text-align: center;">
-<img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="170">
+<img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="200px">
 <figcaption>
-Reference texture from PolyHeaven
-(https://polyhaven.com/a/brown_mud_leaves_01)
+<a href="https://polyhaven.com/a/brown_mud_leaves_01">Reference texture
+from PolyHeaven</a>
 </figcaption>
 </figure>
-Here is a full representation of our normal mapping taken from internet
-for reference (https://en.wikipedia.org/wiki/Normal_mapping) :
-<div>
-<video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;">
-</video>
 </div>
+Here is a full representation of our normal mapping taken from internet
+for reference to showcase a fully functionnal normal mapping with a
+moving light point :
+<figure style="text-align: center;">
+<video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted>
+</video>
+<figcaption>
+(<a href="https://en.wikipedia.org/wiki/Normal_mapping">Wikipedia -
+Normal mapping</a>)
+</figcaption>
+</figure>
 <h3 id="boids">Boids</h3>
 <h4 id="implementation-3">Implementation</h4>
 <p>Our Boids algorithm simulates the flocking behavior of birds by
@@ -435,9 +447,38 @@ this wouldn’t have been very useful and wouldn’t have been a better
 showcase of the feature in our opinion.</p>
 <h3 id="bézier-curves">Bézier Curves</h3>
 <h4 id="implementation-4">Implementation</h4>
-<p>TODO</p>
+<p>To implement Bézier curves we used the reference given in the handout
+for <a href="https://www.shadertoy.com/view/XtBGDR">bezier curves</a>,
+inside bezier.js we took 3 different segments (0-9.72s, 9.72-17.22s,
+17.22-30s) and for each of these segments we interpolated the cubic
+formulas, added multiple methods to calculate the derivatives and others
+like smoothstep to have smooth transitions between the end and the
+beginning of each segment, as well as createCameraRay which takes the
+cameras position and direction and calculates what it should show. For
+that we created a new camera called BezierCamera() and implemented all
+necessairy methods such as update_cam_transform() which recomputes the
+view-matrix in relation to its position, compute the transformation
+matrices for each object in the scene. Which all together gives the
+wanted result.</p>
 <h4 id="validation-4">Validation</h4>
-<p>TODO</p>
+<p>As we can see here, we added a curve (with shaders) following bezier
+curves with the same exact interpolation points, except that we put the
+z-axis lower for easier representation, as the camera and it follows all
+along, which proves that our implementation is correct (each segment
+color represents a different interpolation):</p>
+<figure style="text-align: center;">
+<video src="videos/bezier_validation2.mp4" height="300px" autoplay loop muted>
+</video>
+<figcaption>
+Bezier camera following the curve
+</figcaption>
+</figure>
+<figure>
+<img src="images/Bezier_curves_turntable_camera.png" width="500"
+alt="Image of the curves that the camera is following" />
+<figcaption aria-hidden="true">Image of the curves that the camera is
+following</figcaption>
+</figure>
 <h2 id="discussion">Discussion</h2>
 <h3 id="additional-components">Additional Components</h3>
 <p>TODO</p>

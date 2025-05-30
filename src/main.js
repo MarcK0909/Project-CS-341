@@ -25,6 +25,7 @@ import {BirdTrajectory} from "./scenes/birdTrajectory.js";
 import {BirdDemo} from "./scenes/birdDemo_scene.js";
 import {BoidsDemo} from "./scenes/boidsDemo_scene.js";
 import {BezierDemo} from "./scenes/bezierDemo_scene.js";
+import {TestScene} from "./scenes/Clemens_Feature_validation.js"
 // import { distance } from "../lib/gl-matrix_3.3.0/esm/vec3.js";
 
 DOM_loaded_promise.then(main)
@@ -121,8 +122,9 @@ async function main() {
   const birdDemoScene = new BirdDemo(resource_manager);
   const boidsDemoScene = new BoidsDemo(resource_manager);
   const bezierDemoScene = new BezierDemo(resource_manager);
+  const testScene = new TestScene(resource_manager);
 
-  const active_scene = boidsDemoScene;   // Assign the scene to be rendered to active_scene
+  const active_scene = testScene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation
@@ -155,7 +157,7 @@ async function main() {
     prev_regl_time = frame.time;
 
     // If the time is not paused, iterate over all actors and call their evolve function
-    if (!ui_global_params.is_paused && frame.time > 20){
+    if (!ui_global_params.is_paused && frame.time > 10){
       for (const name in active_scene.actors){
         active_scene.actors[name].evolve(dt);
       }
