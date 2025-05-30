@@ -123,7 +123,7 @@ export class SceneRenderer {
             this.blinn_phong.render(scene_state);
             
             // Render Bezier curves for camera path visualization
-            this.bezier_curve.render(scene_state);
+            // this.bezier_curve.render(scene_state);
             
             // Render the reflection of mirror objects on top
             // this.mirror.render(scene_state, (s_s) => {

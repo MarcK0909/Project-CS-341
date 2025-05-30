@@ -25,12 +25,6 @@ export class TutorialScene extends Scene {
     
     this.resource_manager = resource_manager;
 
-    // Boids
-    this.posList = [];
-    this.newPosList = [];
-    this.velList = [];
-    this.newVelList = [];
-    this.evolvedList = [];
 
     this.initialize_scene();
     this.initialize_actor_actions();
@@ -51,49 +45,6 @@ export class TutorialScene extends Scene {
       color: [1.0, 1.0, 0.9]
     });
 
-
-    for (let h = 0; h < 2; h++) {
-      for (let i = 0; i < 4; i++) {
-        const position = [15.0 * i + 30., 0.0, 10.0 * h + 20.];
-  
-        const actorBird = {
-          translation : position,
-          scale: [5., 5., 5.],
-          mesh_reference : "birdTest1.obj",
-          material : {
-            ...MATERIALS.black,
-            texture: 'BoidsImage.png'
-          }
-        };
-  
-        this.objects.push(actorBird);
-        this.actors[`bird${h * 4 + i}`] = actorBird;
-        this.posList.push(vec3.fromValues(position[0], position[1], position[2]));
-        this.velList.push(vec3.fromValues(0., 8., 0.));
-        this.evolvedList.push(false);
-      }
-      
-    }
-
-
-    this.objects.push({
-      translation : [0., 0.0, 0.0],
-      scale: [5., 5., 5.],
-      mesh_reference : "Bird1.obj",
-      material : {
-        ...MATERIALS.black,
-        texture: 'BoidsImage.png'
-      }
-    });
-
-
-    this.objects.push({
-      translation : [0.0, 0.0, 0.0],
-      scale: [500., 500., 500.],
-      mesh_reference : "skySphere",
-      material : MATERIALS.misty_forrest
-    });
-
   }
 
   /**
@@ -101,55 +52,6 @@ export class TutorialScene extends Scene {
    */
   initialize_actor_actions(){
 
-    // const bird = this.actors["actorBird"];
-    
-    // bird.evolve = (dt) => {
-    //   const maxTraslation = 200.;
-    //   const speed = 10.;
-    //   if (bird.translation[1] < maxTraslation) {
-    //     bird.translation[1] += speed * dt;
-    //   }
-    // }
-    for (const name in this.actors) {
-      // bird
-      if (name.includes("bird")){
-        const bird = this.actors[name];
-        bird.evolve = (dt) => {
-          const index = Number(name.charAt(4)); // relies on naming convention !!!!
-          
-          console.log(`evolving: ${index}`);
-          const velocity = evolveBoid(dt, this.posList, this.velList, index);
-
-          const position = vec3.create();
-          vec3.scaleAndAdd(position, this.posList[index], velocity, dt);
-
-          bird.translation[0] = position[0];
-          bird.translation[1] = position[1];
-          bird.translation[2] = position[2];
-
-          // change to newPosList and newVelList and uncomment paragraph undeneath to use same values for all birds in one step
-          this.posList[index] = position;
-          this.velList[index] = velocity;
-
-          this.evolvedList[index] = true;
-
-          
-
-        //   if (this.evolvedList.every(e => e)) {
-        //     console.log(`all birds have been evolved once`);
-
-        //     this.posList = this.newPosList.slice();
-        //     this.velList = this.newVelList.slice();
-
-        //     // for (let i = 0; i < this.posList.length; i++) {
-        //     //   vec3.copy(this.posList[i], this.newPosList[i]);
-        //     //   vec3.copy(this.velList[i], this.newVelList[i]);
-        //     // }
-        //     this.evolvedList.forEach((v, i, arr) => arr[i] = false);
-        //   }
-        };
-      }
-    }
 
   }
 

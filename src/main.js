@@ -17,15 +17,12 @@ import { ResourceManager } from "./scene_resources/resource_manager.js"
 import { ProceduralTextureGenerator } from "./render/procedural_texture_generator.js";
 
 // Scenes
-import { TextureScene } from "./scenes/texture_scene.js";
-import { BirdAnimation } from "./scenes/birdAnimation_scene.js";
+import { FinalScene } from "./scenes/final_scene.js";
 import { TutorialScene } from "./scenes/tutorial_scene.js";
 import { DemoScene } from "./scenes/demo_scene.js";
-import {BirdTrajectory} from "./scenes/birdTrajectory.js";
 import {BirdDemo} from "./scenes/birdDemo_scene.js";
 import {BoidsDemo} from "./scenes/boidsDemo_scene.js";
 import {BezierDemo} from "./scenes/bezierDemo_scene.js";
-import {TestScene} from "./scenes/Clemens_Feature_validation.js"
 // import { distance } from "../lib/gl-matrix_3.3.0/esm/vec3.js";
 
 DOM_loaded_promise.then(main)
@@ -116,15 +113,13 @@ async function main() {
   // which one is rendered depends on the value of the active_scene variable.
   const demo_scene = new DemoScene(resource_manager, procedural_texture_generator);
   const tutorial_scene = new TutorialScene(resource_manager);
-  const birdAnimation_scene = new BirdAnimation(resource_manager);
-  const trajectoryScene = new BirdTrajectory(resource_manager);
-  const textureScene = new TextureScene(resource_manager);
-  const birdDemoScene = new BirdDemo(resource_manager);
-  const boidsDemoScene = new BoidsDemo(resource_manager);
-  const bezierDemoScene = new BezierDemo(resource_manager);
-  const testScene = new TestScene(resource_manager);
+  const final_scene = new FinalScene(resource_manager);
+  const birdDemoScene = new BirdDemo(resource_manager); // disable the fog when using this scene (comment lines 71 to 74 in blinn_phong.frag.glsl)
+  const boidsDemoScene = new BoidsDemo(resource_manager); // disable the fog when using this scene (comment lines 71 to 74 in blinn_phong.frag.glsl)
+  const bezierDemoScene = new BezierDemo(resource_manager); // change bezier path when using this scene (comment line 295 and uncomment line 296 in camera.js)
+  // to visualize the camera path, you can uncomment line 126 in scene_renderer.js
 
-  const active_scene = testScene;   // Assign the scene to be rendered to active_scene
+  const active_scene = final_scene;   // Assign the scene to be rendered to active_scene
   
   /*---------------------------------------------------------------
     5. UI Instantiation
@@ -157,7 +152,7 @@ async function main() {
     prev_regl_time = frame.time;
 
     // If the time is not paused, iterate over all actors and call their evolve function
-    if (!ui_global_params.is_paused && frame.time > 10){
+    if (!ui_global_params.is_paused && frame.time > 7){
       for (const name in active_scene.actors){
         active_scene.actors[name].evolve(dt);
       }

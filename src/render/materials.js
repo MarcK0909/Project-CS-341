@@ -165,9 +165,6 @@ export const pine_norm = new NormalTexturedMaterial({
     texture :  'pine_texture_2_blurr2.jpg'
 })
 
-export const pine_test = new TexturedObjectMaterial({
-    texture : 'pine_texture_2_blurr2.jpg'
-})
 
 
 
@@ -177,8 +174,5 @@ export const terrain = new TerrainMaterial({
     peak_color: [0.8, 0.5, 0.4]
 });
 
-export const ground = new BackgroundMaterial({
-    texture: 'ground.jpg'
-})
 
 export const mirror = new ReflectiveMaterial({})

@@ -146,23 +146,15 @@ export class ResourceManager{
     textures_to_load(){
         return [
             'kloppenheim_07_puresky_blur.jpg',
-            'testSkySphere.jpg',
-            "misty_pines.jpg",
             'pine.png',
             'WhiteBackground.png',
-            'BirdImage.png',
             'BirdImageDarker.png',
             'ground_normal.png',
             'map.png',
             'ground.jpg',
             'ground_normal.png',
-            'ground2.jpg',
-            'ground2_normal.png',
             "text.jpg",
-            "text_normal.png",
             "pine_texture.png",
-            "pine_texture_2.png",
-            "pine_texture_2_normal.png",
             "pine_texture_2_normal_blurr2.jpg",
             "pine_texture_2_blurr2.jpg",
             "ground_blurr4.png"
@@ -195,7 +187,6 @@ export class ResourceManager{
         "Bird1.obj",
         "pine_3_stack.obj",
         "pine_3_stack_2.obj",
-        "Rock.obj",
         "suzanne.obj",
         "Bird0001.obj",
         "BirdAnimationOndrej0005.obj",
@@ -224,8 +215,6 @@ export class ResourceManager{
         "BirdCoastEndOndrej0002.obj",
         "BirdCoastEndOndrej0003.obj",
         "BirdCoastEndOndrej0004.obj",
-        'floor.obj',
-        "brown_mud_leaves_01_4k.obj"
       ];
     }
 

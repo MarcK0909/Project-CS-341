@@ -232,126 +232,126 @@ function containementForce(posList, index) {
 }
 
 
-// function trajectoryForce(posList, index){
-//     const force = vec3.fromValues(0., 0., 0.);
-//     const x = posList[index][0];
-//     const y = posList[index][1];
-//     const z = posList[index][2];
-//     const angle = Math.atan2(y, x); 
-//     const dist = Math.sqrt(x*x + y*y);
+function trajectoryForce(posList, index){
+    const force = vec3.fromValues(0., 0., 0.);
+    const x = posList[index][0];
+    const y = posList[index][1];
+    const z = posList[index][2];
+    const angle = Math.atan2(y, x); 
+    const dist = Math.sqrt(x*x + y*y);
     
-//     const normalizedAngle = angle < 0 ? angle + 2 * Math.PI : angle;
-//     const trackPos = normalizedAngle / (2 * Math.PI);
+    const normalizedAngle = angle < 0 ? angle + 2 * Math.PI : angle;
+    const trackPos = normalizedAngle / (2 * Math.PI);
     
-//     // Base force magnitude
-//     let mag = 8.0;
+    // Base force magnitude
+    let mag = 8.0;
     
-//     if (trackPos < 0.05) {
-//         mag = 10.0;
-//         vec3.set(force, -y * 1.5, x * 1.5, 20.0); // Strong upward force
-//     } 
-//     else if (trackPos < 0.1) {
-//         // High altitude section in fog
-//         mag = 10.0;
-//         vec3.set(force, -y * 1.3, x * 1.3, 6.0); // Stay high in fog
-//     }
-//     else if (trackPos < 0.15) {
-//         // Dive out of fog
-//         mag = 12.0; 
-//         vec3.set(force, -y * 1.8, x * 1.8, -65.0); // Strong dive down
-//     }
-//     else if (trackPos < 0.2) {
-//         // Recovery from dive
-//         mag = 6.0;
-//         vec3.set(force, -y * 1.0, x * 1.0, 3.0); // Level out
-//     }
-//     else if (trackPos < 0.25) {
-//         // very sharp turn
-//         mag = 7.0; 
-//         vec3.set(force, -y * 2.5, x * 0.4, 0.0); // Extreme banking
-//     }
-//     else if (trackPos < 0.35) {
-//         mag = 9.0;
-//         const chaosX = 4.0 * Math.sin(trackPos * 120);
-//         const chaosY = 4.0 * Math.cos(trackPos * 130);
-//         vec3.set(force, -y * 1.2 + chaosX, x * 1.2 + chaosY, 2.0 * Math.sin(trackPos * 100));
-//     }
-//     else if (trackPos < 0.4) {
-//         mag = 5.0; 
-//         vec3.set(force, -y * 1.8, x * 1.8, 0.0);
-//         force[0] += 3.0 * Math.sin(trackPos * 70);
-//     }
-//     else if (trackPos < 0.45) {
-//         // Swift upward climb back into fog
-//         mag = 10.0;
-//         vec3.set(force, -y * 1.2, x * 1.2, 8.0); // Strong climb
-//     }
-//     else if (trackPos < 0.5) {
-//         // High fog section
-//         mag = 8.0;
-//         const fogEffect = 1.5 * Math.sin(trackPos * 200);
-//         vec3.set(force, -y + fogEffect, x + fogEffect, 4.0);
-//     }
-//     else if (trackPos < 0.55) {
-//         // Dramatic descent from fog with spiral
-//         mag = 12.0;
-//         const spiralX = 3.0 * Math.sin(trackPos * 80);
-//         const spiralY = 3.0 * Math.cos(trackPos * 80);
-//         vec3.set(force, -y * 1.4 + spiralX, x * 1.4 + spiralY, -15.0);
-//     }
-//     else if (trackPos < 0.65) {
-//         const chicanePhase = Math.sin(trackPos * 90);
-//         vec3.set(force, 
-//             -y + chicanePhase * 6.0,
-//             x + chicanePhase * 6.0, 
-//             8.0 * Math.sin(trackPos * 60));
-//         mag = 5.0;
-//     }
-//     else if (trackPos < 0.7) {
-//         mag = 6.0;
-//         vec3.set(force, -y * 1.0, x * 1.0, -2.0);
-//     }
-//     else if (trackPos < 0.75) {
-//         mag = 12.0;
-//         vec3.set(force, -y * 0.8, x * 0.8, 5.0 + 5.0 * Math.sin(trackPos * 90));
-//     }
-//     else if (trackPos < 0.8) {
-//         // High banking turn
-//         mag = 8.0;
-//         vec3.set(force, -y * 0.5, x * 2.5, 1.0 * Math.cos(trackPos * 40));
-//     }
-//     else if (trackPos < 0.85) {
-//         // Dramatic hairpin with swooping motion
-//         mag = 9.0;
-//         vec3.set(force, -y * 0.3, x * 2.8, -4.0 * Math.sin(trackPos * 50));
-//     }
-//     else if (trackPos < 0.9) {
-//         mag = 11.0;
-//         vec3.set(force, -y * 1.7, x * 1.7, 15.0);
-//     }
-//     else if (trackPos < 0.95) {
-//         mag = 14.0;
-//         vec3.set(force, -y * 2.2, x * 2.2, -10.0);
-//     }
-//     else {
-//         const resetAngle = 0.05;
+    if (trackPos < 0.05) {
+        mag = 10.0;
+        vec3.set(force, -y * 1.5, x * 1.5, 20.0); // Strong upward force
+    } 
+    else if (trackPos < 0.1) {
+        // High altitude section in fog
+        mag = 10.0;
+        vec3.set(force, -y * 1.3, x * 1.3, 6.0); // Stay high in fog
+    }
+    else if (trackPos < 0.15) {
+        // Dive out of fog
+        mag = 12.0; 
+        vec3.set(force, -y * 1.8, x * 1.8, -65.0); // Strong dive down
+    }
+    else if (trackPos < 0.2) {
+        // Recovery from dive
+        mag = 6.0;
+        vec3.set(force, -y * 1.0, x * 1.0, 3.0); // Level out
+    }
+    else if (trackPos < 0.25) {
+        // very sharp turn
+        mag = 7.0; 
+        vec3.set(force, -y * 2.5, x * 0.4, 0.0); // Extreme banking
+    }
+    else if (trackPos < 0.35) {
+        mag = 9.0;
+        const chaosX = 4.0 * Math.sin(trackPos * 120);
+        const chaosY = 4.0 * Math.cos(trackPos * 130);
+        vec3.set(force, -y * 1.2 + chaosX, x * 1.2 + chaosY, 2.0 * Math.sin(trackPos * 100));
+    }
+    else if (trackPos < 0.4) {
+        mag = 5.0; 
+        vec3.set(force, -y * 1.8, x * 1.8, 0.0);
+        force[0] += 3.0 * Math.sin(trackPos * 70);
+    }
+    else if (trackPos < 0.45) {
+        // Swift upward climb back into fog
+        mag = 10.0;
+        vec3.set(force, -y * 1.2, x * 1.2, 8.0); // Strong climb
+    }
+    else if (trackPos < 0.5) {
+        // High fog section
+        mag = 8.0;
+        const fogEffect = 1.5 * Math.sin(trackPos * 200);
+        vec3.set(force, -y + fogEffect, x + fogEffect, 4.0);
+    }
+    else if (trackPos < 0.55) {
+        // Dramatic descent from fog with spiral
+        mag = 12.0;
+        const spiralX = 3.0 * Math.sin(trackPos * 80);
+        const spiralY = 3.0 * Math.cos(trackPos * 80);
+        vec3.set(force, -y * 1.4 + spiralX, x * 1.4 + spiralY, -15.0);
+    }
+    else if (trackPos < 0.65) {
+        const chicanePhase = Math.sin(trackPos * 90);
+        vec3.set(force, 
+            -y + chicanePhase * 6.0,
+            x + chicanePhase * 6.0, 
+            8.0 * Math.sin(trackPos * 60));
+        mag = 5.0;
+    }
+    else if (trackPos < 0.7) {
+        mag = 6.0;
+        vec3.set(force, -y * 1.0, x * 1.0, -2.0);
+    }
+    else if (trackPos < 0.75) {
+        mag = 12.0;
+        vec3.set(force, -y * 0.8, x * 0.8, 5.0 + 5.0 * Math.sin(trackPos * 90));
+    }
+    else if (trackPos < 0.8) {
+        // High banking turn
+        mag = 8.0;
+        vec3.set(force, -y * 0.5, x * 2.5, 1.0 * Math.cos(trackPos * 40));
+    }
+    else if (trackPos < 0.85) {
+        // Dramatic hairpin with swooping motion
+        mag = 9.0;
+        vec3.set(force, -y * 0.3, x * 2.8, -4.0 * Math.sin(trackPos * 50));
+    }
+    else if (trackPos < 0.9) {
+        mag = 11.0;
+        vec3.set(force, -y * 1.7, x * 1.7, 15.0);
+    }
+    else if (trackPos < 0.95) {
+        mag = 14.0;
+        vec3.set(force, -y * 2.2, x * 2.2, -10.0);
+    }
+    else {
+        const resetAngle = 0.05;
         
-//         vec3.set(force,
-//             -Math.sin(resetAngle * 2 * Math.PI) * 20.0,
-//             Math.cos(resetAngle * 2 * Math.PI) * 20.0,
-//             -25.0); // Strong upward boost for next lap
+        vec3.set(force,
+            -Math.sin(resetAngle * 2 * Math.PI) * 20.0,
+            Math.cos(resetAngle * 2 * Math.PI) * 20.0,
+            -25.0); // Strong upward boost for next lap
             
-//         mag = 4.0;
-//     }
+        mag = 4.0;
+    }
     
-//     force[2] += 2.5 * Math.sin(trackPos * 20.0);
+    force[2] += 2.5 * Math.sin(trackPos * 20.0);
     
-//     const radiusVar = 1.0 + 1.0 * Math.sin(trackPos * 12.0);
+    const radiusVar = 1.0 + 1.0 * Math.sin(trackPos * 12.0);
     
-//     vec3.scale(force, force, mag * radiusVar);
+    vec3.scale(force, force, mag * radiusVar);
     
-//     return force;
-// }
+    return force;
+}
 
 export function evolveBoid(dt, posList, velList, index) {
     const avoidance = avoidanceForce(posList, index);
@@ -360,10 +360,10 @@ export function evolveBoid(dt, posList, velList, index) {
     const containement = containementForce(posList, index);
     //const trajectory = trajectoryForce(posList, index); 
 
-    console.log(`avoidance: ${vec3.str(avoidance)}`);
-    console.log(`cohesion: ${vec3.str(cohesion)}`);
-    console.log(`alignement: ${vec3.str(alignement)}`);
-    console.log(`containement: ${vec3.str(containement)}`);
+    // console.log(`avoidance: ${vec3.str(avoidance)}`);
+    // console.log(`cohesion: ${vec3.str(cohesion)}`);
+    // console.log(`alignement: ${vec3.str(alignement)}`);
+    // console.log(`containement: ${vec3.str(containement)}`);
 
     const newVel = vec3.create();
     vec3.scale(newVel, avoidance, avoidanceWeight);
