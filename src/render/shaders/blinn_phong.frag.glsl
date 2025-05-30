@@ -68,10 +68,10 @@ void main()
     vec3 color = ambient + (attenuation * light_color * material_color * (diffuse + specular));
 
     // compute fog
-    // float intensity = (length(v2f_frag_pos) - fog_nearFar.x) / (fog_nearFar.y - fog_nearFar.x);
-    // float intensityClamped = clamp(intensity, fog_minMax.x, fog_minMax.y);
+    float intensity = (length(v2f_frag_pos) - fog_nearFar.x) / (fog_nearFar.y - fog_nearFar.x);
+    float intensityClamped = clamp(intensity, fog_minMax.x, fog_minMax.y);
 
-    // color = mix(color, fog_color, intensityClamped);
+    color = mix(color, fog_color, intensityClamped);
 
   
 
