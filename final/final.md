@@ -234,8 +234,14 @@ To implement Bézier curves we used the reference given in the handout for [bezi
 
 #### Validation
 
-TODO
+As we can see here, we added a curve (with shaders) following bezier curves with the same exact interpolation points, except that we put the z-axis lower for easier representation, as the camera and it follows all along, which proves that our implementation is correct (each segment color represents a different interpolation):
 
+<figure style="text-align: center;">
+  <video src="videos/bezier_validation2.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>Bezier camera following the curve</figcaption>
+</figure>
+
+![Image of the curve that the camera is following](images/Bezier_curves_turntable_camera.png){width=500px}
 
 ## Discussion
 

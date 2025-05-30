@@ -25,8 +25,8 @@ export class TestScene extends Scene {
     
     this.resource_manager = resource_manager;
     this.scale = 0.1;
-    this.camera = new BezierCamera();
-    this.camera.set_scale_for_camera(this.scale);
+    // this.camera = new BezierCamera();
+    // this.camera.set_scale_for_camera(this.scale);
 
 
     // Boids
@@ -100,7 +100,7 @@ export class TestScene extends Scene {
         rotation : quat.fromEuler(quat.create(), 0, 0, 90),
         scale: [10,10,10],
         mesh_reference : "plane",
-        material : MATERIALS.normal_ground_forest
+        material : MATERIALS.map_material
         });
 
     this.objects.push({
@@ -112,7 +112,7 @@ export class TestScene extends Scene {
     });
 
 
-    this.actors["camera"] = this.camera;
+    // this.actors["camera"] = this.camera;
   }
 
   /**

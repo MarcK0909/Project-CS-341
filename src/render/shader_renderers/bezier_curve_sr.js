@@ -29,24 +29,24 @@ export class BezierCurveShaderRenderer extends ShaderRenderer {
         this.curve_segments_control_points = [
             // Segment 1
             [
-                vec3.fromValues(120, 0, 10),
-                vec3.fromValues(40, 20, 10),
-                vec3.fromValues(40, 96, 10),
-                vec3.fromValues(-40, 80, 10)
+                vec3.fromValues(120, 0, 5),
+                vec3.fromValues(40, 20, 5),
+                vec3.fromValues(40, 96, 5),
+                vec3.fromValues(-40, 80, 5)
             ],
             // Segment 2
             [
-                vec3.fromValues(-40, 80, 10),
-                vec3.fromValues(-80, 72, 10),
-                vec3.fromValues(-120, 20, 10),
-                vec3.fromValues(-80, -40, 10)
+                vec3.fromValues(-40, 80, 5),
+                vec3.fromValues(-80, 72, 5),
+                vec3.fromValues(-120, 20, 5),
+                vec3.fromValues(-80, -40, 5)
             ],
             // Segment 3
             [
-                vec3.fromValues(-80, -40, 10),
-                vec3.fromValues(-40, -100, 10),
-                vec3.fromValues(60, -100, 10),
-                vec3.fromValues(100, 0, 10)
+                vec3.fromValues(-80, -40, 5),
+                vec3.fromValues(-40, -100, 5),
+                vec3.fromValues(60, -100, 5),
+                vec3.fromValues(100, 0, 5)
             ]
         ];
 
