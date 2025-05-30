@@ -62,6 +62,7 @@
           </ul></li>
           <li><a href="#contributions"
           id="toc-contributions">Contributions</a></li>
+          <li><a href="#comments" id="toc-comments">Comments</a></li>
           <li><a href="#references"
           id="toc-references">References</a></li>
           </ul>
@@ -84,13 +85,13 @@ visually engaging 3D scene showcasing bird animation and flocking
 behavior. We aimed to implement the boids algorithm to simulate the
 behavior of a flock of birds flying through a forest filled with pines
 swirling in between them and dodging them to create a movie-like scene
-which is the video refernced below in our Resources section.</p>
+which is the video referenced below in our Resources section.</p>
 <h2 id="overview">Overview</h2>
 <p>As described earlier in the abstract, our goal was to create a scene
 of birds flying through a forest in a realistic manner. To accomplish
 this, we implemented a boids algorithm to simulate the behavior of a
-flock of birds. We added the classic forces of a Boids like algorithm
-(avoidance, cohesion, alignement and containment) while also adding some
+flock of birds. We added the classic forces of a Boids-like algorithm
+(avoidance, cohesion, alignment and containment) while also adding some
 more features which will be further described in our feature validation
 of this effect. The second feature we decided to implement was to design
 our own custom meshes, namely the birds and the trees. We did so using
@@ -100,7 +101,7 @@ complex and realistic appearance for our low-polygon models. The fourth
 feature was the implementation of fog in our scene. This was important
 for the immersion of the scene as it hides the edges of the “map”, while
 adding a cinematic and mysterious look to the scene. The fifth and final
-feature were Bezier curves that were used to create a smooth camera path
+feature was Bezier curves that were used to create a smooth camera path
 to follow the birds in flight like in the movie clip that inspired
 us.</p>
 <h2 id="feature-validation">Feature validation</h2>
@@ -261,7 +262,7 @@ created. All the meshes can be found in our assets folder</em></p>
 <h4 id="implementation-1">Implementation</h4>
 <p>We implemented the fog in the blinn phong shader, as suggested by the
 tutorial provided in the project instructions. The fog is rendered by
-mixing the color of the fog to the color of each fragment without the
+mixing the color of the fog with the color of each fragment without the
 fog. The intensity of the fog at a given fragment is given by the
 distance of this fragment from the camera. First we need to input the
 fog color, a minimum and maximum distance values and a minimum and
@@ -269,12 +270,12 @@ maximum intensity values to the pipeline. Every fragment closer to the
 camera than the minimum distance threshold will have the minimum
 intensity fog and every fragment further from the camera than the
 maximum distance threshold will have fog corresponding to the maximum
-intensity value. Between these two threasholds we used linear
+intensity value. Between these two thresholds we used linear
 interpolation to calculate the fog intensity. These calculations happen
 in the fragment shader after the color of the fragment without any fog
 has been computed. The distance of the fragment from the camera is the
 length of the vector representing the fragments position in view space,
-as in this space the camera is a the origin. The weight to mix the the
+as in this space the camera is at the origin. The weight to mix the the
 fog color with the fragment color is simply the intensity
 calculated.</p>
 <h4 id="validation-1">Validation</h4>
@@ -285,7 +286,7 @@ alt="Fog parameters for our final scene" />
 scene</figcaption>
 </figure>
 <p>The parameters for the fog in the final scene are : minimum intensity
-= 0.6, maximum intensity = 1, minimum distance theshold = 1, maximum
+= 0.6, maximum intensity = 1, minimum distance threshold = 1, maximum
 distance threshold = 7.2, color = (0.9, 0.9, 0.9).</p>
 <p>Below, you can see the effect of modifying each parameter
 individually. Note that when maximum intensity is below 1, we can see
@@ -308,13 +309,13 @@ Maximum intensity is 0.8
 <figure>
 <img src="images/fog_close.png" alt="Image 1" width="300">
 <figcaption>
-Distance thesholds: min = 0.2, max = 1
+Distance thresholds: min = 0.2, max = 1
 </figcaption>
 </figure>
 <figure>
 <img src="images/fog_far.png" alt="Image 2" width="300">
 <figcaption>
-Distance thesholds: min = 6, max = 9
+Distance thresholds: min = 6, max = 9
 </figcaption>
 </figure>
 </div>
@@ -337,7 +338,7 @@ Red fog
 <p>We implemented the mapping based on the course material and the <a
 href="https://lettier.github.io/3d-game-shaders-for-beginners/normal-mapping.html">example</a>
 provided in the instructions for the project. We implemented the normal
-mapping directly in the blinn phong shader renderer as it required only
+mapping directly in the Blinn Phong shader renderer as it required only
 small adaptations. Moreover, a normal map is just a texture, so it made
 sense to obtain the normal mapping data of each fragment at the same
 time as its color. To calculate the modified normal of each fragment, we
@@ -349,10 +350,10 @@ of the fragment coordinates is the same as for the texture, so no new
 code had to be added. The “.obj” files representing our meshes only
 store vertex normals, so in order to get tangents and bitangents we need
 to calculate them. This is done when loading the mesh from the file in
-cg_mesh. We then pass the vertex normal tangent and bitangent to the
-vertex shader where we interpolate all three before passing them to the
-fragment shader where the final computation is done following the
-formula seen in the lectures :
+<code>cg_mesh</code>. We then pass the vertex normal tangent and
+bitangent to the vertex shader where we interpolate all three before
+passing them to the fragment shader where the final computation is done
+following the formula seen in the lectures :
 <code>n = normalize(x * t + y * b + z * n);</code> where x,y and z are
 the three values obtained from the normal map.</p>
 <h4 id="validation-2">Validation</h4>
@@ -404,39 +405,42 @@ several influencing forces, and its position is then updated. These are
 the forces we used which are based on a previous lab done by us in a
 previous course (CS-214) :</p>
 <ul>
-<li><p><strong>The avoidanceForce</strong> function checks for other
-boids within a defined avoidanceRadius. If a nearby boid is detected, a
-repulsive force is generated, pushing the current boid away from it. The
-strength of this repulsion is inversely proportional to the distance
-(stronger for closer boids) and is capped by avoidanceForceLimit to
-prevent excessively strong reactions.</p></li>
-<li><p><strong>The cohesionForce</strong> function calculates the center
-of mass of neighboring boids within a perceptionRadius. It then
-generates a force vector pointing from the current boid’s position
-towards this perceived center. The diffFromMeanPerceptionFiltered helper
-function is used to find this average position of neighbors.</p></li>
-<li><p><strong>The alignementForce</strong> function calculates the
-average velocity of neighboring boids within the perceptionRadius. It
-then generates a force that attempts to steer the current boid towards
-this average velocity. Again, diffFromMeanPerceptionFiltered is used,
-this time to average the velocities of neighbors.</p></li>
-<li><p><strong>The containementForce</strong> function keeps the boid in
-a certain boundary by applying a force to the boid if it is out of the
-predifined areas to bring it back. This function is quite complex in our
-implementation as we defined a boundary so that all birds follow a
-general corridor through the forest. We first define the boundaries in
-the x and y plane. After that we also create boundaries for the boid
-height by checking the z coordinate. Usually the force applied to a boid
-out of the predefined zone is normal to the boundary “wall”. However as
-we wanted the birds to move forward through the forest and not bounce
-between the “walls” we rotated the force applied (by a specified angle)
-to push the birds forward. Here is a more detailed explanation of the
-diferent elements of this function:</p>
+<li><p><strong>The <code>avoidanceForce</code></strong> function checks
+for other boids within a defined <code>avoidanceRadius</code>. If a
+nearby boid is detected, a repulsive force is generated, pushing the
+current boid away from it. The strength of this repulsion is inversely
+proportional to the distance (stronger for closer boids) and is capped
+by <code>avoidanceForceLimit</code> to prevent excessively strong
+reactions.</p></li>
+<li><p><strong>The <code>cohesionForce</code></strong> function
+calculates the center of mass of neighboring boids within a
+<code>perceptionRadius</code>. It then generates a force vector pointing
+from the current boid’s position towards this perceived center. The
+<code>diffFromMeanPerceptionFiltered</code> helper function is used to
+find this average position of neighbors.</p></li>
+<li><p><strong>The <code>alignmentForce</code></strong> function
+calculates the average velocity of neighboring boids within the
+<code>perceptionRadius</code>. It then generates a force that attempts
+to steer the current boid towards this average velocity. Again,
+<code>diffFromMeanPerceptionFiltered</code> is used, this time to
+average the velocities of neighbors.</p></li>
+<li><p><strong>The <code>containmentForce</code></strong> function keeps
+the boid in a certain boundary by applying a force to the boid if it is
+out of the predefined areas to bring it back. This function is quite
+complex in our implementation as we defined a boundary so that all birds
+follow a general corridor through the forest. We first define the
+boundaries in the x and y plane. After that we also created boundaries
+for the boid height by checking the z coordinate. Usually the force
+applied to a boid out of the predefined zone is normal to the boundary
+“wall”. However, as we wanted the birds to move forward through the
+forest and not bounce between the “walls” we rotated the force applied
+(by a specified angle) to push the birds forward. Here is a more
+detailed explanation of the different elements of this function:</p>
 <ul>
 <li>“Cylinder” Definitions: The cylinder helper function defines
 cylindrical zones, each with a center in the XY plane, a radius, and a
 preferred direction of movement (trigonometric or inverse) for boids
-interacting with it. We call these exculsion zones cylinders as all
+interacting with it. We call these exclusion zones cylinders as all
 checks are done on the horizontal distance of the boid to the center
 “axis” of the exclusion zone.</li>
 <li>Cylinder Interaction: The cylinderCheck function determines if a
@@ -455,19 +459,19 @@ the Z-axis, pushing boids back towards the median flight altitude if
 they stray too high or too low.</li>
 </ul></li>
 </ul>
-<p><strong>Putting everything together :</strong> The forces calculated
+<p><strong>Putting everything together:</strong> The forces calculated
 from Avoidance, Cohesion, Alignment, and Containment are each multiplied
-by their respective weights (avoidanceWeight, cohesionWeight,
-alignementWeight, containementWeight). These weights determine the
-relative influence of each behavior which is demonstrated below in the
-attached videos. The weighted forces are summed up to get a net
-acceleration vector. This acceleration is then added to the boid’s
-current velocity (scaled by the timestep dt) to compute the new
-velocity. The boid’s speed is always clamped between a lower and a upper
-bound. The upper bound can temporarily increase if the boid is lagging
-behind the average angular position of the flock, helping it catch
-up.</p>
-<p>The forces weights and the evolveBoid function are difined in
+by their respective weights
+(<code>avoidanceWeight, cohesionWeight, alignmentWeight, containmentWeight</code>).
+These weights determine the relative influence of each behavior which is
+demonstrated below in the attached videos. The weighted forces are
+summed up to get a net acceleration vector. This acceleration is then
+added to the boid’s current velocity (scaled by the timestep
+<code>dt</code>) to compute the new velocity. The boid’s speed is always
+clamped between a lower and an upper bound. The upper bound can
+temporarily increase if the boid is lagging behind the average angular
+position of the flock, helping it catch up.</p>
+<p>The forces weights and the evolveBoid function are defined in
 boids.js. The evolveBoid function is then called by each bird (defined
 as an actor in the scene) in evolve function.</p>
 <h4 id="validation-3">Validation</h4>
@@ -479,13 +483,14 @@ Illustrative video of our boids’ behavior
 </figcaption>
 </figure>
 <p>The above video showcases how our boids behave when the area they can
-evolve in is a simple and symetric shape. This is to clearly see their
+evolve in is a simple and symmetric shape. This is to clearly see their
 interactions without the added complexity of the trajectory. This scene
-can be found in the file named boidsDemo_scene.js. We created a copy of
-our boids.js file (boidsDemo.js) to be able to modify the
-containmentForce and the weights for the demos without affecting the
-final scene. We also increased the number of boids to 200 for this
-demonstration to clearly show the interaction of a big flock.</p>
+can be found in the file named <code>boidsDemo_scene</code>.js. We
+created a copy of our boids.js file (<code>boidsDemo.js</code>) to be
+able to modify the containmentForce and the weights for the demos
+without affecting the final scene. We also increased the number of boids
+to 200 for this demonstration to clearly show the interaction of a big
+flock.</p>
 <p>As we can see in the video the boids behave as expected. Below we
 show what happens when adjusting the weights of certain forces so that
 you can better observe their effects on the boids.</p>
@@ -510,11 +515,11 @@ boids seem to fly around much faster.</p>
 Alignment and cohesion weight both doubled
 </figcaption>
 </figure>
-<p>In this third video we doubled both the alignement and cohesion
+<p>In this third video we doubled both the alignment and cohesion
 weights again to better showcase their effects. As can be seen, the
 birds now seem to split into two groups (which is the way we make them
 spawn) and, contrary to the other two videos, they stay packed quite
-clos together in these two groups throughout the video which is simply
+close together in these two groups throughout the video which is simply
 due to the fact that the forces attracting them together is much
 stronger and thus overshadow the other forces affecting the boids.</p>
 <p>These three videos showcase the effects of all forces well and how
@@ -546,11 +551,14 @@ computes the necessary view matrix, which is used to render the scene
 from the camera’s smoothly moving perspective. This method allowed us to
 achieve the desired cinematic camera flight through the environment.</p>
 <h4 id="validation-4">Validation</h4>
-<p>As we can see here, we added a curve (with shaders) following bezier
-curves with the same exact interpolation points, except that we put the
-z-axis lower for easier representation, as the camera and it follows all
-along, which proves that our implementation is correct (each segment
-color represents a different interpolation):</p>
+<p>To validate our Bézier curve implementation, we display a visual
+curve (rendered with shaders) that precisely follows the camera’s path,
+using the same Bézier interpolation points. For better visibility in
+this demonstration, the visual curve has been lowered on the Z-axis. The
+accompanying video shows the camera accurately tracking along this path,
+confirming that our implementation is correct. Each colored section of
+the curve represents one of the distinct Bézier segments used for
+interpolation:</p>
 <figure style="text-align: center;">
 <video src="videos/bezier_validation2.mp4" height="300px" autoplay loop muted>
 </video>
@@ -570,27 +578,27 @@ following</figcaption>
 would ensure our boids circle around the origin but also have some
 variation with their movement (up-down, left-right) didn’t work as we
 hoped. Our first step was to create 2 containment cylinders both
-centered at the origin and of different radiuses to have the birds fly
+centered at the origin and of different radii to have the birds fly
 around the origin in a circle. These were not actual cylinders but were
 checks on the horizontal distance of the birds to the origin. If a bird
-was too far from the origin (ie. “outside” of our large cylinder) we
+was too far from the origin (i.e. “outside” of our large cylinder) we
 would push it back closer and conversely if a bird got too close to it.
 We then thought to implement a more complex trajectory in the following
 way : using the angle the birds formed with the Z axis to locate the
 bird and split our trajectory circle into 8 quadrants, we applied some
-effects to it (ex. a force vector of (0, 0, 1) to make the bird “fly” up
+effects to it (eg. a force vector of (0, 0, 1) to make the bird “fly” up
 or the opposite to make it go down). We thus implemented a new function
-called trajectoryForce (whose now unused code can be found in the
-boids.js file from lines 235 to 354) but the results of this proved to
-work in a very robotic and unnatural way, not at all what we were
-wishing for in the beginning. Indeed, as all the boids had the exact
-same force vector applied to them at almost the same time (because 8
-quadrants wasn’t that big to seperate them and because we originally
-tested this with few boids) they all followed each other almost like if
-it were a carousel. The below video showcases this failed experiment
-(the artifact in the middle of the screen is unrelated, the skysphere is
-just too far to render completely, this video was done in the earlier
-stages of the project and we don’t have the scene anymore).</p>
+called <code>trajectoryForce</code> (whose now unused code can be found
+in the boids.js file from lines 235 to 354) but the results of this
+proved to work in a very robotic and unnatural way, not at all what we
+were wishing for in the beginning. Indeed, as all the boids had the
+exact same force vector applied to them at almost the same time (because
+8 quadrants wasn’t that big to separate them and because we originally
+tested this with few boids) they all followed each other almost as if on
+a carousel. The below video showcases this failed experiment (the
+artifact in the middle of the screen is unrelated, the skysphere is just
+too far to render completely; this video was done in the earlier stages
+of the project and we don’t have the scene anymore).</p>
 <figure style="text-align: center;">
 <video src="videos/ShowcaseFailure.mp4" height="300px" autoplay loop muted>
 </video>
@@ -622,15 +630,51 @@ The trajectory we implemented using Geogebra
 </div>
 <p>Using our visualization, we then were able to manually place the pine
 trees inside/close to the cylinders we placed to give the illusion that
-the birds were dodging them which created the look we were going for.
-This proved to be quite challenging as the process of placing the trees
-was quite tedious and the existing code for the birds’ trajectory had to
-be extensively modified, mainly the containment force which was fully
-reworked and helper functions had to be added to better modularize the
-code. All of that can be seen in our boids.js class.</p>
-<p>Another challenge we faced was acne caused by the fog rendering, as
-you can see in this example : <img src="images/fog_acne.png" width="500"
-alt="Fog acne" /></p>
+the birds were dodging them which created the look we were going for and
+can be seen in the video below. We created a map material with our GGB
+file to place our trees in the correct positions for the boids to
+correctly avoid them. This proved to be quite challenging as the process
+of placing the trees was very tedious and the existing code for the
+birds’ trajectory had to be extensively modified, mainly the containment
+force which was fully reworked and helper functions had to be added to
+better modularize the code which can all be seen in our boids.js file.
+We created a function that checks if a boid is “in” a cylinder to then
+generate the correct propulsion force in relation to where the boid is
+compared to the cylinder.</p>
+<figure style="text-align: center;">
+<video src="videos/PinePlacementShowcase.mp4" height="300px" autoplay loop muted>
+</video>
+<figcaption>
+How we placed our pines compared to the boids’ trajectory
+</figcaption>
+</figure>
+Another challenge we faced was acne (small white dots) caused by the fog
+rendering, as you can see in this example :
+<figure style="text-align: center;">
+<img src="images/fog_acne.png" alt="Fog acne" width="500px">
+<figcaption>
+Fog acne
+</figcaption>
+</figure>
+<p>We first suspected that the acne artifacts were caused by incorrect
+fog calculations or precision issues in <code>v2f_frag_pos</code>, but
+verifying its use in view space and simplifying the fog math didn’t
+eliminate the issue. Then we tested whether normal mapping introduced
+the artifacts, but disabling it had no effect. We checked for NaNs or
+Infs in the color output, using NaN detection logic, but the artifacts
+persisted even when outputting constant values like
+<code>vec4(0.5)</code>, ruling out invalid math. We explored whether the
+clamp function or color precision was the problem, but even basic
+mid-tone colors like <code>vec3(0.5)</code> produced acne, while
+saturated values did not. Attempts to filter the acne color using
+distance thresholds also failed, likely because the artifact color
+wasn’t consistent or close enough to a single value. Finally, we
+considered that the problem might stem from depth-related issues like
+Z-fighting or overlapping fragments, which became the leading
+explanation as such artifacts often appear in similar visual patterns
+and are more noticeable with neutral tones. In the end we found that the
+acne was less visible when using a more saturated color, so we changed
+the fog color.</p>
 <h2 id="contributions">Contributions</h2>
 <table>
 <caption>
@@ -798,9 +842,15 @@ Clemens
 </tr>
 </tbody>
 </table>
+<p>In the end we managed to respect all deadlines but the project took
+longer than we had initially thought.</p>
+<h2 id="comments">Comments</h2>
+<p>We added a small delay before starting actor evolution in our scenes
+for the scene to properly load before starting animation. This is in
+<code>main.js</code> and is currently set to 7 seconds.</p>
 <h2 id="references">References</h2>
-<p><a href="youtube.com/watch?v=YH4Xr6GIp4U">Example scene from the Lord
-of the Rings</a> from 1:22 to 1:35</p>
+<p><a href="https://youtube.com/watch?v=YH4Xr6GIp4U">Example scene from
+the Lord of the Rings</a> from 1:22 to 1:35</p>
 <p><a href="https://www.shadertoy.com/view/XtBGDR">Bezier curves</a></p>
 <p><a href="https://en.wikipedia.org/wiki/Boids">Boids
 explanation</a></p>
@@ -819,9 +869,10 @@ design</a></p>
 tree</a></p>
 <p><a href="https://www.youtube.com/watch?v=hvxoAX_poI0">Low
 Poly</a></p>
-<p><a href="https://free3d.com/3d-model/low-poly-rock-4631.html">Rock
-blend</a></p>
-<p><a href="https://polyhaven.com/">Free to use textures</a></p>
+<p><a href="https://polyhaven.com/a/brown_mud_leaves_01">Ground
+texture</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Normal_mapping">Normal map
+reference</a></p>
         </div>
       </div>
     </div>

@@ -15,11 +15,9 @@ title: Final Project Report CS-341 2025
 
 The goal of our project, "In Flight," is to create a dynamic and visually engaging 3D scene showcasing bird animation and flocking behavior. We aimed to implement the boids algorithm to simulate the behavior of a flock of birds flying through a forest filled with pines swirling in between them and dodging them to create a movie-like scene which is the video referenced below in our Resources section.
 
-
 ## Overview
 
 As described earlier in the abstract, our goal was to create a scene of birds flying through a forest in a realistic manner. To accomplish this, we implemented a boids algorithm to simulate the behavior of a flock of birds. We added the classic forces of a Boids-like algorithm (avoidance, cohesion, alignment and containment) while also adding some more features which will be further described in our feature validation of this effect. The second feature we decided to implement was to design our own custom meshes, namely the birds and the trees. We did so using Blender and tutorials on how to proceed in order to have a nicer result. The third feature we added was Normal Mapping to have more visually complex and realistic appearance for our low-polygon models. The fourth feature was the implementation of fog in our scene. This was important for the immersion of the scene as it hides the edges of the "map", while adding a cinematic and mysterious look to the scene. The fifth and final feature was Bezier curves that were used to create a smooth camera path to follow the birds in flight like in the movie clip that inspired us.
-
 
 ## Feature validation
 
@@ -60,7 +58,6 @@ As described earlier in the abstract, our goal was to create a scene of birds fl
 		</tr>
 	</tbody>
 </table>
-
 
 ### Mesh Design
 
@@ -128,8 +125,6 @@ We designed our meshes in Blender, mainly by following tutorials on YouTube ([Pi
 </div>
 
 *Note: The above objects are not exhaustive of all the meshes we created. All the meshes can be found in our assets folder*
-
-
 
 ### Fog
 
@@ -332,9 +327,12 @@ Using our visualization, we then were able to manually place the pine trees insi
 </figure>
 
 
-Another challenge we faced was acne caused by the fog rendering, as you can see in this example :
-![Fog acne](images/fog_acne.png){width=500px}
-We tried to fix this acne by numerous methods, as it was especially visible when the camera was moving. No fixes seemed to work as we couldn't pinpoint the source of the error. In the end we found that the acne was less visible when using a more saturated color, so we changed the fog color.
+Another challenge we faced was acne (small white dots) caused by the fog rendering, as you can see in this example :
+<figure style="text-align: center;">
+  <img src="images/fog_acne.png" alt="Fog acne" width="500px">
+  <figcaption>Fog acne</figcaption>
+</figure>
+We first suspected that the acne artifacts were caused by incorrect fog calculations or precision issues in `v2f_frag_pos`, but verifying its use in view space and simplifying the fog math didn’t eliminate the issue. Then we tested whether normal mapping introduced the artifacts, but disabling it had no effect. We checked for NaNs or Infs in the color output, using NaN detection logic, but the artifacts persisted even when outputting constant values like `vec4(0.5)`, ruling out invalid math. We explored whether the clamp function or color precision was the problem, but even basic mid-tone colors like `vec3(0.5)` produced acne, while saturated values did not. Attempts to filter the acne color using distance thresholds also failed, likely because the artifact color wasn’t consistent or close enough to a single value. Finally, we considered that the problem might stem from depth-related issues like Z-fighting or overlapping fragments, which became the leading explanation as such artifacts often appear in similar visual patterns and are more noticeable with neutral tones. In the end we found that the acne was less visible when using a more saturated color, so we changed the fog color.
 
 ## Contributions
 
@@ -414,6 +412,11 @@ We tried to fix this acne by numerous methods, as it was especially visible when
 	</tbody>
 </table>
 
+In the end we managed to respect all deadlines but the project took longer than we had initially thought.
+
+## Comments
+
+We added a small delay before starting actor evolution in our scenes for the scene to properly load before starting animation. This is in `main.js` and is currently set to 7 seconds.
 
 ## References
 
