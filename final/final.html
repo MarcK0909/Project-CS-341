@@ -575,8 +575,9 @@ same force vector applied to them at almost the same time (because 8
 quadrants wasn’t that big to seperate them and because we originally
 tested this with few boids) they all followed each other almost like if
 it were a carousel. The below video showcases this failed experiment
-(the artifact in the middle of the screen is unrelated, this video was
-done ).</p>
+(the artifact in the middle of the screen is unrelated, the skysphere is
+just too far to render completely, this video was done in the earlier
+stages of the project and we don’t have the scene anymore).</p>
 <figure style="text-align: center;">
 <video src="videos/ShowcaseFailure.mp4" height="300px" autoplay loop muted>
 </video>
@@ -612,6 +613,9 @@ was quite tedious and the existing code for the birds’ trajectory had to
 be extensively modified, mainly the containment force which was fully
 reworked and helper functions had to be added to better modularize the
 code. All of that can be seen in our boids.js class.</p>
+<p>Another challenge we faced was acne caused by the fog rendering, as
+you can see in this example : <img src="images/fog_acne.png" width="500"
+alt="Fog acne" /></p>
 <h2 id="contributions">Contributions</h2>
 <table>
 <caption>

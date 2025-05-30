@@ -327,8 +327,8 @@ Using our visualization, we then were able to manually place the pine trees insi
 
 
 Another challenge we faced was acne caused by the fog rendering, as you can see in this example :
-![Fog acne](images/Bezier_curves_turntable_camera.png){width=500px}
-
+![Fog acne](images/fog_acne.png){width=500px}
+We tried to fix this acne by numerous methods, as it was especially visible when the camera was moving. No fixes seemed to work as we couldn't pinpoint the source of the error. In the end we found that the acne was less visible when using a more saturated color, so we changed the fog color.
 
 ## Contributions
 
