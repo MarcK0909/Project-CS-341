@@ -296,31 +296,42 @@ we then normalized inside the vertex shader). We then used all the
 loaded ressources and computed the normal displacement to finally get
 the wanted result. As we will see in the validation</p>
 <h4 id="validation-2">Validation</h4>
+<p>As shown below we have 1 implementation where we turned off normal
+mapping (which gives a texture without any details, as it should), next
+we have our implementation of the texture where we added normal mapping,
+for reference we have the original sphere from polyheaven, when we
+downloaded it. As we can see the mapping clearly works.</p>
+<div style="display: flex; justify-content: center; gap: 10px;">
 <figure style="text-align: center;">
-<img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="170">
+<img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="200px">
 <figcaption>
 Texture without normal mapping
 </figcaption>
 </figure>
 <figure style="text-align: center;">
-<img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="170">
+<img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="200px">
 <figcaption>
 Texture with normal mapping
 </figcaption>
 </figure>
 <figure style="text-align: center;">
-<img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="170">
+<img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="200px">
 <figcaption>
-Reference texture from PolyHeaven
-(https://polyhaven.com/a/brown_mud_leaves_01)
+<a href="https://polyhaven.com/a/brown_mud_leaves_01">Reference texture
+from PolyHeaven</a>
 </figcaption>
 </figure>
-Here is a full representation of our normal mapping taken from internet
-for reference (https://en.wikipedia.org/wiki/Normal_mapping) :
-<div>
-<video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;">
-</video>
 </div>
+Here is a full representation of our normal mapping taken from internet
+for reference :
+<figure style="text-align: center;">
+<video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted>
+</video>
+<figcaption>
+(<a href="https://en.wikipedia.org/wiki/Normal_mapping">Wikipedia -
+Normal mapping</a>)
+</figcaption>
+</figure>
 <h3 id="boids">Boids</h3>
 <h4 id="implementation-3">Implementation</h4>
 <p>Our Boids algorithm simulates the flocking behavior of birds by
@@ -539,20 +550,27 @@ Ondrej
 Marc
 </td>
 <td>
+3
 </td>
 <td style="background-color: #f0f0f0;">
 </td>
 <td>
+2
 </td>
 <td>
+4
 </td>
 <td>
+6
 </td>
 <td>
+6
 </td>
 <td>
+6
 </td>
 <td>
+28
 </td>
 </tr>
 <tr>

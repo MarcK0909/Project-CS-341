@@ -157,22 +157,32 @@ We implemented the mapping following the course's material as well as the implem
 
 #### Validation
 
+As shown below we have 1 implementation where we turned off normal mapping (which gives a texture without any details, as it should), next we have our implementation of the texture where we added normal mapping, for reference we have the original sphere from polyheaven, when we downloaded it. As we can see the mapping clearly works.
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+
 <figure style="text-align: center;">
-    <img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="170">
+    <img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="200px">
     <figcaption>Texture without normal mapping</figcaption>
 </figure>
+
 <figure style="text-align: center;">
-    <img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="170">
+    <img src="images/sphere_with_normal_mapping.png" alt="Texture with normal mapping" height="200px">
     <figcaption>Texture with normal mapping</figcaption>
 </figure>
+
 <figure style="text-align: center;">
-    <img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="170">
-    <figcaption>Reference texture from PolyHeaven (https://polyhaven.com/a/brown_mud_leaves_01)</figcaption>
+    <img src="images/Normal_Mapping_ref.png" alt="Reference texture from PolyHeaven" height="200px">
+    <figcaption>[Reference texture from PolyHeaven](https://polyhaven.com/a/brown_mud_leaves_01)</figcaption>
 </figure>
-Here is a full representation of our normal mapping taken from internet for reference (https://en.wikipedia.org/wiki/Normal_mapping) : 
-<div>
-<video src="videos/Normal_map_video.mkv" height="210px" autoplay loop style="vertical-align: middle;"></video>
+
 </div>
+
+Here is a full representation of our normal mapping taken from internet for reference to showcase a fully functionnal normal mapping with a moving light point :
+<figure style="text-align: center;">
+	<video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted></video>
+	<figcaption>([Wikipedia - Normal mapping](https://en.wikipedia.org/wiki/Normal_mapping))</figcaption>
+</figure>
 
 ### Boids
 
@@ -228,7 +238,7 @@ We think these three videos showcase well the effects each force has on the boid
 
 #### Implementation
 
-TODO
+To implement Bézier curves we used the reference given in the handout for [bezier curves](https://www.shadertoy.com/view/XtBGDR), inside bezier.js we took 3 different segments (0-9.72s, 9.72-17.22s, 17.22-30s) and for each of these segments we interpolated the cubic formulas, added multiple methods to calculate the derivatives and others like smoothstep to have smooth transitions between the end and the beginning of each segment, as well as createCameraRay which takes the cameras position and direction and calculates what it should show. For that we created a new camera called BezierCamera() and implemented all necessairy methods such as update_cam_transform() which recomputes the view-matrix in relation to its position, compute the transformation matrices for each object in the scene. Which all together gives the wanted result.
 
 #### Validation
 

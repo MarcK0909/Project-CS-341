@@ -1,4 +1,3 @@
-
 import { TurntableCamera } from "../scene_resources/camera.js"
 import { BezierCamera } from "../scene_resources/camera.js"
 import * as MATERIALS from "../render/materials.js"
@@ -26,6 +25,10 @@ export class TestScene extends Scene {
     
     this.resource_manager = resource_manager;
     this.scale = 0.1;
+    this.camera = new BezierCamera();
+    this.camera.set_scale_for_camera(this.scale);
+
+
     // Boids
     this.posList = [];
     this.newPosList = [];
@@ -47,22 +50,31 @@ export class TestScene extends Scene {
 
     this.resource_manager.add_procedural_mesh("skySphere", cg_mesh_make_uv_sphere(20));
     this.resource_manager.add_procedural_mesh("plane",cg_mesh_make_plane());
+    // this.resource_manager.add_procedural_mesh("sphere", cg_mesh_make_uv_sphere(2)); // Add sphere mesh
 
+    // Add small spheres at interpolation points along the Bezier curves
 
     // this.lights.push({
     //   position : [10. , 10., 10.],
     //   color: [1.0, 1.0, 0.9]
     // });
     const lightActor = {
-      translation:[0,0,0],
       position:[30, 30, 35],
       color: [1.0, 1.0, 0.9],
-      time: 0
     };
+    const points = [
+      vec3.fromValues(12, 0, 1.5),
+      vec3.fromValues(-4, 8, 1),
+
+      vec3.fromValues(-4, 8, 1),
+      vec3.fromValues(-8, -4, 1),
+
+      vec3.fromValues(-8, -4, 1),
+      vec3.fromValues(10, 0, 1),
+
+    ];
     // this.actors.push(lightActor);
     // this.lights.push(lightActor);
-
-
 
     // this.objects.push({
     //   translation : [0, 0, 0],
@@ -72,14 +84,24 @@ export class TestScene extends Scene {
     //   material : MATERIALS.normal_ground_forest
     // });
     // brown_mud_leaves_01_4k
+
+      // for(let i = 0; i < 5; i++){
+      //   this.objects.push({
+      //     translation : [points[i][0],points[i][1],points[i][2]],
+      //     rotation : quat.fromEuler(quat.create(), 0, 0, 0),
+      //     scale: [1,1,1],
+      //     mesh_reference : "sphere",
+      //     material : MATERIALS.black    
+      //   })
+      // }
+
     this.objects.push({
         translation : [0,0,0],
         rotation : quat.fromEuler(quat.create(), 0, 0, 90),
         scale: [10,10,10],
         mesh_reference : "plane",
-        material : MATERIALS.normal_validation
+        material : MATERIALS.normal_ground_forest
         });
-
 
     this.objects.push({
       translation : [0.0, 0.0, 0.0],
@@ -89,9 +111,8 @@ export class TestScene extends Scene {
       material : MATERIALS.sunset_sky
     });
 
-    this.lights.push(lightActor);
-    this.actors["light"] = lightActor;
 
+    this.actors["camera"] = this.camera;
   }
 
   /**
@@ -99,17 +120,24 @@ export class TestScene extends Scene {
    */
   initialize_actor_actions(){
     for(const name in this.actors){
-        if(name.includes("light")){
-          console.log("Found light");
-            const light = this.actors[name];
-            light.evolve = (dt) => {
-              light.time += dt;
-              light.position[0] = 30 *Math.cos(light.time);
-              light.position[1] = 30 *Math.sin(light.time);
-            }
+      if (name.includes("camera")) {
+        const bezierCam = this.actors[name];
+        bezierCam.evolve = (dt) => {
+          bezierCam.update_time(dt);
         }
+      }
+        // if(name.includes("light")){
+        //   console.log("Found light");
+        //     const light = this.actors[name];
+        //     light.evolve = (dt) => {
+        //       light.time += dt;
+        //       light.position[0] = 30 *Math.cos(light.time);
+        //       light.position[1] = 30 *Math.sin(light.time);
+        //   }
+        // }
+
     }
-}
+  }
 
   /**
    * Initialize custom scene-specific UI parameters to allow interactive control of selected scene elements.
@@ -123,7 +151,7 @@ export class TestScene extends Scene {
 
 }
 
-
+ 
 function animateBird(bird, time, scale) {
   const frameRate = 25;
   const frame = Math.round(time * frameRate) % 200;
