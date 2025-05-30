@@ -416,7 +416,7 @@ TODO
 
 ## References
 
-[Example scene from the Lord of the Rings](youtube.com/watch?v=YH4Xr6GIp4U) from 1:22 to 1:35
+[Example scene from the Lord of the Rings](https://youtube.com/watch?v=YH4Xr6GIp4U) from 1:22 to 1:35
 
 [Bezier curves](https://www.shadertoy.com/view/XtBGDR)
 
