@@ -322,10 +322,6 @@ export class FinalScene extends Scene {
           // console.log(`vel: ${vec3.str(velocity)}`);
 
           bird.rotation = quat.rotationTo(quat.create(), vec3.fromValues(0., 1., 0.), vec3.normalize(vec3.create(), velocity));
-          if (index == 3) {
-            const angle = 360 * vec3.angle(vec3.fromValues(1., 0., 0.), velocity) / (2 * Math.PI);
-            // console.log(angle);
-          }
 
           animateBird(bird, bird.time, this.scale);
 

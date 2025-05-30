@@ -120,7 +120,7 @@ export class BoidsDemo extends Scene {
     if (boid_actor_id_counter >= 900) {
         console.warn(`WARNING: Number of boids (${boid_actor_id_counter}) is approaching or exceeding the limit (900) for the current actor name parsing logic in initialize_actor_actions. Indexing may become incorrect.`);
     }
-    console.log(`Initialized ${boid_actor_id_counter} boids.`);
+    // console.log(`Initialized ${boid_actor_id_counter} boids.`);
 
 
     this.objects.push({
