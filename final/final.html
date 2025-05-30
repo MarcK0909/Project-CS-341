@@ -256,9 +256,79 @@ Bird design in the YouTube tutorial
 created.</em></p>
 <h3 id="fog">Fog</h3>
 <h4 id="implementation-1">Implementation</h4>
-<p>TODO</p>
+<p>We implemented the fog in the blinn phong shader, as suggested by the
+tutorial provided in the project instructions. The fog is rendered by
+mixing the color of the fog to the color of each fragment without the
+fog. The intensity of the fog at a given fragment is given by the
+distance of this fragment from the camera. First we need to input the
+fog color, a minimum and maximum distance values and a minimum and
+maximum intensity values to the pipeline. Every fragment closer to the
+camera than the minimum distance threshold will have the minimum
+intensity fog and every fragment further from the camera than the
+maximum distance threshold will have fog corresponding to the maximum
+intensity value. Between these two threasholds we used linear
+interpolation to calculate the fog intensity. These calculations happen
+in the fragment shader after the color of the fragment without any fog
+has been computed. The distance of the fragment from the camera is the
+length of the vector representing the fragments position in view space,
+as in this space the camera is a the origin. The weight to mix the the
+fog color with the fragment color is simply the intensity
+calculated.</p>
 <h4 id="validation-1">Validation</h4>
-<p>TODO</p>
+<figure>
+<img src="images/fog.png" width="500"
+alt="Fog parameters for our final scene" />
+<figcaption aria-hidden="true">Fog parameters for our final
+scene</figcaption>
+</figure>
+<p>The parameters for the fog in the final scene are : minimum intensity
+= 0.6, maximum intensity = 1, minimum distance theshold = 1, maximum
+distance threshold = 7.2, color = (0.9, 0.9, 0.9).</p>
+<p>Below, you can see the effect of modifying each parameter
+individually. Note that when maximum intensity is below 1, we can see
+the edge of the ground plane, underlying the importance of the fog.</p>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<figure>
+<img src="images/fog_0min.png" alt="Image 1" width="300">
+<figcaption>
+Minimum intensity is 0
+</figcaption>
+</figure>
+<figure>
+<img src="images/fog_08max.png" alt="Image 2" width="300">
+<figcaption>
+Maximum intensity is 0.8
+</figcaption>
+</figure>
+</div>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<figure>
+<img src="images/fog_close.png" alt="Image 1" width="300">
+<figcaption>
+Distance thesholds: min = 0.2, max = 1
+</figcaption>
+</figure>
+<figure>
+<img src="images/fog_far.png" alt="Image 2" width="300">
+<figcaption>
+Distance thesholds: min = 6, max = 9
+</figcaption>
+</figure>
+</div>
+<div style="display: flex; justify-content: center; gap: 20px;">
+<figure>
+<img src="images/fog_blue.png" alt="Image 1" width="300">
+<figcaption>
+Blue fog
+</figcaption>
+</figure>
+<figure>
+<img src="images/fog_red.png" alt="Image 2" width="300">
+<figcaption>
+Red fog
+</figcaption>
+</figure>
+</div>
 <h3 id="normal-mapping">Normal Mapping</h3>
 <h4 id="implementation-2">Implementation</h4>
 <p>We implemented the mapping based on the course material and the <a
@@ -284,8 +354,10 @@ formula seen in the lectures.</p>
 <p>As shown below we have 1 implementation where we turned off normal
 mapping (which gives a texture without any details, as it should), next
 we have our implementation of the texture where we added normal mapping,
-for reference we have the original sphere from polyheaven, when we
-downloaded it. As we can see the mapping clearly works.</p>
+for reference we have the original sphere from polyheaven, where the
+texture and the normal map come from. As we can see the mapping adds
+details, contrast to the texture and helps soften the transition from
+light to shadow.</p>
 <div style="display: flex; justify-content: center; gap: 10px;">
 <figure style="text-align: center;">
 <img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="200px">
@@ -307,15 +379,14 @@ from PolyHeaven</a>
 </figcaption>
 </figure>
 </div>
-Here is a full representation of our normal mapping taken from internet
-for reference to showcase a fully functionnal normal mapping with a
-moving light point :
+Here is a demo of our implementation with a normal map taken from the <a
+href="https://en.wikipedia.org/wiki/Normal_mapping">internet</a> to
+showcase how normal mapping adds “fake” terrain on a flat white surface:
 <figure style="text-align: center;">
 <video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted>
 </video>
 <figcaption>
-(<a href="https://en.wikipedia.org/wiki/Normal_mapping">Wikipedia -
-Normal mapping</a>)
+Normal mapping demo
 </figcaption>
 </figure>
 <h3 id="boids">Boids</h3>
@@ -369,7 +440,7 @@ specified direction.</li>
 <li>Quadrant-Specific Logic: The containment logic is divided into
 quadrants based on the boid’s angle around the Z-axis. Different sets of
 guiding cylinders are active in different quadrants, creating a complex,
-predefined flight path (shown below).</li>
+predefined flight path (shown in the challenges section).</li>
 <li>Global Boundaries: There’s a global outer radius to prevent boids
 from flying too far away and an inner radius to keep them from
 collapsing into the origin.</li>
@@ -436,15 +507,14 @@ Alignment and cohesion weight both doubled
 <p>In this third video we doubled both the alignement and cohesion
 weights again to better showcase their effects. As can be seen, the
 birds now seem to split into two groups (which is the way we make them
-spawn) and, contrary to the other two videos, they stay in these two
-groups throughout the video which is simply due to the fact that the
-forces attracting them together is much stronger and thus overshadow the
-other forces affecting the boids.</p>
-<p>We think these three videos showcase the effects well for each force
-on the boids and how they work all together to create a cohesive
-result.We decided not to include a video for each force individually as
-this wouldn’t have been very useful and wouldn’t have been a better
-showcase of the feature in our opinion.</p>
+spawn) and, contrary to the other two videos, they stay packed quite
+clos together in these two groups throughout the video which is simply
+due to the fact that the forces attracting them together is much
+stronger and thus overshadow the other forces affecting the boids.</p>
+<p>These three videos showcase the effects of all forces well and how
+they work all together to create a cohesive result. We decided not to
+include videos for other parameter configurations to keep this section
+somewhat concise as there are too many options.</p>
 <h3 id="bézier-curves">Bézier Curves</h3>
 <h4 id="implementation-4">Implementation</h4>
 <p>To implement Bézier curves we used the reference given in the handout
@@ -475,29 +545,29 @@ Bezier camera following the curve
 </figure>
 <figure>
 <img src="images/Bezier_curves_turntable_camera.png" width="500"
-alt="Image of the curves that the camera is following" />
-<figcaption aria-hidden="true">Image of the curves that the camera is
+alt="Image of the curve that the camera is following" />
+<figcaption aria-hidden="true">Image of the curve that the camera is
 following</figcaption>
 </figure>
 <h2 id="discussion">Discussion</h2>
 <h3 id="additional-components">Additional Components</h3>
 <p>TODO</p>
 <h3 id="failed-experiments">Failed Experiments</h3>
-<p>One of our biggest shortcomings was our original plan on how to
-enforce a trajectory for the boids, which would ensure our boids circle
-around the origin but also have some variation with their movement
-(up-down, left-right). Our first step was to create 2 containment
-cylinders both centered at the origin and of different radiuses to have
-the birds fly around the origin in a circle. These were not actual
-cylinders but were checks on the distance of the birds. If a bird was
-too far from the origin (ie. “outside” of our large cylinder) we would
-push it back closer and conversely if a bird got too close to it. We
-then thought to implement a more complex trajectory in the following way
-: using the angle the birds formed with the Z axis to locate the bird
-and split our trajectory circle into 8 quadrants, we applied some
+<p>Our original plan on how to enforce a trajectory for the boids, which
+would ensure our boids circle around the origin but also have some
+variation with their movement (up-down, left-right) didn’t work as we
+hoped. Our first step was to create 2 containment cylinders both
+centered at the origin and of different radiuses to have the birds fly
+around the origin in a circle. These were not actual cylinders but were
+checks on the horizontal distance of the birds to the origin. If a bird
+was too far from the origin (ie. “outside” of our large cylinder) we
+would push it back closer and conversely if a bird got too close to it.
+We then thought to implement a more complex trajectory in the following
+way : using the angle the birds formed with the Z axis to locate the
+bird and split our trajectory circle into 8 quadrants, we applied some
 effects to it (ex. a force vector of (0, 0, 1) to make the bird “fly” up
 or the opposite to make it go down). We thus implemented a new function
-called trajectoryForce (whose code can be found commented out in the
+called trajectoryForce (whose now unused code can be found in the
 boids.js file from lines 235 to 354) but the results of this proved to
 work in a very robotic and unnatural way, not at all what we were
 wishing for in the beginning. Indeed, as all the boids had the exact
@@ -505,8 +575,8 @@ same force vector applied to them at almost the same time (because 8
 quadrants wasn’t that big to seperate them and because we originally
 tested this with few boids) they all followed each other almost like if
 it were a carousel. The below video showcases this failed experiment
-(don’t mind the artifact in the middle of the screen) and puts it into
-video form.</p>
+(the artifact in the middle of the screen is unrelated, this video was
+done ).</p>
 <figure style="text-align: center;">
 <video src="videos/ShowcaseFailure.mp4" height="300px" autoplay loop muted>
 </video>
@@ -514,21 +584,20 @@ video form.</p>
 Original trajectory idea for our boids
 </figcaption>
 </figure>
-<p>In the end we opted for another approach to fix this, and get what we
-wnated, which is detailed below in the Challenges section.</p>
+<p>In the end we opted for another approach for the trajectory, which is
+the one descibed in the Boids feature validation and detailed below in
+the Challenges section.</p>
 <h3 id="challenges">Challenges</h3>
 Our first big challenge to face was the implementation of a general
 trajectory for the boids. We thus opted for another approach which was
 to place “cylinders” across our scene, similar to the ones we originally
 used to contain the boids as our base step, as these seemed to provide
 the best results since the boids would dodge the obstacles in a much
-more natural manner. We started by multiplying our entire scene by a
-scale to have a “miniature” one so that we could better visualize what
-was going on. We also implemented a camera which filmed our scene from
-above the origin so that we could see the boids circling around. Using
-all these tools we opted to place the cylinders, which would mimick the
-trees, on Geogebra and thus could easily visually represent what was
-happening in our scene.
+more natural manner. We scaled down the scene so that we could better
+visualize what was going on and set the turntable camera above the
+origin so that we could see the boids circling around. Using Geogebra we
+created a 2d map of our scene to choose where to place the exclusion
+zones, which would then be filled with trees.
 <div style="text-align: center;">
 <img src="images/trajectory_on_ggb.png" height="300px">
 <figcaption style="text-align: center;">
@@ -542,7 +611,7 @@ This proved to be quite challenging as the process of placing the trees
 was quite tedious and the existing code for the birds’ trajectory had to
 be extensively modified, mainly the containment force which was fully
 reworked and helper functions had to be added to better modularize the
-code which can all be seen in our boids.js class.</p>
+code. All of that can be seen in our boids.js class.</p>
 <h2 id="contributions">Contributions</h2>
 <table>
 <caption>
@@ -585,20 +654,28 @@ Total
 Ondrej
 </td>
 <td>
+6
 </td>
 <td style="background-color: #f0f0f0;">
+2
 </td>
 <td>
+3
 </td>
 <td>
+6
 </td>
 <td>
+8
 </td>
 <td>
+10
 </td>
 <td>
+6
 </td>
 <td>
+41
 </td>
 </tr>
 <tr>
@@ -615,19 +692,19 @@ Marc
 2
 </td>
 <td>
-4
-</td>
-<td>
 6
 </td>
 <td>
-6.5
+9
 </td>
 <td>
-6.5
+7
 </td>
 <td>
-30
+9
+</td>
+<td>
+38
 </td>
 </tr>
 <tr>
@@ -644,19 +721,19 @@ Clemens
 4
 </td>
 <td>
-5
-</td>
-<td>
 6
 </td>
 <td>
-5
+7
 </td>
 <td>
-5
+9
 </td>
 <td>
-30
+7
+</td>
+<td>
+38
 </td>
 </tr>
 </tbody>

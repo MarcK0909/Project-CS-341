@@ -134,12 +134,60 @@ We designed our meshes in Blender, mainly by following tutorials on youtube ([Pi
 
 #### Implementation
 
-TODO
+We implemented the fog in the blinn phong shader, as suggested by the tutorial provided in the project instructions. The fog is rendered by mixing the color of the fog to the color of each fragment without the fog. The intensity of the fog at a given fragment is given by the distance of this fragment from the camera.
+First we need to input the fog color, a minimum and maximum distance values and a minimum and maximum intensity values to the pipeline. Every fragment closer to the camera than the minimum distance threshold will have the minimum intensity fog and every fragment further from the camera than the maximum distance threshold will have fog corresponding to the maximum intensity value. Between these two threasholds we used linear interpolation to calculate the fog intensity.
+These calculations happen in the fragment shader after the color of the fragment without any fog has been computed. The distance of the fragment from the camera is the length of the vector representing the fragments position in view space, as in this space the camera is a the origin.
+The weight to mix the the fog color with the fragment color is simply the intensity calculated.
 
 #### Validation
 
-TODO
+![Fog parameters for our final scene](images/fog.png){width="500px"}
 
+The parameters for the fog in the final scene are : minimum intensity = 0.6, maximum intensity = 1, minimum distance theshold = 1, maximum distance threshold = 7.2, color = (0.9, 0.9, 0.9).
+
+Below, you can see the effect of modifying each parameter individually. Note that when maximum intensity is below 1, we can see the edge of the ground plane, underlying the importance of the fog.
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+
+  <figure>
+	<img src="images/fog_0min.png" alt="Image 1" width="300">
+	<figcaption>Minimum intensity is 0</figcaption>
+  </figure>
+
+  <figure>
+	<img src="images/fog_08max.png" alt="Image 2" width="300">
+	<figcaption>Maximum intensity is 0.8</figcaption>
+  </figure>
+
+</div>
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+
+  <figure>
+	<img src="images/fog_close.png" alt="Image 1" width="300">
+	<figcaption>Distance thesholds: min = 0.2, max = 1</figcaption>
+  </figure>
+
+  <figure>
+	<img src="images/fog_far.png" alt="Image 2" width="300">
+	<figcaption>Distance thesholds: min = 6, max = 9</figcaption>
+  </figure>
+
+</div>
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+
+  <figure>
+	<img src="images/fog_blue.png" alt="Image 1" width="300">
+	<figcaption>Blue fog</figcaption>
+  </figure>
+
+  <figure>
+	<img src="images/fog_red.png" alt="Image 2" width="300">
+	<figcaption>Red fog</figcaption>
+  </figure>
+
+</div>
 
 ### Normal Mapping
 
@@ -151,7 +199,7 @@ We created a new material called "NormalTexturedMaterial" which takes two parame
 
 #### Validation
 
-As shown below we have 1 implementation where we turned off normal mapping (which gives a texture without any details, as it should), next we have our implementation of the texture where we added normal mapping, for reference we have the original sphere from polyheaven, when we downloaded it. As we can see the mapping clearly works.
+As shown below we have 1 implementation where we turned off normal mapping (which gives a texture without any details, as it should), next we have our implementation of the texture where we added normal mapping, for reference we have the original sphere from polyheaven, where the texture and the normal map come from. As we can see the mapping adds details, contrast to the texture and helps soften the transition from light to shadow.
 
 <div style="display: flex; justify-content: center; gap: 10px;">
 
@@ -172,10 +220,10 @@ As shown below we have 1 implementation where we turned off normal mapping (whic
 
 </div>
 
-Here is a full representation of our normal mapping taken from internet for reference to showcase a fully functionnal normal mapping with a moving light point :
+Here is a demo of our implementation with a normal map taken from the [internet](https://en.wikipedia.org/wiki/Normal_mapping) to showcase how normal mapping adds "fake" terrain on a flat white surface:
 <figure style="text-align: center;">
 	<video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted></video>
-	<figcaption>([Wikipedia - Normal mapping](https://en.wikipedia.org/wiki/Normal_mapping))</figcaption>
+	<figcaption>Normal mapping demo</figcaption>
 </figure>
 
 ### Boids
@@ -258,7 +306,7 @@ TODO
 
 ### Failed Experiments
 
-Our original plan on how to enforce a trajectory for the boids, which would ensure our boids circle around the origin but also have some variation with their movement (up-down, left-right) didn't work as we hoped. Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the horizontal distance of the birds to the origin. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. We then thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird and split our trajectory circle into 8 quadrants, we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up or the opposite to make it go down). We thus implemented a new function called trajectoryForce (whose now unused code can be found in the boids.js file from lines 235 to 354) but the results of this proved to work in a very robotic and unnatural way, not at all what we were wishing for in the beginning. Indeed, as all the boids had the  exact same force vector applied to them at almost the same time (because 8 quadrants wasn't that big to seperate them and because we originally tested this with few boids) they all followed each other almost like if it were a carousel. The below video showcases this failed experiment (the artifact in the middle of the screen is unrelated, this video was done ).
+Our original plan on how to enforce a trajectory for the boids, which would ensure our boids circle around the origin but also have some variation with their movement (up-down, left-right) didn't work as we hoped. Our first step was to create 2 containment cylinders both centered at the origin and of different radiuses to have the birds fly around the origin in a circle. These were not actual cylinders but were checks on the horizontal distance of the birds to the origin. If a bird was too far from the origin (ie. "outside" of our large cylinder) we would push it back closer and conversely if a bird got too close to it. We then thought to implement a more complex trajectory in the following way : using the angle the birds formed with the Z axis to locate the bird and split our trajectory circle into 8 quadrants, we applied some effects to it (ex. a force vector of (0, 0, 1) to make the bird "fly" up or the opposite to make it go down). We thus implemented a new function called trajectoryForce (whose now unused code can be found in the boids.js file from lines 235 to 354) but the results of this proved to work in a very robotic and unnatural way, not at all what we were wishing for in the beginning. Indeed, as all the boids had the  exact same force vector applied to them at almost the same time (because 8 quadrants wasn't that big to seperate them and because we originally tested this with few boids) they all followed each other almost like if it were a carousel. The below video showcases this failed experiment (the artifact in the middle of the screen is unrelated, the skysphere is just too far to render completely, this video was done in the earlier stages of the project and we don't have the scene anymore).
 
 <figure style="text-align: center;">
   <video src="videos/ShowcaseFailure.mp4" height="300px" autoplay loop muted></video>
@@ -276,6 +324,10 @@ Our first big challenge to face was the implementation of a general trajectory f
 </div>
 
 Using our visualization, we then were able to manually place the pine trees inside/close to the cylinders we placed to give the illusion that the birds were dodging them which created the look we were going for. This proved to be quite challenging as the process of placing the trees was quite tedious and the existing code for the birds' trajectory had to be extensively modified, mainly the containment force which was fully reworked and helper functions had to be added to better modularize the code. All of that can be seen in our boids.js class.
+
+
+Another challenge we faced was acne caused by the fog rendering, as you can see in this example :
+![Fog acne](images/Bezier_curves_turntable_camera.png){width=500px}
 
 
 ## Contributions
