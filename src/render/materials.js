@@ -132,11 +132,11 @@ export const test_sphere = new BackgroundMaterial({
 });
 
 export const normal_ground_forest = new NormalTexturedMaterial({
-    normal_map: 'ground_normal.png',
+    normal_map: 'ground_normal.jpg',
     texture: 'ground.jpg'
 });
 export const ground2 = new NormalTexturedMaterial({
-    normal_map: 'ground_normal.png',
+    normal_map: 'ground_normal.jpg',
     texture: 'ground_blurr4.png'
 })
 
@@ -155,10 +155,6 @@ export const black = new DiffuseMaterial({
     shininess: 5.0
 });
 
-export const pine = new DiffuseMaterial({
-    texture: 'text.jpg',
-    shininess: 0.5
-});
 
 export const pine_norm = new NormalTexturedMaterial({
     normal_map :  'pine_texture_2_normal_blurr2.jpg',

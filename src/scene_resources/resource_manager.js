@@ -38,7 +38,7 @@ export class ResourceManager{
           let tex_load_options = {}
           if (texture_name.includes("BirdImage") || texture_name.includes("map") || texture_name.includes("pine_3_stack_2.obj")) {
             tex_load_options = {flipY : true}
-          } else if(texture_name.includes("ground_blurr4.png") || texture_name.includes("ground_normal.png")){
+          } else if(texture_name.includes("ground_blurr4.png") || texture_name.includes("ground_normal.jpg")){
             tex_load_options = {wrap : 'repeat'}
           }
           resource_promises[texture_name] = load_texture(
@@ -149,11 +149,9 @@ export class ResourceManager{
             'pine.png',
             'WhiteBackground.png',
             'BirdImageDarker.png',
-            'ground_normal.png',
             'map.png',
             'ground.jpg',
-            'ground_normal.png',
-            "text.jpg",
+            'ground_normal.jpg',
             "pine_texture.png",
             "pine_texture_2_normal_blurr2.jpg",
             "pine_texture_2_blurr2.jpg",
