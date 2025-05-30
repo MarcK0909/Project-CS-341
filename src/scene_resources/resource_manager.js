@@ -165,10 +165,7 @@ export class ResourceManager{
             "pine_texture_2_normal.png",
             "pine_texture_2_normal_blurr2.jpg",
             "pine_texture_2_blurr2.jpg",
-            "ground_blurr4.png",
-            "ground_normal_2.png",
-            'normal_map_map.png',
-            'normal_validation.png'
+            "ground_blurr4.png"
           ];
     }
 
@@ -184,7 +181,6 @@ export class ResourceManager{
             'noise.vert.glsl', 'noise.frag.glsl',
             `buffer_to_screen.vert.glsl`, `buffer_to_screen.frag.glsl`,
             'terrain.vert.glsl', 'terrain.frag.glsl',
-            'normal.frag.glsl', 'normal.vert.glsl',
           ];
     }
 
