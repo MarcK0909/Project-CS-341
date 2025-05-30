@@ -2,12 +2,14 @@
 title: Final Project Report CS-341 2025
 ---
 
+<div style="text-align: center;">
 # In Flight
-
-<div>
-<video src="videos/demo_teaser.mp4" height="300px" autoplay loop></video>
 </div>
-<figcaption style="text-align: center;"></figcaption>
+
+<figure style="text-align: center;">
+  <video src="videos/ProjectTeaser.mp4" height="300px" autoplay loop muted></video>
+  <figcaption>A short teaser video of the final result.</figcaption>
+</figure>
 
 ## Abstract
 
@@ -15,16 +17,6 @@ The goal of our project, "In Flight," is to create a dynamic and visually engagi
 
 
 ## Overview
-
-<div style="display: flex; justify-content: space-around; align-items: center;">
-<div>
-<img src="images/demo_detail.png" height="210px" style="vertical-align: middle;">
-</div>
-<div>
-<video src="videos/demo_detail.mp4" height="210px" autoplay loop style="vertical-align: middle;"></video>
-</div>
-</div>
-<figcaption style="text-align: center;">Some more visuals focusing on interesting details of your scene.</figcaption>
 
 As described earlier in the abstract, our goal was to create a scene of birds flying through a forest in a realistic manner. To accomplish this, we first thought about implementing a boids algorithm to have better and more natural bird movement than if we had just used a linear trajectory for the birds to follow. We added the classic forces you would have in a Boids like algorithm (avoidance, cohesion, alignement and containment) while also adding some more features which will be further described in our feature validation of this effect. The second feature we decided to implement was to design our own custom meshes instead of just importing ones from the Internet. We thought this would add a more unique look to our project and we did so using Blender and tutorials on how to proceed as we had almost never used this tool. The third feature we added was Normal Mapping to have more visually complex and realistic appearance for our low-polygon models. We added this with the help of a normal map for each texture used in the scene as described in the course in more detail. The fourth feature was the implementation of fog in our scene, we thought this would give a more cinematic and mysterious look to the scene while also making it seem like a real forest which also works well with the way that the boids behave where one can see them go in and out of the fog seamlessly. The fifth and final feature were Bezier curves to have smoother camera movement and thus a nicer visual result in the end which proved to further enhance our result.
 
@@ -205,7 +197,7 @@ This acceleration is then added to the boid's current velocity (scaled by the ti
   <figcaption>Illustrative video of our boids' behavior</figcaption>
 </figure>
 
-The above video showcases how our boids behave in a containment sphere isolated from all other obstacles which means the only forces they are affected by are from themselves and the containment force, this scene can be found in the file named boidsDemo_scene.js. We modified our standard boids.js file and created a new one called boidsDemo.js because we had to modify the containmentForce to work differently than in the final scene. We only included a sphere in this test scene so that the boids are isolated and their interactions are more visible than if they were flying around cylinders which explains the need for a new file. Other than that, the code in this Demo boids algorithm is the same as in our "real" scene. As we can see in the video the boids behave as expected and the below videos show what happens when adjusting the weights of certain forces so that you can better observe their effects on the boids.
+The above video showcases how our boids behave in a containment sphere isolated from all other obstacles which means the only forces they are affected by are from themselves and the containment force, this scene can be found in the file named boidsDemo_scene.js. We modified our standard boids.js file and created a new one called boidsDemo.js because we had to modify the containmentForce to work differently than in the final scene and we also increased the number of boids to 200. We only included a sphere in this test scene so that the boids are isolated and their interactions are more visible than if they were flying around cylinders which explains the need for a new file. Other than that, the code in this Demo boids algorithm is the same as in our "real" scene. As we can see in the video the boids behave as expected and the below videos show what happens when adjusting the weights of certain forces so that you can better observe their effects on the boids.
 
 <figure style="text-align: center;">
   <video src="videos/boidsDemoS.mp4" height="300px" autoplay loop muted></video>
@@ -295,13 +287,13 @@ Using our visualization, we then were able to manually place the pine trees insi
 		<tr>
 			<td>Marc</td>
 			<td>3</td>
-			<td style="background-color: #f0f0f0;"></td>
+			<td style="background-color: #f0f0f0;">2</td>
 			<td>2</td>
 			<td>4</td>
 			<td>6</td>
-			<td>6</td>
-			<td>7</td>
-			<td>29</td>
+			<td>6.5</td>
+			<td>6.5</td>
+			<td>30</td>
 		</tr>
 		<tr>
 			<td>Clemens</td>

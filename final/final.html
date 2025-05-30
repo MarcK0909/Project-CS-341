@@ -38,8 +38,7 @@
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
           </ul>-->
           <ul>
-          <li><a href="#in-flight" id="toc-in-flight">In Flight</a>
-          <ul>
+          <li><a href="#in-flight" id="toc-in-flight">In Flight</a></li>
           <li><a href="#abstract" id="toc-abstract">Abstract</a></li>
           <li><a href="#overview" id="toc-overview">Overview</a></li>
           <li><a href="#feature-validation"
@@ -67,18 +66,20 @@
           id="toc-contributions">Contributions</a></li>
           <li><a href="#references"
           id="toc-references">References</a></li>
-          </ul></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         
-<h1 id="in-flight">In Flight</h1>
-<div>
-<video src="videos/demo_teaser.mp4" height="300px" autoplay loop>
+<section id="in-flight" style="text-align: center;">
+<h1>In Flight</h1>
+</section>
+<figure style="text-align: center;">
+<video src="videos/ProjectTeaser.mp4" height="300px" autoplay loop muted>
 </video>
-</div>
-<figcaption style="text-align: center;">
+<figcaption>
+A short teaser video of the final result.
 </figcaption>
+</figure>
 <h2 id="abstract">Abstract</h2>
 <p>The goal of our project, “In Flight,” is to create a dynamic and
 visually engaging 3D scene showcasing bird animation and flocking
@@ -87,19 +88,6 @@ behavior of a flock of birds flying through a forest filled with pines
 swirling in between them and dodging them to create a movie-like
 scene.</p>
 <h2 id="overview">Overview</h2>
-<div
-style="display: flex; justify-content: space-around; align-items: center;">
-<div>
-<p><img src="images/demo_detail.png" height="210px" style="vertical-align: middle;"></p>
-</div>
-<div>
-<video src="videos/demo_detail.mp4" height="210px" autoplay loop style="vertical-align: middle;">
-</video>
-</div>
-</div>
-<figcaption style="text-align: center;">
-Some more visuals focusing on interesting details of your scene.
-</figcaption>
 <p>As described earlier in the abstract, our goal was to create a scene
 of birds flying through a forest in a realistic manner. To accomplish
 this, we first thought about implementing a boids algorithm to have
@@ -394,14 +382,14 @@ they are affected by are from themselves and the containment force, this
 scene can be found in the file named boidsDemo_scene.js. We modified our
 standard boids.js file and created a new one called boidsDemo.js because
 we had to modify the containmentForce to work differently than in the
-final scene. We only included a sphere in this test scene so that the
-boids are isolated and their interactions are more visible than if they
-were flying around cylinders which explains the need for a new file.
-Other than that, the code in this Demo boids algorithm is the same as in
-our “real” scene. As we can see in the video the boids behave as
-expected and the below videos show what happens when adjusting the
-weights of certain forces so that you can better observe their effects
-on the boids.</p>
+final scene and we also increased the number of boids to 200. We only
+included a sphere in this test scene so that the boids are isolated and
+their interactions are more visible than if they were flying around
+cylinders which explains the need for a new file. Other than that, the
+code in this Demo boids algorithm is the same as in our “real” scene. As
+we can see in the video the boids behave as expected and the below
+videos show what happens when adjusting the weights of certain forces so
+that you can better observe their effects on the boids.</p>
 <figure style="text-align: center;">
 <video src="videos/boidsDemoS.mp4" height="300px" autoplay loop muted>
 </video>
@@ -569,6 +557,7 @@ Marc
 3
 </td>
 <td style="background-color: #f0f0f0;">
+2
 </td>
 <td>
 2
@@ -580,13 +569,13 @@ Marc
 6
 </td>
 <td>
-6
+6.5
 </td>
 <td>
-7
+6.5
 </td>
 <td>
-29
+30
 </td>
 </tr>
 <tr>
