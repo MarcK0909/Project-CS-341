@@ -49,7 +49,6 @@ class TexturedObjectMaterial extends Material {
 class NormalTexturedMaterial extends Material {
     constructor({texture = default_texture, normal_map = default_texture}){
         super();
-        this.properties.push("normal_mapping");
         this.texture = texture;
         this.normal_map = normal_map;
     }
