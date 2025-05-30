@@ -16,8 +16,8 @@ const avoidanceForceLimit = 30. * scale;
 
 const avoidanceWeight = 2. * scale;
 const cohesionWeight = 5. * scale;
-const alignementWeight = 2. * scale;
-const containementWeight = 50. * scale;
+const alignmentWeight = 2. * scale;
+const containmentWeight = 50. * scale;
 const trajectoryWeight = 0.;
 
 // useful vec3
@@ -100,7 +100,7 @@ function cohesionForce(posList, index) {
     return force;
 }
 
-function alignementForce(posList, velList, index) {
+function alignmentForce(posList, velList, index) {
     const force = diffFromMeanPerceptionFiltered(posList, velList, index);
     return force;
 }
@@ -126,11 +126,11 @@ function cylinder(distFromOrigin, angleDeg, radius, direction) {
 }
 
 
-function containementForce(posList, index) {
+function containmentForce(posList, index) {
     let force = vec3.fromValues(0., 0., 0.);
 
 
-    /* ################ XY CONTAINEMENT ################### */
+    /* ################ XY CONTAINMENT ################### */
     const birdXYPos = vec3.set(vec3.create(), posList[index][0], posList[index][1], 0);
 
     /* ===== Define cylinders ===== */
@@ -206,7 +206,7 @@ function containementForce(posList, index) {
     }
 
 
-    /* ################ Z CONTAINEMENT ################### */
+    /* ################ Z CONTAINMENT ################### */
     const z = posList[index][2];
 
     //
@@ -356,20 +356,20 @@ function containementForce(posList, index) {
 export function evolveBoid(dt, posList, velList, index) {
     const avoidance = avoidanceForce(posList, index);
     const cohesion = cohesionForce(posList, index);
-    const alignement = alignementForce(posList, velList, index);
-    const containement = containementForce(posList, index);
+    const alignment = alignmentForce(posList, velList, index);
+    const containment = containmentForce(posList, index);
     //const trajectory = trajectoryForce(posList, index); 
 
     console.log(`avoidance: ${vec3.str(avoidance)}`);
     console.log(`cohesion: ${vec3.str(cohesion)}`);
-    console.log(`alignement: ${vec3.str(alignement)}`);
-    console.log(`containement: ${vec3.str(containement)}`);
+    console.log(`alignment: ${vec3.str(alignment)}`);
+    console.log(`containment: ${vec3.str(containment)}`);
 
     const newVel = vec3.create();
     vec3.scale(newVel, avoidance, avoidanceWeight);
     vec3.scaleAndAdd(newVel, newVel, cohesion, cohesionWeight);
-    vec3.scaleAndAdd(newVel, newVel, alignement, alignementWeight);
-    vec3.scaleAndAdd(newVel, newVel, containement, containementWeight);
+    vec3.scaleAndAdd(newVel, newVel, alignment, alignmentWeight);
+    vec3.scaleAndAdd(newVel, newVel, containment, containmentWeight);
     //vec3.scaleAndAdd(newVel, newVel, trajectory, trajectoryWeight);
 
     vec3.scaleAndAdd(newVel, velList[index], newVel, dt);

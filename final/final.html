@@ -55,8 +55,6 @@
           </ul></li>
           <li><a href="#discussion" id="toc-discussion">Discussion</a>
           <ul>
-          <li><a href="#additional-components"
-          id="toc-additional-components">Additional Components</a></li>
           <li><a href="#failed-experiments"
           id="toc-failed-experiments">Failed Experiments</a></li>
           <li><a href="#challenges"
@@ -184,13 +182,18 @@ Completed
 <h3 id="mesh-design">Mesh Design</h3>
 <h4 id="implementation">Implementation</h4>
 <p>We designed our meshes in Blender, mainly by following tutorials on
-youtube (<a href="https://www.youtube.com/watch?v=mgJxH_Jc2DI">Pine tree
+YouTube (<a href="https://www.youtube.com/watch?v=mgJxH_Jc2DI">Pine tree
 tutorial</a>, <a href="https://www.youtube.com/watch?v=hvxoAX_poI0">Tree
 tutorial</a>, <a
 href="https://www.youtube.com/watch?v=eSL98LLr1kw&amp;list=WL&amp;index=29">Bird
 tutorial</a>). These were very helpful as it was our first/second time
 working with Blender and helped us achieve a good visual result while
-managing the object complexity.</p>
+managing the object complexity. We won’t detail the steps taken for
+every mesh as the tutorials give a very solid explanation on how to
+proceed. We opted to not use other tree models/other meshes than our
+pines as when testing with more variations the resulting forest looked
+very weird and unnatural because the tree models don’t blend well
+together.</p>
 <h4 id="validation">Validation</h4>
 <div style="display: flex; justify-content: center; gap: 10px;">
 <figure style="text-align: center;">
@@ -253,7 +256,7 @@ Bird design in the YouTube tutorial
 </figure>
 </div>
 <p><em>Note: The above objects are not exhaustive of all the meshes we
-created.</em></p>
+created. All the meshes can be found in our assets folder</em></p>
 <h3 id="fog">Fog</h3>
 <h4 id="implementation-1">Implementation</h4>
 <p>We implemented the fog in the blinn phong shader, as suggested by the
@@ -341,23 +344,25 @@ time as its color. To calculate the modified normal of each fragment, we
 need the normal map texture, the position of the fragment on this
 texture, the original normal of the fragment as well as its tangent and
 bitangent. We created a new material called “NormalTexturedMaterial”
-which takes two parameters, a texture and a normal map. The uv mapping
+which takes two parameters, a texture and a normal map. The UV mapping
 of the fragment coordinates is the same as for the texture, so no new
-code has to be added. The “.obj” files representing our meshes only
+code had to be added. The “.obj” files representing our meshes only
 store vertex normals, so in order to get tangents and bitangents we need
 to calculate them. This is done when loading the mesh from the file in
 cg_mesh. We then pass the vertex normal tangent and bitangent to the
 vertex shader where we interpolate all three before passing them to the
 fragment shader where the final computation is done following the
-formula seen in the lectures.</p>
+formula seen in the lectures :
+<code>n = normalize(x * t + y * b + z * n);</code> where x,y and z are
+the three values obtained from the normal map.</p>
 <h4 id="validation-2">Validation</h4>
 <p>As shown below we have 1 implementation where we turned off normal
 mapping (which gives a texture without any details, as it should), next
-we have our implementation of the texture where we added normal mapping,
-for reference we have the original sphere from polyheaven, where the
-texture and the normal map come from. As we can see the mapping adds
-details, contrast to the texture and helps soften the transition from
-light to shadow.</p>
+to it we have our implementation of the texture where we added normal
+mapping and finally for reference we have the original sphere from
+PolyHeaven, where the texture and the normal map come from. As we can
+see the mapping adds details, contrast to the texture and helps soften
+the transition from light to shadow.</p>
 <div style="display: flex; justify-content: center; gap: 10px;">
 <figure style="text-align: center;">
 <img src="images/sphere_withOUT_normal_mapping.png" alt="Texture without normal mapping" height="200px">
@@ -380,7 +385,7 @@ from PolyHeaven</a>
 </figure>
 </div>
 Here is a demo of our implementation with a normal map taken from the <a
-href="https://en.wikipedia.org/wiki/Normal_mapping">internet</a> to
+href="https://en.wikipedia.org/wiki/Normal_mapping">Internet</a> to
 showcase how normal mapping adds “fake” terrain on a flat white surface:
 <figure style="text-align: center;">
 <video src="videos/Normal_map_video.mp4" height="350px" autoplay loop muted>
@@ -396,7 +401,8 @@ applying a set of rules to each individual boid (bird) in the
 simulation. Each boid has a current position and velocity. In each step
 of the simulation, a new velocity is calculated for every boid based on
 several influencing forces, and its position is then updated. These are
-the forces we used :</p>
+the forces we used which are based on a previous lab done by us in a
+previous course (CS-214) :</p>
 <ul>
 <li><p><strong>The avoidanceForce</strong> function checks for other
 boids within a defined avoidanceRadius. If a nearby boid is detected, a
@@ -415,10 +421,10 @@ then generates a force that attempts to steer the current boid towards
 this average velocity. Again, diffFromMeanPerceptionFiltered is used,
 this time to average the velocities of neighbors.</p></li>
 <li><p><strong>The containementForce</strong> function keeps the boid in
-a certain boudary by aplying a force to the boid if it is out of the
+a certain boundary by applying a force to the boid if it is out of the
 predifined areas to bring it back. This function is quite complex in our
-implementation as we defined a complex boundary so that all birds follow
-a general corridor through the forest. We first define the boundaries in
+implementation as we defined a boundary so that all birds follow a
+general corridor through the forest. We first define the boundaries in
 the x and y plane. After that we also create boundaries for the boid
 height by checking the z coordinate. Usually the force applied to a boid
 out of the predefined zone is normal to the boundary “wall”. However as
@@ -517,19 +523,28 @@ include videos for other parameter configurations to keep this section
 somewhat concise as there are too many options.</p>
 <h3 id="bézier-curves">Bézier Curves</h3>
 <h4 id="implementation-4">Implementation</h4>
-<p>To implement Bézier curves we used the reference given in the handout
-for <a href="https://www.shadertoy.com/view/XtBGDR">bezier curves</a>,
-inside bezier.js we took 3 different segments (0-9.72s, 9.72-17.22s,
-17.22-30s) and for each of these segments we interpolated the cubic
-formulas, added multiple methods to calculate the derivatives and others
-like smoothstep to have smooth transitions between the end and the
-beginning of each segment, as well as createCameraRay which takes the
-cameras position and direction and calculates what it should show. For
-that we created a new camera called BezierCamera() and implemented all
-necessairy methods such as update_cam_transform() which recomputes the
-view-matrix in relation to its position, compute the transformation
-matrices for each object in the scene. Which all together gives the
-wanted result.</p>
+<p>To create a smooth and predefined camera path for our scene, we
+implemented a system based on Bézier curves. To implement this we mainly
+used the reference given in the handout for <a
+href="https://www.shadertoy.com/view/XtBGDR">bezier curves</a>. Our
+approach, primarily managed within <code>bezier.js</code>, involves
+defining the camera’s trajectory using three distinct cubic Bézier curve
+segments. Each segment corresponds to a specific time interval in our
+animation (0-9.72s, 9.72-17.22s, and 17.22-30s), allowing for varied
+camera movements over time.</p>
+<p>For each segment, the camera’s 3D position is determined by
+evaluating the corresponding Bézier curve at the current animation time.
+To ensure the camera orients itself correctly along the path, we also
+calculate the curve’s tangent (its first derivative) at that point. This
+tangent vector provides the direction the camera should be looking. We
+focused on ensuring smooth transitions between these segments to avoid
+abrupt camera movements.</p>
+<p>A specialized <code>BezierCamera</code> class was developed to handle
+this logic. Each frame, this camera updates its position and orientation
+based on the active Bézier curve segment and the current time. It then
+computes the necessary view matrix, which is used to render the scene
+from the camera’s smoothly moving perspective. This method allowed us to
+achieve the desired cinematic camera flight through the environment.</p>
 <h4 id="validation-4">Validation</h4>
 <p>As we can see here, we added a curve (with shaders) following bezier
 curves with the same exact interpolation points, except that we put the
@@ -550,8 +565,6 @@ alt="Image of the curve that the camera is following" />
 following</figcaption>
 </figure>
 <h2 id="discussion">Discussion</h2>
-<h3 id="additional-components">Additional Components</h3>
-<p>TODO</p>
 <h3 id="failed-experiments">Failed Experiments</h3>
 <p>Our original plan on how to enforce a trajectory for the boids, which
 would ensure our boids circle around the origin but also have some
@@ -594,11 +607,13 @@ trajectory for the boids. We thus opted for another approach which was
 to place “cylinders” across our scene, similar to the ones we originally
 used to contain the boids as our base step, as these seemed to provide
 the best results since the boids would dodge the obstacles in a much
-more natural manner. We scaled down the scene so that we could better
-visualize what was going on and set the turntable camera above the
-origin so that we could see the boids circling around. Using Geogebra we
-created a 2d map of our scene to choose where to place the exclusion
-zones, which would then be filled with trees.
+more natural manner. We started by multiplying our entire scene by a
+scale to have a “miniature” one so that we could better visualize what
+was going on. We also implemented a camera which filmed our scene from
+above the origin so that we could see the boids circling around it.
+Using all these tools we opted to place the cylinders, which would
+mimick the trees, on Geogebra and thus could easily visually represent
+what was happening in our scene.
 <div style="text-align: center;">
 <img src="images/trajectory_on_ggb.png" height="300px">
 <figcaption style="text-align: center;">
@@ -783,8 +798,6 @@ Clemens
 </tr>
 </tbody>
 </table>
-<h4 id="comments">Comments</h4>
-<p>TODO</p>
 <h2 id="references">References</h2>
 <p><a href="youtube.com/watch?v=YH4Xr6GIp4U">Example scene from the Lord
 of the Rings</a> from 1:22 to 1:35</p>
